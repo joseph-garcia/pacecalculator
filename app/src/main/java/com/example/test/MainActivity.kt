@@ -34,6 +34,11 @@ class MainActivity : AppCompatActivity() {
         mainMilesPicker.setMaxValue(99)
         mainMilesPicker.setMinValue(1)
 
+        // Change Hour Selected from User
+        var hourSelected = 0
+        mainHourPicker.setOnValueChangedListener { numberPicker, oldVal, newVal ->
+            hourSelected = newVal
+        }
 
         // Change Minute Selected from User
         var minuteSelected = 35
@@ -43,13 +48,31 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        // Change Second Selected from User
+        var secondSelected = 0
+        mainSecondPicker.setOnValueChangedListener { numberPicker, oldVal, newVal ->
+            secondSelected = newVal
+        }
+
+        // Change Hour Selected from User
+        var milesSelected = 0
+        mainMilesPicker.setOnValueChangedListener { numberPicker, oldVal, newVal ->
+            milesSelected = newVal
+        }
+
+
+
+
 
 
 
         calculateBtn.setOnClickListener {
             // Pass the minute selected variable to the Calculate class
             val intent = Intent(this@MainActivity, Calculate::class.java);
+            intent.putExtra("hourSel", hourSelected)
             intent.putExtra("minuteSel", minuteSelected)
+            intent.putExtra("secondSel", secondSelected)
+            intent.putExtra("mileSel", milesSelected)
             intent.putExtra("calcSel", "PaceCalc")
             startActivity(intent)
             //startActivity(Intent(this, Calculate::class.java))
@@ -58,6 +81,8 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+
 
 
 }
