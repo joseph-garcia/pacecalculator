@@ -34,6 +34,17 @@ class MainActivity : AppCompatActivity() {
         mainMilesPicker.setMaxValue(99)
         mainMilesPicker.setMinValue(1)
 
+        // Create Miles Decimal (Tens) Picker
+        var mainMilesTensPicker = numberpicker_main_milesTens
+        mainMilesTensPicker.setMaxValue(9)
+        mainMilesTensPicker.setMinValue(0)
+
+        // Create Miles Decimal (Ones) Picker
+        var mainMilesOnesPicker = numberpicker_main_milesOnes
+        mainMilesOnesPicker.setMaxValue(9)
+        mainMilesOnesPicker.setMinValue(0)
+
+
         // Change Hour Selected from User
         var hourSelected = 0
         mainHourPicker.setOnValueChangedListener { numberPicker, oldVal, newVal ->
@@ -41,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Change Minute Selected from User
-        var minuteSelected = 35
+        var minuteSelected = 0
         mainMinutePicker.setOnValueChangedListener { numberPicker, oldVal, newVal ->
             minuteSelected = newVal
             d("minuteSel", "$minuteSelected")
@@ -54,13 +65,23 @@ class MainActivity : AppCompatActivity() {
             secondSelected = newVal
         }
 
-        // Change Hour Selected from User
-        var milesSelected = 0
+        // Change Miles Selected from User
+        var milesSelected = 1
         mainMilesPicker.setOnValueChangedListener { numberPicker, oldVal, newVal ->
             milesSelected = newVal
         }
 
+        // Change Miles Tens Selected from User
+        var milesTensSelected = 0
+        mainMilesTensPicker.setOnValueChangedListener { numberPicker, oldVal, newVal ->
+            milesTensSelected = newVal
+        }
 
+        // Change Miles Ones Selected from User
+        var milesOnesSelected = 0
+        mainMilesOnesPicker.setOnValueChangedListener { numberPicker, oldVal, newVal ->
+            milesOnesSelected = newVal
+        }
 
 
 
@@ -73,6 +94,8 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("minuteSel", minuteSelected)
             intent.putExtra("secondSel", secondSelected)
             intent.putExtra("mileSel", milesSelected)
+            intent.putExtra("mileSelTens", milesTensSelected)
+            intent.putExtra("mileSelOnes", milesOnesSelected)
             intent.putExtra("calcSel", "PaceCalc")
             startActivity(intent)
             //startActivity(Intent(this, Calculate::class.java))
