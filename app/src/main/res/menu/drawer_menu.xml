@@ -3,6 +3,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         tools:showIn="navigation_view">
 
+    <!-- Only select one menu item within this group -->
     <group android:checkableBehavior="single">
         <item
                 android:id="@+id/ic_row"
@@ -14,7 +15,10 @@
                 android:title="Looping"></item>
     </group>
 
-    <!-- single action area
+    <!-- these won't stay selected when we choose them, but
+    they will instead execute an action -->
+
+    <!--
     <item android:title="TitleHere">
         <menu>
             <item android:id="@+id/nav_share"
