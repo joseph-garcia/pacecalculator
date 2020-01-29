@@ -5,20 +5,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log.d
 import android.view.Gravity
+import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.ToolbarWidgetWrapper
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_calculate.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     // create a member variable for the draw layout itself
-    //private var drawer: DrawerLayout? = null
+    //val drawer:DrawerLayout = TODO()
+    //val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+
+        //we need a reference to our navigation view
+        // NavigationView navigationView = findViewById(R.id.nav_view)
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener(this)
 
         var toggle = ActionBarDrawerToggle(
             this,
@@ -41,10 +49,32 @@ class MainActivity : AppCompatActivity() {
         // takes care of rotating hamburger icon
         toggle.syncState()
 
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().replace(
+                R.id.fragment_container,
+                RowingFragment()
+            ).commit()
+            navigationView.setCheckedItem(R.id.ic_row)
+        }
 
 
+    }
 
+    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+        when (p0.itemId) {
+            R.id.ic_row -> {
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
+                    RowingFragment()).commit()
+            }
+            R.id.ic_loop -> {
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
+                    LoopingFragment()).commit()
+            }
+        }
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+        drawer.closeDrawer(GravityCompat.START)
 
+        return true
     }
 
     // when we press the back btn when drawer is open, we dont want to leave the activity--instead we want to close nav drawer
