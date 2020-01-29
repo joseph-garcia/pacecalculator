@@ -11,7 +11,13 @@ class RowingFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
+
+
     ): View? {
+
+        
+
         return inflater.inflate(R.layout.fragment_rowing, container, false)
     }
+
 }

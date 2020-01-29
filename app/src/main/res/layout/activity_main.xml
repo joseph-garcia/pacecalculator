@@ -18,6 +18,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
+
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -29,12 +31,17 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+
+
+
         <FrameLayout
                 android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
         </FrameLayout>
+
+
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
