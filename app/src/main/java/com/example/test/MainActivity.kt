@@ -1,18 +1,12 @@
 package com.example.test
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log.d
-import android.view.Gravity
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
-import androidx.appcompat.widget.ToolbarWidgetWrapper
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.activity_calculate.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -54,7 +48,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().replace(
                 R.id.fragment_container,
-                RowingFragment()
+                CalculateFragment()
             ).commit()
             navigationView.setCheckedItem(R.id.ic_row)
         }
@@ -66,7 +60,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (p0.itemId) {
             R.id.ic_row -> {
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    RowingFragment()).commit()
+                    CalculateFragment()).commit()
             }
             R.id.ic_loop -> {
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
