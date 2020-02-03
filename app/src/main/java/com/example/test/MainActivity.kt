@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     //val drawer:DrawerLayout = TODO()
     //val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

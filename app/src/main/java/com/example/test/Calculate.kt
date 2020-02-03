@@ -2,10 +2,21 @@ package com.example.test
 
 import android.os.Bundle
 import android.util.Log.d
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_calculate.*
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class Calculate : AppCompatActivity() {
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +46,16 @@ class Calculate : AppCompatActivity() {
         backBtn.setOnClickListener {
             onBackPressed()
             d("mileSelected", "$mileSelectedDecimals")
+        }
+
+        sendButton.setOnClickListener {
+            //val toast = Toast.makeText(applicationContext, "Ouch!", Toast.LENGTH_SHORT)
+            //toast.show()
+            val data = GlobalData()
+            data.menuItems += "ouch"
+            data.listEntries.setValue(data.menuItems)
+            val toast = Toast.makeText(applicationContext, data.listEntries.toString(), Toast.LENGTH_LONG)
+            toast.show()
         }
 
         // get the time, convert to seconds, then divide seconds by miles
