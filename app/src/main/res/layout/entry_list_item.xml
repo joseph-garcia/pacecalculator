@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+    <ImageView
+            android:id="@+id/entryImage"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/entryTemplate" />
+
+    <TextView
+            android:id="@+id/entryTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/entryImage"
+            app:layout_constraintEnd_toEndOf="@+id/entryImage"
+            app:layout_constraintHorizontal_bias="0.344"
+            app:layout_constraintStart_toStartOf="@+id/entryImage"
+            app:layout_constraintTop_toTopOf="@+id/entryImage"
+            tools:text="1h:30m:5s" />
+
+    <TextView
+            android:id="@+id/entryDiff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/entryImage"
+            app:layout_constraintStart_toEndOf="@+id/entryTime"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="+2.5s" />
+</androidx.constraintlayout.widget.ConstraintLayout>

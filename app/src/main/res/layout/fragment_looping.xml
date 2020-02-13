@@ -7,8 +7,8 @@
         android:layout_height="match_parent"
         android:background="@android:color/holo_blue_light">
 
-    <ListView
-            android:id="@+id/entryMenu"
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/entryRecyclerMenu"
             android:layout_width="300dp"
             android:layout_height="600dp"
             app:layout_constraintBottom_toBottomOf="parent"
