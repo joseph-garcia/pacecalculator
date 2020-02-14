@@ -42,7 +42,7 @@ class EntryAdapter(val context: Context, val entries: List<RunningEntry>) : Recy
             val resourceId = context.resources.getIdentifier(entry.image, "drawable", context.packageName)
             entryImage?.setImageResource(resourceId)
             entryTime?.text = entry.timeString
-            entryDifference?.text = entry.timeFloat.toString()
+            entryDifference?.text = entry.timeDifference.toString()
 
 
         }

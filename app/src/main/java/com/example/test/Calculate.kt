@@ -1,5 +1,6 @@
 package com.example.test
 
+
 import android.os.Bundle
 import android.util.Log.d
 import android.widget.Toast
@@ -9,7 +10,8 @@ import androidx.core.app.ComponentActivity
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
+import com.example.test.Model.RunningEntry
+import com.example.test.Services.DataService
 
 
 class Calculate : AppCompatActivity() {
@@ -46,16 +48,18 @@ class Calculate : AppCompatActivity() {
         backBtn.setOnClickListener {
             onBackPressed()
             d("mileSelected", "$mileSelectedDecimals")
+
         }
 
         sendButton.setOnClickListener {
             //val toast = Toast.makeText(applicationContext, "Ouch!", Toast.LENGTH_SHORT)
             //toast.show()
-            val data = GlobalData()
-            data.menuItems += "ouch"
-            data.listEntries.setValue(data.menuItems)
-            val toast = Toast.makeText(applicationContext, data.listEntries.toString(), Toast.LENGTH_LONG)
+            println(hourSelected)
+            DataService.runningEntries.add(RunningEntry("4h:15m:41s", "+0.92s", "entrytemplate"))
+            val toast = Toast.makeText(applicationContext, "New entry added!", Toast.LENGTH_LONG)
             toast.show()
+
+
         }
 
         // get the time, convert to seconds, then divide seconds by miles
