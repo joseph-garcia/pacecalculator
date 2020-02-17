@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_calculate.*
 import com.example.test.Model.RunningEntry
 import com.example.test.Services.DataService
+import kotlin.math.pow
 
 
 class Calculate : AppCompatActivity() {
@@ -78,10 +79,17 @@ class Calculate : AppCompatActivity() {
         return "${minutePace.toInt()}:${secondPace.toInt()}/mi"
     }
 
-    fun adjustedPace() {
+    fun adjustedPace(minutes:Int, seconds:Int, miles:Int, milesTens:Int, milesOnes: Int, goalMiles:Double) : Unit {
         //Race time predictor algorithm from Pete Riegel
         //T2 = T1 x ((D2/D1)^1.06) where T1 is the given time, D1 is the given distance, D2 is the distance to predict a time for, and T2 is the calculated time for D2.
         // adjustedPace = runDurationInMinutes * ((goalMiles/milesRan)^1.06)
+        val milesRan:Double = miles + (milesTens * 0.10) + (milesOnes * 0.01)
+        val runDurationInMinutes:Int = minutes + seconds
+        val adjustedPace:Double = runDurationInMinutes * ((goalMiles/milesRan).pow(1.06))
+        val minuteValue = adjustedPace.toInt()
+        val secondsValue = (adjustedPace - minuteValue) * 60
+        println(minuteValue)
+        println(secondsValue)
 
     }
 
