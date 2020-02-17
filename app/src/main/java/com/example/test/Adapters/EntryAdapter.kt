@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.test.Model.RunningEntry
 import com.example.test.R
 import com.example.test.Services.DataService.runningEntries
+import org.w3c.dom.Text
 
 class EntryAdapter(val context: Context, val entries: List<RunningEntry>) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
 
@@ -38,11 +39,22 @@ class EntryAdapter(val context: Context, val entries: List<RunningEntry>) : Recy
         val entryTime = itemView?.findViewById<TextView>(R.id.entryTime)
         val entryDifference = itemView?.findViewById<TextView>(R.id.entryDiff)
 
+        val entryDistance = itemView?.findViewById<TextView>(R.id.entryDistance)
+        val entryDate = itemView?.findViewById<TextView>(R.id.entryDate)
+        val entryAdjusted = itemView?.findViewById<TextView>(R.id.entryAdjusted)
+        val entryPace = itemView?.findViewById<TextView>(R.id.entryPace)
+
+        // actual binding shia leboeuf
         fun bindEntry(entry: RunningEntry, context: Context) {
             val resourceId = context.resources.getIdentifier(entry.image, "drawable", context.packageName)
             entryImage?.setImageResource(resourceId)
             entryTime?.text = entry.timeString
             entryDifference?.text = entry.timeDifference.toString()
+
+            entryDistance?.text = entry.distanceString
+            entryDate?.text = entry.dateString
+            entryAdjusted?.text = entry.adjustedTime
+            entryPace?.text = entry.paceString
 
 
         }

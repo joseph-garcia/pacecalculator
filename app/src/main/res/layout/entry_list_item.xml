@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -24,22 +23,89 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/entryImage"
             app:layout_constraintEnd_toEndOf="@+id/entryImage"
-            app:layout_constraintHorizontal_bias="0.344"
+            app:layout_constraintHorizontal_bias="0.18"
             app:layout_constraintStart_toStartOf="@+id/entryImage"
             app:layout_constraintTop_toTopOf="@+id/entryImage"
+            app:layout_constraintVertical_bias="0.452"
             tools:text="1h:30m:5s" />
 
     <TextView
             android:id="@+id/entryDiff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/entryAdjusted"
             app:layout_constraintEnd_toEndOf="@+id/entryImage"
-            app:layout_constraintStart_toEndOf="@+id/entryTime"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/entryAdjusted"
+            app:layout_constraintVertical_bias="0.506"
             tools:text="+2.5s" />
+
+    <TextView
+            android:id="@+id/entryDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/entryTime"
+            app:layout_constraintStart_toStartOf="@+id/entryTime"
+            tools:text="15 miles" />
+
+    <TextView
+            android:id="@+id/entryDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Feb 13th, 2020" />
+
+    <TextView
+            android:id="@+id/entryAdjusted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="84dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/entryTime"
+            app:layout_constraintStart_toEndOf="@+id/entryTime"
+            app:layout_constraintTop_toTopOf="@+id/entryTime"
+            tools:text="6m:20s" />
+
+    <TextView
+            android:id="@+id/entryPace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/entryTime"
+            app:layout_constraintTop_toBottomOf="@+id/entryTime"
+            tools:text="8:30/mi" />
+
+    <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 Mile"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/entryAdjusted"
+            app:layout_constraintEnd_toEndOf="@+id/entryAdjusted"
+            app:layout_constraintStart_toStartOf="@+id/entryAdjusted" />
+
+    <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adjusted Time"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/entryAdjusted"
+            app:layout_constraintStart_toStartOf="@+id/entryAdjusted"
+            app:layout_constraintTop_toBottomOf="@+id/entryAdjusted" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
