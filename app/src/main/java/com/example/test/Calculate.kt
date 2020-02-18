@@ -2,12 +2,16 @@ package com.example.test
 
 
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_calculate.*
 import com.example.test.Model.RunningEntry
 import com.example.test.Services.DataService
+import com.example.test.Services.DataService.runningEntries
+import kotlinx.android.synthetic.main.entry_list_item.*
 import kotlin.math.pow
+import kotlin.math.roundToInt
 
 
 class Calculate : AppCompatActivity() {
@@ -22,6 +26,7 @@ class Calculate : AppCompatActivity() {
     private var minutePace : Double = 0.0
     private var remainderSeconds : Double = 0.0
     private var goalDistance: Double = 1.0
+    private var adjustedTimeInSeconds: Int = 0
 
 
 
@@ -37,8 +42,9 @@ class Calculate : AppCompatActivity() {
 
 
         // calculates pace and binds pace text to view
-        calculatePace()
-
+        val totalSeconds = 3600*(hourSelected) + 60*(minuteSelected) + secondSelected
+        val paceText = getPaceStringFromSeconds(totalSeconds) + "/mi"
+        paceStringText.text = paceText
 
 
         // Back button
@@ -52,20 +58,52 @@ class Calculate : AppCompatActivity() {
             //val toast = Toast.makeText(applicationContext, "Ouch!", Toast.LENGTH_SHORT)
             //toast.show()
             val timeString = timeStringify(hourSelected, minuteSelected, secondSelected)
-            val paceString = paceStringify(minutePace, remainderSeconds)
+            val paceString = paceText
+            val distanceString = distanceStringify(milesSelected, milesTensSelected, milesOnesSelected)
+            val dateString = "Feb 18, 2020"
+            val adjustedTime: String = adjustedPace(minuteSelected, secondSelected, milesSelected, milesTensSelected, milesOnesSelected, goalDistance)
             DataService.runningEntries.add(RunningEntry(
                 timeString,
-                "$milesSelected miles",
+                distanceString,
                 paceString,
-                "Feb 17, 2020",
-                "-2s",
-                "7m:15s",
+                dateString,
+                adjustedTime,
+                adjustedTimeInSeconds,
+                "",
                 "entrytemplate"))
             val toast = Toast.makeText(applicationContext, "New entry added!", Toast.LENGTH_LONG)
             toast.show()
+            val timeDifference = getTimeDifference()
+            runningEntries[runningEntries.lastIndex].timeDifference = timeDifference
+            println(adjustedTimeInSeconds)
+            println("list length is: ${runningEntries.size}")
 
 
         }
+    }
+
+    fun getTimeDifference() : String {
+        // if the list of entries > 1:
+        val differenceValue:Int
+        var timeDiffString:String
+        if (runningEntries.size > 1) {
+            //     get the value of current adjustedTimeInSeconds
+            val lastIndex = runningEntries.lastIndex
+            //     get the value of previous adjustedTimeInSeconds, and subtract current - previous
+            differenceValue = runningEntries[lastIndex].adjustedTimeInSeconds - runningEntries[lastIndex - 1].adjustedTimeInSeconds
+            timeDiffString = differenceValue.toString()
+        } else return ""
+
+        if (differenceValue > 0) {
+            //make value red and append a + in front
+            timeDiffString = "+$timeDiffString"
+        } else if (differenceValue < 0) {
+            //     make value green and append a - in front
+            timeDiffString = "$timeDiffString"
+        }
+        // append an s after the string
+        timeDiffString = "${timeDiffString}s"
+        return timeDiffString
     }
 
     fun timeStringify(hour:Int, minute:Int, second:Int) : String {
@@ -76,20 +114,38 @@ class Calculate : AppCompatActivity() {
     }
 
     fun paceStringify(minutePace:Double, secondPace:Double) : String {
-        return "${minutePace.toInt()}:${secondPace.toInt()}/mi"
+        if (secondPace < 10) {
+            return "${minutePace.toInt()}:0${secondPace.toInt()}"
+        } else return "${minutePace.toInt()}:${secondPace.toInt()}"
     }
 
-    fun adjustedPace(minutes:Int, seconds:Int, miles:Int, milesTens:Int, milesOnes: Int, goalMiles:Double) : Unit {
+    fun distanceStringify(miles:Int, milesTens:Int, milesOnes:Int) : String {
+        return "$miles.$milesTens$milesOnes miles"
+    }
+
+    fun getMinutesFromSeconds(seconds:Int) : String {
+        // Get raw decimal value (ie 90 seconds >> 1.5)
+        val minuteDouble = (seconds/60.0)
+        // Get floor of the minute value to return (ie 1.5 >> 1)
+        val minuteValue = minuteDouble.toInt()
+        // Get the remainder (the decimal we need to convert to seconds, ie 1.5 - 1 = 0.5)
+        val secondDouble = minuteDouble - minuteValue
+        // Then actually convert to seconds
+        val secondValue = secondDouble * 60
+        return paceStringify(minuteValue.toDouble(), secondValue)
+    }
+
+    fun adjustedPace(minutes:Int, seconds:Int, miles:Int, milesTens:Int, milesOnes: Int, goalMiles:Double) : String {
         //Race time predictor algorithm from Pete Riegel
         //T2 = T1 x ((D2/D1)^1.06) where T1 is the given time, D1 is the given distance, D2 is the distance to predict a time for, and T2 is the calculated time for D2.
         // adjustedPace = runDurationInMinutes * ((goalMiles/milesRan)^1.06)
         val milesRan:Double = miles + (milesTens * 0.10) + (milesOnes * 0.01)
-        val runDurationInMinutes:Int = minutes + seconds
+        val runDurationInMinutes:Double = minutes + (seconds/60.0)
         val adjustedPace:Double = runDurationInMinutes * ((goalMiles/milesRan).pow(1.06))
         val minuteValue = adjustedPace.toInt()
-        val secondsValue = (adjustedPace - minuteValue) * 60
-        println(minuteValue)
-        println(secondsValue)
+        val secondsValue = ((adjustedPace - minuteValue) * 60).roundToInt()
+        adjustedTimeInSeconds = (minuteValue * 60) + secondsValue
+        return (getMinutesFromSeconds(adjustedTimeInSeconds))
 
     }
 
@@ -106,9 +162,9 @@ class Calculate : AppCompatActivity() {
         milesNumText.text = mileSelectedDecimals.toString()
     }
 
-    fun calculatePace() {
-        // get the time, convert to seconds, then divide seconds by miles
-        val totalSeconds = 3600*(hourSelected) + 60*(minuteSelected) + secondSelected
+
+    fun getPaceStringFromSeconds(totalSeconds: Int) : String {
+        //divide seconds by miles
         val paceBySeconds = totalSeconds / mileSelectedDecimals
         // get that number and divide by 60 to get minute pace
         minutePace = paceBySeconds / 60.0
@@ -119,9 +175,10 @@ class Calculate : AppCompatActivity() {
         remainderSeconds = (remainderSeconds * 60)
 
 
-        // print the minute and seconds
-        minutePaceText.text = minutePace.toInt().toString()
-        secondPaceText.text = remainderSeconds.toInt().toString()
+        println("minutePace is: $minutePace")
+        println("remainderSeconds is: $remainderSeconds")
+        // return the minute and seconds as a string
+        return paceStringify(minutePace, remainderSeconds)
     }
 
     fun intentInit() {

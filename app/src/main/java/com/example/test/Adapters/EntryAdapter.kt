@@ -1,6 +1,7 @@
 package com.example.test.Adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,7 +50,15 @@ class EntryAdapter(val context: Context, val entries: List<RunningEntry>) : Recy
             val resourceId = context.resources.getIdentifier(entry.image, "drawable", context.packageName)
             entryImage?.setImageResource(resourceId)
             entryTime?.text = entry.timeString
-            entryDifference?.text = entry.timeDifference.toString()
+
+            println("time difference is ${entry.timeDifference}")
+            if ((entry.timeDifference).contains("-")) {
+                entryDifference?.setTextColor(Color.GREEN)
+            } else {
+                entryDifference?.setTextColor(Color.RED)
+            }
+
+            entryDifference?.text = entry.timeDifference
 
             entryDistance?.text = entry.distanceString
             entryDate?.text = entry.dateString
