@@ -1,24 +1,25 @@
-package com.example.test
+package com.josyf.improvementtracker
 
 
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_calculate.*
-import com.example.test.Model.RunningEntry
-import com.example.test.Services.DataService
-import com.example.test.Services.DataService.runningEntries
-import kotlinx.android.synthetic.main.entry_list_item.*
+import com.josyf.improvementtracker.Model.RunningEntry
+import com.josyf.improvementtracker.Services.DataService
+import com.josyf.improvementtracker.Services.DataService.runningEntries
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
-
+// The logic behind the main Pace Calculator xml view.
 class Calculate : AppCompatActivity() {
 
+    // Each variable corresponds to differing numerical values from the view.
+    // It's separated like this, because it's separated in the view as well.
     private var hourSelected : Int = 0
     private var minuteSelected : Int = 0
     private var secondSelected : Int = 0
+
     private var milesSelected : Int = 0
     private var milesTensSelected : Int = 0
     private var milesOnesSelected : Int = 0

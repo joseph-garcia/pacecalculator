@@ -1,9 +1,10 @@
-package com.example.test.Services
+package com.josyf.improvementtracker.Services
 
-import com.example.test.Model.RunningEntry
+import com.josyf.improvementtracker.Model.RunningEntry
 
 
-// this is our singleton. in here, we want all of our arrays that hold our data for our running entries
+// Our mutable list of RunningEntry class objects are encapsulated in a DataService singleton for simplicity. Our object
+// list has to live somewhere, I suppose. This part may be interchangeable with Firebase
 object DataService {
     val runningEntries = mutableListOf<RunningEntry>(
 //        RunningEntry("1h:30m:0s", "12 miles", "8:30/mi", "Feb 17, 2020", "7m:20s", 440, "+2s", "entrytemplate"),

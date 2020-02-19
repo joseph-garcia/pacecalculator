@@ -1,4 +1,4 @@
-package com.example.test.Adapters
+package com.josyf.improvementtracker.Adapters
 
 import android.content.Context
 import android.graphics.Color
@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.test.Model.RunningEntry
-import com.example.test.R
-import com.example.test.Services.DataService.runningEntries
-import org.w3c.dom.Text
+import com.josyf.improvementtracker.Model.RunningEntry
+import com.josyf.improvementtracker.R
+import com.josyf.improvementtracker.Services.DataService.runningEntries
 
+// The adapter that provides a binding from RunningEntry (from Model package) to the RecyclerView list items (from entry_list_item.xml)
 class EntryAdapter(val context: Context, val entries: List<RunningEntry>) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
 
 

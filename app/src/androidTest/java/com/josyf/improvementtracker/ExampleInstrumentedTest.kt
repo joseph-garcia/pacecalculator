@@ -1,4 +1,4 @@
-package com.example.test
+package com.josyf.improvementtracker
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4

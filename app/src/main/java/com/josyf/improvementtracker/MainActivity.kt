@@ -1,4 +1,4 @@
-package com.example.test
+package com.josyf.improvementtracker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
