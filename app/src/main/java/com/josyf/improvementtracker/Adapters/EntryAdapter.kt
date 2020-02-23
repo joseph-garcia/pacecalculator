@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.josyf.improvementtracker.Model.RunningEntry
 import com.josyf.improvementtracker.R
@@ -31,6 +32,13 @@ class EntryAdapter(val context: Context, val entries: List<RunningEntry>) : Recy
     // function that is called by the recycler view to display the data at the specified location
     override fun onBindViewHolder(holder: EntryViewHolder, position: Int) {
         holder?.bindEntry(runningEntries[position], context)
+
+        //area for updating (navigating?)
+        holder.view.setOnClickListener{
+            val action = HomeFragmentDirections.actionAddNote()
+            action.note = notes[position]
+            Navigation.findNavController(it).navigate(action)
+        }
     }
 
     // let's add a viewholder, this is responsible for the data binding--or to prepare the child view to display the data corresponding to its position in the adapter

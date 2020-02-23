@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_calculator.*
 
 class CalculateFragment : Fragment() {
@@ -94,18 +95,19 @@ class CalculateFragment : Fragment() {
 
 
         calculateBtn.setOnClickListener {
-            // Pass the minute selected variable to the Calculate class
-            val intent = Intent(activity, Calculate::class.java);
-            intent.putExtra("hourSel", hourSelected)
-            intent.putExtra("minuteSel", minuteSelected)
-            intent.putExtra("secondSel", secondSelected)
-            intent.putExtra("mileSel", milesSelected)
-            intent.putExtra("mileSelTens", milesTensSelected)
-            intent.putExtra("mileSelOnes", milesOnesSelected)
-            intent.putExtra("calcSel", "PaceCalc")
-            startActivity(intent)
-            //startActivity(Intent(this, Calculate::class.java))
-            //d("numOut", "$test1.text")
+//            // Pass the minute selected variable to the Calculate class
+//            val intent = Intent(activity, Calculate::class.java);
+//            intent.putExtra("hourSel", hourSelected)
+//            intent.putExtra("minuteSel", minuteSelected)
+//            intent.putExtra("secondSel", secondSelected)
+//            intent.putExtra("mileSel", milesSelected)
+//            intent.putExtra("mileSelTens", milesTensSelected)
+//            intent.putExtra("mileSelOnes", milesOnesSelected)
+//            intent.putExtra("calcSel", "PaceCalc")
+//            startActivity(intent)
+            //fragment to
+            val action = CalculateFragmentDirections.calcToResult()
+            Navigation.findNavController(view!!).navigate(action)
         }
     }
 
