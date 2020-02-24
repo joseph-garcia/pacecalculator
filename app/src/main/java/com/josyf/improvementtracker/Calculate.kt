@@ -1,9 +1,14 @@
 package com.josyf.improvementtracker
 
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_calculate.*
 import com.josyf.improvementtracker.Model.RunningEntry
 import com.josyf.improvementtracker.Services.DataService
@@ -12,7 +17,19 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 
 // The logic behind the main Pace Calculator xml view.
-class Calculate : AppCompatActivity() {
+class Calculate : Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+
+
+
+    ): View? {
+        return inflater.inflate(R.layout.fragment_calculator, container, false)
+
+
+    }
 
     // Each variable corresponds to differing numerical values from the view.
     // It's separated like this, because it's separated in the view as well.
@@ -33,10 +50,10 @@ class Calculate : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_calculate)
+        //setContentView(R.layout.activity_calculate)
 
         // initialize the variables carried through from MainActivity
-        intentInit()
+        //intentInit()
 
         // Display the values passed from Pace Calculator (not actually visible until Calculate Pace is pressed)
         displayValues()
@@ -48,11 +65,11 @@ class Calculate : AppCompatActivity() {
         paceStringText.text = paceText
 
 
-        // Back button
-        backBtn.setOnClickListener {
-            onBackPressed()
-
-        }
+//        // Back button
+//        backBtn.setOnClickListener {
+//            onBackPressed()
+//
+//        }
 
         // SEND TO JOURNAL BUTTON
         sendButton.setOnClickListener {
@@ -72,12 +89,14 @@ class Calculate : AppCompatActivity() {
                 adjustedTimeInSeconds,
                 "",
                 "entrytemplate"))
-            val toast = Toast.makeText(applicationContext, "New entry added!", Toast.LENGTH_LONG)
+            val toast = Toast.makeText(context, "New entry added!", Toast.LENGTH_LONG)
             toast.show()
             val timeDifference = getTimeDifference()
             runningEntries[runningEntries.lastIndex].timeDifference = timeDifference
             println(adjustedTimeInSeconds)
             println("list length is: ${runningEntries.size}")
+
+
 
 
         }
@@ -182,14 +201,14 @@ class Calculate : AppCompatActivity() {
         return paceStringify(minutePace, remainderSeconds)
     }
 
-    fun intentInit() {
-        hourSelected = intent.getIntExtra("hourSel", 0)
-        minuteSelected = intent.getIntExtra("minuteSel", 0)
-        secondSelected = intent.getIntExtra("secondSel", 0)
-        milesSelected = intent.getIntExtra("mileSel", 1)
-        milesTensSelected = intent.getIntExtra("mileSelTens", 0)
-        milesOnesSelected = intent.getIntExtra("mileSelOnes", 0)
-        val calcSelected = intent.getStringExtra("calcSel")
-    }
+//    fun intentInit() {
+//        hourSelected = intent.getIntExtra("hourSel", 0)
+//        minuteSelected = intent.getIntExtra("minuteSel", 0)
+//        secondSelected = intent.getIntExtra("secondSel", 0)
+//        milesSelected = intent.getIntExtra("mileSel", 1)
+//        milesTensSelected = intent.getIntExtra("mileSelTens", 0)
+//        milesOnesSelected = intent.getIntExtra("mileSelOnes", 0)
+//        val calcSelected = intent.getStringExtra("calcSel")
+//    }
 
 }

@@ -1,12 +1,14 @@
 package com.josyf.improvementtracker
 
-import android.content.Intent
+import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import kotlinx.android.synthetic.main.fragment_calculator.*
+
 
 class CalculateFragment : Fragment() {
     override fun onCreateView(
@@ -95,17 +97,29 @@ class CalculateFragment : Fragment() {
 
         calculateBtn.setOnClickListener {
             // Pass the minute selected variable to the Calculate class
-            val intent = Intent(activity, Calculate::class.java);
-            intent.putExtra("hourSel", hourSelected)
-            intent.putExtra("minuteSel", minuteSelected)
-            intent.putExtra("secondSel", secondSelected)
-            intent.putExtra("mileSel", milesSelected)
-            intent.putExtra("mileSelTens", milesTensSelected)
-            intent.putExtra("mileSelOnes", milesOnesSelected)
-            intent.putExtra("calcSel", "PaceCalc")
-            startActivity(intent)
+//            val intent = Intent(activity, Calculate::class.java);
+//            intent.putExtra("hourSel", hourSelected)
+//            intent.putExtra("minuteSel", minuteSelected)
+//            intent.putExtra("secondSel", secondSelected)
+//            intent.putExtra("mileSel", milesSelected)
+//            intent.putExtra("mileSelTens", milesTensSelected)
+//            intent.putExtra("mileSelOnes", milesOnesSelected)
+//            intent.putExtra("calcSel", "PaceCalc")
+            //startActivity(intent)
             //startActivity(Intent(this, Calculate::class.java))
             //d("numOut", "$test1.text")
+            val someFragment: Fragment = LoopingFragment()
+            val transaction: FragmentTransaction = fragmentManager!!.beginTransaction()
+            transaction.replace(
+                R.id.fragment_container,
+                someFragment
+            ) // give your fragment container id in first parameter
+
+            transaction.addToBackStack(null) // if written, this transaction will be added to backstack
+
+            transaction.commit()
+            supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
+                CalculateFragment()).commit()
         }
     }
 
