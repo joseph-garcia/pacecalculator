@@ -19,6 +19,7 @@ class LoopingFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
 
+
         // set adapter that we declared but didn't initialize before
         adapter = EntryAdapter(this.requireContext(), DataService.runningEntries)
 //        val layoutManager = LinearLayoutManager(this.requireContext())
@@ -37,6 +38,7 @@ class LoopingFragment : Fragment() {
 
         // takes the XML info and shows it
         var view = inflater.inflate(R.layout.fragment_looping, container, false)
+
 
 
 
@@ -81,6 +83,7 @@ class LoopingFragment : Fragment() {
 
         super.onActivityCreated(savedInstanceState)
         val layoutManager = LinearLayoutManager(this.requireContext())
+
         entryRecyclerMenu.layoutManager = layoutManager
         entryRecyclerMenu.adapter = adapter
         entryRecyclerMenu.setHasFixedSize(true)

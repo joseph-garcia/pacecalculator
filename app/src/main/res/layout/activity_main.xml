@@ -27,7 +27,6 @@
 
 
 
-
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -40,7 +39,13 @@
         </androidx.appcompat.widget.Toolbar>
 
 
-
+        <fragment
+                android:id="@+id/fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/nav_graph" />
 
         <FrameLayout
                 android:id="@+id/fragment_container"

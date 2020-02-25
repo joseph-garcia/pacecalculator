@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.activity_calculate.*
 import com.josyf.improvementtracker.Model.RunningEntry
 import com.josyf.improvementtracker.Services.DataService
@@ -18,18 +19,6 @@ import kotlin.math.roundToInt
 
 // The logic behind the main Pace Calculator xml view.
 class Calculate : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-
-
-
-    ): View? {
-        return inflater.inflate(R.layout.fragment_calculator, container, false)
-
-
-    }
 
     // Each variable corresponds to differing numerical values from the view.
     // It's separated like this, because it's separated in the view as well.
@@ -46,14 +35,38 @@ class Calculate : Fragment() {
     private var goalDistance: Double = 1.0
     private var adjustedTimeInSeconds: Int = 0
 
-
-
+    // this happens first
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_calculate)
 
+
+
+    }
+
+
+    //this happens second
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+
+
+
+    ): View? {
+        return inflater.inflate(R.layout.activity_calculate, container, false)
+
+
+    }
+
+
+
+    //this happens 3rd
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
         // initialize the variables carried through from MainActivity
-        //intentInit()
+        intentInit()
 
         // Display the values passed from Pace Calculator (not actually visible until Calculate Pace is pressed)
         displayValues()
@@ -75,32 +88,39 @@ class Calculate : Fragment() {
         sendButton.setOnClickListener {
             //val toast = Toast.makeText(applicationContext, "Ouch!", Toast.LENGTH_SHORT)
             //toast.show()
-            val timeString = timeStringify(hourSelected, minuteSelected, secondSelected)
-            val paceString = paceText
-            val distanceString = distanceStringify(milesSelected, milesTensSelected, milesOnesSelected)
-            val dateString = "Feb 18, 2020"
-            val adjustedTime: String = adjustedPace(minuteSelected, secondSelected, milesSelected, milesTensSelected, milesOnesSelected, goalDistance)
-            DataService.runningEntries.add(RunningEntry(
-                timeString,
-                distanceString,
-                paceString,
-                dateString,
-                adjustedTime,
-                adjustedTimeInSeconds,
-                "",
-                "entrytemplate"))
-            val toast = Toast.makeText(context, "New entry added!", Toast.LENGTH_LONG)
-            toast.show()
-            val timeDifference = getTimeDifference()
-            runningEntries[runningEntries.lastIndex].timeDifference = timeDifference
-            println(adjustedTimeInSeconds)
-            println("list length is: ${runningEntries.size}")
 
 
+//            val timeString = timeStringify(hourSelected, minuteSelected, secondSelected)
+//            val paceString = paceText
+//            //val paceString = "pace strting here"
+//            val distanceString = distanceStringify(milesSelected, milesTensSelected, milesOnesSelected)
+//            val dateString = "Feb 18, 2020"
+//            val adjustedTime: String = adjustedPace(minuteSelected, secondSelected, milesSelected, milesTensSelected, milesOnesSelected, goalDistance)
+//            DataService.runningEntries.add(RunningEntry(
+//                timeString,
+//                distanceString,
+//                paceString,
+//                dateString,
+//                adjustedTime,
+//                adjustedTimeInSeconds,
+//                "",
+//                "entrytemplate"))
+//            val toast = Toast.makeText(context, "New entry added!", Toast.LENGTH_LONG)
+//            toast.show()
+//            val timeDifference = getTimeDifference()
+//            runningEntries[runningEntries.lastIndex].timeDifference = timeDifference
+//            println(adjustedTimeInSeconds)
+//            println("list length is: ${runningEntries.size}")
 
+            val action = CalculateDirections.toEntryLog()
+            Navigation.findNavController(it).navigate(action)
 
         }
+
     }
+
+
+
 
     fun getTimeDifference() : String {
         // if the list of entries > 1:
@@ -171,6 +191,7 @@ class Calculate : Fragment() {
 
 
     fun displayValues() {
+
         hoursNumText.text = hourSelected.toString()
         minutesNumText.text = minuteSelected.toString()
         secondsNumText.text = secondSelected.toString()
@@ -201,7 +222,7 @@ class Calculate : Fragment() {
         return paceStringify(minutePace, remainderSeconds)
     }
 
-//    fun intentInit() {
+    fun intentInit() {
 //        hourSelected = intent.getIntExtra("hourSel", 0)
 //        minuteSelected = intent.getIntExtra("minuteSel", 0)
 //        secondSelected = intent.getIntExtra("secondSel", 0)
@@ -209,6 +230,13 @@ class Calculate : Fragment() {
 //        milesTensSelected = intent.getIntExtra("mileSelTens", 0)
 //        milesOnesSelected = intent.getIntExtra("mileSelOnes", 0)
 //        val calcSelected = intent.getStringExtra("calcSel")
-//    }
+
+        hourSelected = 0
+        minuteSelected = 0
+        secondSelected = 0
+        milesSelected = 0
+        milesTensSelected = 0
+        milesOnesSelected = 0
+    }
 
 }

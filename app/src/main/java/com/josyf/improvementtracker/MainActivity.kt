@@ -2,11 +2,13 @@ package com.josyf.improvementtracker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -21,12 +23,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     //val drawer:DrawerLayout = TODO()
     //val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
 
+    lateinit var navController:NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val navController = NavHostFragment.findNavController(LoopingFragment())
+        navController = Navigation.findNavController(this, R.id.fragment)
 
         var toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -66,12 +69,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         when (p0.itemId) {
             R.id.ic_row -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    CalculateFragment()).commit()
+//                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
+//                    CalculateFragment()).commit()
+                //val action = MainAc
+
+                //navController.navigate(calculateFragment)
+                //val action = CalculateFragment()
+                navController.navigate(R.id.calculateFragment)
+
+
             }
             R.id.ic_loop -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    LoopingFragment()).commit()
+//                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
+//                    LoopingFragment()).commit()
+                navController.navigate(R.id.loopingFragment)
             }
         }
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
