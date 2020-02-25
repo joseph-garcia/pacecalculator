@@ -7,6 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_calculator.*
 
 
@@ -19,8 +23,9 @@ class CalculateFragment : Fragment() {
 
 
     ): View? {
-        return inflater.inflate(R.layout.fragment_calculator, container, false)
-
+        // takes the XML info and shows it
+        var view = inflater.inflate(com.josyf.improvementtracker.R.layout.fragment_calculator, container, false)
+        return view
 
     }
 
@@ -108,18 +113,9 @@ class CalculateFragment : Fragment() {
             //startActivity(intent)
             //startActivity(Intent(this, Calculate::class.java))
             //d("numOut", "$test1.text")
-            val someFragment: Fragment = LoopingFragment()
-            val transaction: FragmentTransaction = fragmentManager!!.beginTransaction()
-            transaction.replace(
-                R.id.fragment_container,
-                someFragment
-            ) // give your fragment container id in first parameter
 
-            transaction.addToBackStack(null) // if written, this transaction will be added to backstack
-
-            transaction.commit()
-            supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                CalculateFragment()).commit()
+            val action = CalculateFragmentDirections.toCalculation()
+            Navigation.findNavController(view!!).navigate(action)
         }
     }
 

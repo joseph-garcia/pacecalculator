@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/nav_graph"
         app:startDestination="@id/loopingFragment">
 
     <fragment
             android:id="@+id/loopingFragment"
             android:name="com.josyf.improvementtracker.LoopingFragment"
-            android:label="LoopingFragment"/>
+            android:label="LoopingFragment">
+        <action
+                android:id="@+id/action_loopingFragment_to_calculateFragment"
+                app:destination="@id/calculateFragment" />
+    </fragment>
     <fragment
             android:id="@+id/calculateFragment"
             android:name="com.josyf.improvementtracker.CalculateFragment"
-            android:label="CalculateFragment" >
+            android:label="CalculateFragment">
         <action
-                android:id="@+id/toCalculate"
+                android:id="@+id/toCalculation"
                 app:destination="@id/calculate" />
     </fragment>
-    <activity
+    <fragment
             android:id="@+id/calculate"
             android:name="com.josyf.improvementtracker.Calculate"
-            android:label="Calculate" />
+            android:label="Calculate" >
+        <action
+                android:id="@+id/toEntryLog"
+                app:destination="@id/loopingFragment" />
+    </fragment>
 </navigation>
