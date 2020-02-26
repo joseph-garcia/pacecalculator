@@ -9,7 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.navigation.Navigation
+import com.josyf.improvementtracker.Model.CalculationViewModel
 import kotlinx.android.synthetic.main.activity_calculate.*
 import com.josyf.improvementtracker.Model.RunningEntry
 import com.josyf.improvementtracker.Services.DataService
@@ -35,13 +40,18 @@ class CalcResultsFragment : Fragment() {
     private var goalDistance: Double = 1.0
     private var adjustedTimeInSeconds: Int = 0
 
+    private val model: CalculationViewModel by viewModels()
+
     // this happens first
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_calculate)
 
-
-
+        val nameObserver = Observer<Int>{newName ->
+            println("hi i am $newName")
+        }
+        model.hourSelected.observe(this, nameObserver)
+        println("${model.hourSelected.value} is the hourSelected here")
     }
 
 
@@ -64,6 +74,12 @@ class CalcResultsFragment : Fragment() {
     //this happens 3rd
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        //val model: CalculationViewModel by viewModels()
+
+
+
+
 
         // initialize the variables carried through from MainActivity
         intentInit()

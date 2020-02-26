@@ -1,9 +1,13 @@
 package com.josyf.improvementtracker.Model
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class CalculationViewModel : ViewModel() {
-    var hourSelected : Int = 0
+    //private var hourSelected : Int = 0
+    val hourSelected: MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>()
+    }
     private var minuteSelected : Int = 0
     private var secondSelected : Int = 0
 
@@ -15,4 +19,5 @@ class CalculationViewModel : ViewModel() {
     private var remainderSeconds : Double = 0.0
     private var goalDistance: Double = 1.0
     private var adjustedTimeInSeconds: Int = 0
+
 }

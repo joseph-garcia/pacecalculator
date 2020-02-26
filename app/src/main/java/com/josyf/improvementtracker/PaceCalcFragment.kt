@@ -31,6 +31,12 @@ class PaceCalcFragment : Fragment() {
 
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         var mainHourPicker = numberpicker_main_hours
@@ -99,8 +105,7 @@ class PaceCalcFragment : Fragment() {
         }
 
 
-        val model: CalculationViewModel by viewModels()
-        model.hourSelected = 0 // <--!! You left off here
+
 
 
 
@@ -117,6 +122,12 @@ class PaceCalcFragment : Fragment() {
             //startActivity(intent)
             //startActivity(Intent(this, Calculate::class.java))
             //d("numOut", "$test1.text")
+
+            val model: CalculationViewModel by viewModels()
+            val numberThree = 3
+            model.hourSelected.value = numberThree
+            println("from paceCalcFragment: ${model.hourSelected.value}")
+
 
             val action = PaceCalcFragmentDirections.toCalculation()
             Navigation.findNavController(view!!).navigate(action)
