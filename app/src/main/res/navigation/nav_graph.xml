@@ -11,20 +11,20 @@
             android:label="LoopingFragment">
         <action
                 android:id="@+id/toCalcFrag"
-                app:destination="@id/calculateFragment" />
+                app:destination="@id/paceCalcFragment" />
     </fragment>
     <fragment
-            android:id="@+id/calculateFragment"
-            android:name="com.josyf.improvementtracker.CalculateFragment"
-            android:label="CalculateFragment">
+            android:id="@+id/paceCalcFragment"
+            android:name="com.josyf.improvementtracker.PaceCalcFragment"
+            android:label="PaceCalcFragment">
         <action
                 android:id="@+id/toCalculation"
-                app:destination="@id/calculate" />
+                app:destination="@id/calcResultsFragment" />
     </fragment>
     <fragment
-            android:id="@+id/calculate"
-            android:name="com.josyf.improvementtracker.Calculate"
-            android:label="Calculate" >
+            android:id="@+id/calcResultsFragment"
+            android:name="com.josyf.improvementtracker.CalcResultsFragment"
+            android:label="CalcResultsFragment">
         <action
                 android:id="@+id/toEntryLog"
                 app:destination="@id/loopingFragment" />

@@ -18,7 +18,7 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 
 // The logic behind the main Pace Calculator xml view.
-class Calculate : Fragment() {
+class CalcResultsFragment : Fragment() {
 
     // Each variable corresponds to differing numerical values from the view.
     // It's separated like this, because it's separated in the view as well.
@@ -112,7 +112,7 @@ class Calculate : Fragment() {
 //            println(adjustedTimeInSeconds)
 //            println("list length is: ${runningEntries.size}")
 
-            val action = CalculateDirections.toEntryLog()
+            val action = CalcResultsFragmentDirections.toEntryLog()
             Navigation.findNavController(it).navigate(action)
 
         }

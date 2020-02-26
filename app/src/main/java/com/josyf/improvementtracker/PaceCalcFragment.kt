@@ -7,14 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.josyf.improvementtracker.Model.CalculationViewModel
 import kotlinx.android.synthetic.main.fragment_calculator.*
 
 
-class CalculateFragment : Fragment() {
+class PaceCalcFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -97,6 +99,8 @@ class CalculateFragment : Fragment() {
         }
 
 
+        val model: CalculationViewModel by viewModels()
+        model.hourSelected = 0 // <--!! You left off here
 
 
 
@@ -114,7 +118,7 @@ class CalculateFragment : Fragment() {
             //startActivity(Intent(this, Calculate::class.java))
             //d("numOut", "$test1.text")
 
-            val action = CalculateFragmentDirections.toCalculation()
+            val action = PaceCalcFragmentDirections.toCalculation()
             Navigation.findNavController(view!!).navigate(action)
         }
     }
