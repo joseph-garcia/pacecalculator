@@ -22,6 +22,7 @@ class LoopingFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
 
+
         // set adapter that we declared but didn't initialize before
         adapter = EntryAdapter(this.requireContext(), DataService.runningEntries)
 //        val layoutManager = LinearLayoutManager(this.requireContext())
@@ -41,6 +42,41 @@ class LoopingFragment : BaseFragment() {
         // takes the XML info and shows it
         var view = inflater.inflate(R.layout.fragment_looping, container, false)
 
+
+
+
+
+
+        // get global variable
+//        var data = GlobalData()
+//        data.listEntries.observe(this,
+//            Observer {
+//                var menuItems = data.menuItems
+//                var listView : ListView = view.entryMenu
+//                var listViewAdapter = ArrayAdapter<String>(
+//                    requireActivity(),
+//                    android.R.layout.simple_list_item_1,
+//                    menuItems
+//                )
+//
+//                listView.setAdapter(listViewAdapter)
+//            })
+//
+//
+//        // get global variable
+//        var menuItems = data.menuItems
+//
+//        var listView : ListView = view.entryMenu
+//
+//        var listViewAdapter = ArrayAdapter<String>(
+//            requireActivity(),
+//            android.R.layout.simple_list_item_1,
+//            menuItems
+//        )
+//
+//        listView.setAdapter(listViewAdapter)
+
+//
         return view
     }
 
@@ -57,6 +93,7 @@ class LoopingFragment : BaseFragment() {
 
         entryRecyclerMenu.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(this.requireContext())
+
         entryRecyclerMenu.layoutManager = layoutManager
 
         launch {

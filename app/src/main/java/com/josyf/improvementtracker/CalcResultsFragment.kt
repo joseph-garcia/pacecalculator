@@ -1,10 +1,21 @@
 package com.josyf.improvementtracker
 
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
+import com.josyf.improvementtracker.Model.CalculationViewModel
 import kotlinx.android.synthetic.main.activity_calculate.*
 import com.josyf.improvementtracker.Model.RunningEntry
 import com.josyf.improvementtracker.Services.BaseFragment
@@ -15,7 +26,7 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 
 // The logic behind the main Pace Calculator xml view.
-class Calculate : BaseFragment() {
+class CalcResultsFragment : Fragment() {
 
     // Each variable corresponds to differing numerical values from the view.
     // It's separated like this, because it's separated in the view as well.
@@ -32,11 +43,43 @@ class Calculate : BaseFragment() {
     private var goalDistance: Double = 1.0
     private var adjustedTimeInSeconds: Int = 0
 
+    private val args: CalcResultsFragmentArgs by navArgs()
 
-
+    // this happens first
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        layoutInflater.inflate(R.layout.activity_calculate, fragment_container, false)
+        //setContentView(R.layout.activity_calculate)
+
+
+    }
+
+
+    //this happens second
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+
+
+
+    ): View? {
+        return inflater.inflate(R.layout.activity_calculate, container, false)
+
+
+    }
+
+
+
+    //this happens 3rd
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        //val model: CalculationViewModel by viewModels()
+
+
+        println("the hour of the args is ${args.hour} wow ezpz")
+
+
 
         // initialize the variables carried through from MainActivity
         intentInit()
@@ -51,40 +94,52 @@ class Calculate : BaseFragment() {
         paceStringText.text = paceText
 
 
-
-
+//        // Back button
+//        backBtn.setOnClickListener {
+//            onBackPressed()
+//
+//        }
 
         // SEND TO JOURNAL BUTTON
         sendButton.setOnClickListener {
             //val toast = Toast.makeText(applicationContext, "Ouch!", Toast.LENGTH_SHORT)
             //toast.show()
-            val timeString = timeStringify(hourSelected, minuteSelected, secondSelected)
-            val paceString = paceText
-            val distanceString = distanceStringify(milesSelected, milesTensSelected, milesOnesSelected)
-            val dateString = "Feb 18, 2020"
-            val adjustedTime: String = adjustedPace(minuteSelected, secondSelected, milesSelected, milesTensSelected, milesOnesSelected, goalDistance)
-            DataService.runningEntries.add(RunningEntry(
-                timeString,
-                distanceString,
-                paceString,
-                dateString,
-                adjustedTime,
-                adjustedTimeInSeconds,
-                "",
-                "entrytemplate"))
-            val toast = Toast.makeText(context, "New entry added!", Toast.LENGTH_LONG)
-            toast.show()
-            val timeDifference = getTimeDifference()
-            runningEntries[runningEntries.lastIndex].timeDifference = timeDifference
-            println(adjustedTimeInSeconds)
-            println("list length is: ${runningEntries.size}")
 
             val action = CalculateDirections.calcToList()
             Navigation.findNavController(view!!).navigate(action)
 
 
+//            val timeString = timeStringify(hourSelected, minuteSelected, secondSelected)
+//            val paceString = paceText
+//            //val paceString = "pace strting here"
+//            val distanceString = distanceStringify(milesSelected, milesTensSelected, milesOnesSelected)
+//            val dateString = "Feb 18, 2020"
+//            val adjustedTime: String = adjustedPace(minuteSelected, secondSelected, milesSelected, milesTensSelected, milesOnesSelected, goalDistance)
+//            DataService.runningEntries.add(RunningEntry(
+//                timeString,
+//                distanceString,
+//                paceString,
+//                dateString,
+//                adjustedTime,
+//                adjustedTimeInSeconds,
+//                "",
+//                "entrytemplate"))
+//            val toast = Toast.makeText(context, "New entry added!", Toast.LENGTH_LONG)
+//            toast.show()
+//            val timeDifference = getTimeDifference()
+//            runningEntries[runningEntries.lastIndex].timeDifference = timeDifference
+//            println(adjustedTimeInSeconds)
+//            println("list length is: ${runningEntries.size}")
+
+            val action = CalcResultsFragmentDirections.toEntryLog()
+            Navigation.findNavController(it).navigate(action)
+
         }
+
     }
+
+
+
 
     fun getTimeDifference() : String {
         // if the list of entries > 1:
@@ -155,6 +210,7 @@ class Calculate : BaseFragment() {
 
 
     fun displayValues() {
+
         hoursNumText.text = hourSelected.toString()
         minutesNumText.text = minuteSelected.toString()
         secondsNumText.text = secondSelected.toString()
@@ -185,7 +241,7 @@ class Calculate : BaseFragment() {
         return paceStringify(minutePace, remainderSeconds)
     }
 
-//    fun intentInit() {
+    fun intentInit() {
 //        hourSelected = intent.getIntExtra("hourSel", 0)
 //        minuteSelected = intent.getIntExtra("minuteSel", 0)
 //        secondSelected = intent.getIntExtra("secondSel", 0)
@@ -193,15 +249,13 @@ class Calculate : BaseFragment() {
 //        milesTensSelected = intent.getIntExtra("mileSelTens", 0)
 //        milesOnesSelected = intent.getIntExtra("mileSelOnes", 0)
 //        val calcSelected = intent.getStringExtra("calcSel")
-//    }
 
-    fun intentInit(){
-        hourSelected = 0
-        minuteSelected = 30
-        secondSelected = 0
-        milesSelected = 3
-        milesTensSelected = 0
-        milesOnesSelected = 0
+        hourSelected = args.hour
+        minuteSelected = args.minute
+        secondSelected = args.second
+        milesSelected = args.miles
+        milesTensSelected = args.milesTens
+        milesOnesSelected = args.milesOnes
     }
 
 }

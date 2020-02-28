@@ -1,26 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/nav_graph"
         app:startDestination="@id/loopingFragment">
 
     <fragment
             android:id="@+id/loopingFragment"
             android:name="com.josyf.improvementtracker.LoopingFragment"
-            android:label="LoopingFragment" />
-    <fragment
-            android:id="@+id/calculate"
-            android:name="com.josyf.improvementtracker.Calculate"
-            android:label="Calculate" >
+            android:label="LoopingFragment">
         <action
-                android:id="@+id/calcToList"
-                app:destination="@id/loopingFragment" />
+                android:id="@+id/toCalcFrag"
+                app:destination="@id/paceCalcFragment" />
     </fragment>
     <fragment
-            android:id="@+id/calculateFragment"
-            android:name="com.josyf.improvementtracker.CalculateFragment"
-            android:label="CalculateFragment" >
+            android:id="@+id/paceCalcFragment"
+            android:name="com.josyf.improvementtracker.PaceCalcFragment"
+            android:label="PaceCalcFragment">
         <action
-                android:id="@+id/calcToResult"
-                app:destination="@id/calculate" />
+                android:id="@+id/toCalculation"
+                app:destination="@id/calcResultsFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/calcResultsFragment"
+            android:name="com.josyf.improvementtracker.CalcResultsFragment"
+            android:label="CalcResultsFragment">
+        <action
+                android:id="@+id/toEntryLog"
+                app:destination="@id/loopingFragment" />
+        <argument
+                android:name="hour"
+                app:argType="integer" />
+        <argument
+                android:name="minute"
+                app:argType="integer" />
+        <argument
+                android:name="second"
+                app:argType="integer" />
+        <argument
+                android:name="miles"
+                app:argType="integer" />
+        <argument
+                android:name="milesTens"
+                app:argType="integer" />
+        <argument
+                android:name="milesOnes"
+                app:argType="integer" />
     </fragment>
 </navigation>

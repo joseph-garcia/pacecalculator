@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -19,14 +22,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     //val drawer:DrawerLayout = TODO()
     //val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
 
+    lateinit var navController:NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val navController = Navigation.findNavController(this, R.id.fragment)
+        navController = Navigation.findNavController(this, R.id.fragment)
 
-        //var toolbar = findViewById<Toolbar>(R.id.toolbar)
+        var toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
@@ -53,7 +57,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().replace(
                 R.id.fragment_container,
-                CalculateFragment()
+                LoopingFragment()
             ).commit()
             navigationView.setCheckedItem(R.id.ic_row)
         }
@@ -64,12 +68,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         when (p0.itemId) {
             R.id.ic_row -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    CalculateFragment()).commit()
+//                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
+//                    CalculateFragment()).commit()
+                //val action = MainAc
+
+                //navController.navigate(calculateFragment)
+                //val action = CalculateFragment()
+                navController.navigate(R.id.paceCalcFragment)
+
+
             }
             R.id.ic_loop -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    LoopingFragment()).commit()
+//                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
+//                    LoopingFragment()).commit()
+                navController.navigate(R.id.loopingFragment)
             }
         }
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
@@ -88,12 +100,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+//    override fun onSupportNavigateUp(): Boolean {
+//        return NavigationUI.navigateUp(
+//            Navigation.findNavController(this, R.id.fragment),
+//            null
+//        )
+//    }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(
-            Navigation.findNavController(this, R.id.fragment),
-            null
-        )
-    }
 
 }

@@ -1,15 +1,22 @@
 package com.josyf.improvementtracker
 
-import android.content.Intent
+import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import com.josyf.improvementtracker.Model.CalculationViewModel
 import kotlinx.android.synthetic.main.fragment_calculator.*
 
-class CalculateFragment : Fragment() {
+
+class PaceCalcFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -18,7 +25,14 @@ class CalculateFragment : Fragment() {
 
 
     ): View? {
-        return inflater.inflate(R.layout.fragment_calculator, container, false)
+        // takes the XML info and shows it
+        var view = inflater.inflate(com.josyf.improvementtracker.R.layout.fragment_calculator, container, false)
+        return view
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
 
     }
@@ -94,8 +108,9 @@ class CalculateFragment : Fragment() {
 
 
 
+
         calculateBtn.setOnClickListener {
-//            // Pass the minute selected variable to the Calculate class
+            // Pass the minute selected variable to the Calculate class
 //            val intent = Intent(activity, Calculate::class.java);
 //            intent.putExtra("hourSel", hourSelected)
 //            intent.putExtra("minuteSel", minuteSelected)
@@ -104,9 +119,21 @@ class CalculateFragment : Fragment() {
 //            intent.putExtra("mileSelTens", milesTensSelected)
 //            intent.putExtra("mileSelOnes", milesOnesSelected)
 //            intent.putExtra("calcSel", "PaceCalc")
-//            startActivity(intent)
-            //fragment to
-            val action = CalculateFragmentDirections.calcToResult()
+            //startActivity(intent)
+            //startActivity(Intent(this, Calculate::class.java))
+            //d("numOut", "$test1.text")
+
+
+
+
+            val action = PaceCalcFragmentDirections.toCalculation(
+                hourSelected,
+                minuteSelected,
+                secondSelected,
+                milesSelected,
+                milesTensSelected,
+                milesOnesSelected
+            )
             Navigation.findNavController(view!!).navigate(action)
         }
     }
