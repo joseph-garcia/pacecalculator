@@ -1,27 +1,15 @@
 package com.josyf.improvementtracker
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import com.josyf.improvementtracker.Model.CalculationViewModel
 import kotlinx.android.synthetic.main.activity_calculate.*
-import com.josyf.improvementtracker.Model.RunningEntry
-import com.josyf.improvementtracker.Services.BaseFragment
-import com.josyf.improvementtracker.Services.DataService
 import com.josyf.improvementtracker.Services.DataService.runningEntries
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -82,7 +70,7 @@ class CalcResultsFragment : Fragment() {
 
 
         // initialize the variables carried through from MainActivity
-        intentInit()
+        getArgs()
 
         // Display the values passed from Pace Calculator (not actually visible until Calculate Pace is pressed)
         displayValues()
@@ -105,8 +93,7 @@ class CalcResultsFragment : Fragment() {
             //val toast = Toast.makeText(applicationContext, "Ouch!", Toast.LENGTH_SHORT)
             //toast.show()
 
-            val action = CalculateDirections.calcToList()
-            Navigation.findNavController(view!!).navigate(action)
+
 
 
 //            val timeString = timeStringify(hourSelected, minuteSelected, secondSelected)
@@ -214,7 +201,7 @@ class CalcResultsFragment : Fragment() {
         hoursNumText.text = hourSelected.toString()
         minutesNumText.text = minuteSelected.toString()
         secondsNumText.text = secondSelected.toString()
-        milesNumText.text = milesSelected.toString()
+        //milesNumText.text = milesSelected.toString()
 
         // Tack on the decimals
         mileSelectedDecimals = milesSelected.toDouble() + (milesTensSelected * 0.10) + (milesOnesSelected * 0.01)
@@ -241,15 +228,7 @@ class CalcResultsFragment : Fragment() {
         return paceStringify(minutePace, remainderSeconds)
     }
 
-    fun intentInit() {
-//        hourSelected = intent.getIntExtra("hourSel", 0)
-//        minuteSelected = intent.getIntExtra("minuteSel", 0)
-//        secondSelected = intent.getIntExtra("secondSel", 0)
-//        milesSelected = intent.getIntExtra("mileSel", 1)
-//        milesTensSelected = intent.getIntExtra("mileSelTens", 0)
-//        milesOnesSelected = intent.getIntExtra("mileSelOnes", 0)
-//        val calcSelected = intent.getStringExtra("calcSel")
-
+    fun getArgs() {
         hourSelected = args.hour
         minuteSelected = args.minute
         secondSelected = args.second

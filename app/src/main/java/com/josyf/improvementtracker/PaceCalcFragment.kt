@@ -1,18 +1,11 @@
 package com.josyf.improvementtracker
 
-import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import com.josyf.improvementtracker.Model.CalculationViewModel
 import kotlinx.android.synthetic.main.fragment_calculator.*
 
 
@@ -26,19 +19,17 @@ class PaceCalcFragment : Fragment() {
 
     ): View? {
         // takes the XML info and shows it
-        var view = inflater.inflate(com.josyf.improvementtracker.R.layout.fragment_calculator, container, false)
+        var view = inflater.inflate(R.layout.fragment_calculator, container, false)
         return view
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        // TODO please redo/refactor this
+
         var mainHourPicker = numberpicker_main_hours
         mainHourPicker.setMaxValue(7);
         mainHourPicker.setMinValue(0);
@@ -110,21 +101,6 @@ class PaceCalcFragment : Fragment() {
 
 
         calculateBtn.setOnClickListener {
-            // Pass the minute selected variable to the Calculate class
-//            val intent = Intent(activity, Calculate::class.java);
-//            intent.putExtra("hourSel", hourSelected)
-//            intent.putExtra("minuteSel", minuteSelected)
-//            intent.putExtra("secondSel", secondSelected)
-//            intent.putExtra("mileSel", milesSelected)
-//            intent.putExtra("mileSelTens", milesTensSelected)
-//            intent.putExtra("mileSelOnes", milesOnesSelected)
-//            intent.putExtra("calcSel", "PaceCalc")
-            //startActivity(intent)
-            //startActivity(Intent(this, Calculate::class.java))
-            //d("numOut", "$test1.text")
-
-
-
 
             val action = PaceCalcFragmentDirections.toCalculation(
                 hourSelected,

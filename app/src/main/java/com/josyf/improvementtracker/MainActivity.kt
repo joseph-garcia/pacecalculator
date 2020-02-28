@@ -8,9 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -68,22 +66,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         when (p0.itemId) {
             R.id.ic_row -> {
-//                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-//                    CalculateFragment()).commit()
-                //val action = MainAc
-
-                //navController.navigate(calculateFragment)
-                //val action = CalculateFragment()
                 navController.navigate(R.id.paceCalcFragment)
-
-
             }
             R.id.ic_loop -> {
-//                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-//                    LoopingFragment()).commit()
                 navController.navigate(R.id.loopingFragment)
             }
         }
+
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         drawer.closeDrawer(GravityCompat.START)
 

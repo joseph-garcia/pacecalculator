@@ -33,12 +33,12 @@ class EntryAdapter(val context: Context, val entries: List<RunningEntry>) : Recy
     override fun onBindViewHolder(holder: EntryViewHolder, position: Int) {
         holder?.bindEntry(runningEntries[position], context)
 
-        //area for updating (navigating?)
-        holder.view.setOnClickListener{
-            val action = HomeFragmentDirections.actionAddNote()
-            action.note = notes[position]
-            Navigation.findNavController(it).navigate(action)
-        }
+        //area for updating (navigating? when an entry is clicked on, this happens)
+//        holder.view.setOnClickListener{
+//            val action = HomeFragmentDirections.actionAddNote()
+//            action.note = notes[position]
+//            Navigation.findNavController(it).navigate(action)
+//        }
     }
 
     // let's add a viewholder, this is responsible for the data binding--or to prepare the child view to display the data corresponding to its position in the adapter

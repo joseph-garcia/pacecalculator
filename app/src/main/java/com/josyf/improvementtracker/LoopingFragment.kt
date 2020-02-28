@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 
 class LoopingFragment : BaseFragment() {
     lateinit var adapter: EntryAdapter
-    //lateinit var layoutManager: LinearLayoutManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +24,6 @@ class LoopingFragment : BaseFragment() {
 
         // set adapter that we declared but didn't initialize before
         adapter = EntryAdapter(this.requireContext(), DataService.runningEntries)
-//        val layoutManager = LinearLayoutManager(this.requireContext())
-//        entryRecyclerMenu.layoutManager = layoutManager
-//        entryRecyclerMenu.setHasFixedSize(true)
-
 
     }
 
@@ -41,11 +36,6 @@ class LoopingFragment : BaseFragment() {
 
         // takes the XML info and shows it
         var view = inflater.inflate(R.layout.fragment_looping, container, false)
-
-
-
-
-
 
         // get global variable
 //        var data = GlobalData()
@@ -86,10 +76,6 @@ class LoopingFragment : BaseFragment() {
 
         super.onActivityCreated(savedInstanceState)
 
-//        val layoutManager = LinearLayoutManager(this.requireContext())
-//        entryRecyclerMenu.layoutManager = layoutManager
-//        entryRecyclerMenu.adapter = adapter
-//        entryRecyclerMenu.setHasFixedSize(true)
 
         entryRecyclerMenu.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(this.requireContext())
