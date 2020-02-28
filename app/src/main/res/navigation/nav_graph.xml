@@ -28,5 +28,23 @@
         <action
                 android:id="@+id/toEntryLog"
                 app:destination="@id/loopingFragment" />
+        <argument
+                android:name="hour"
+                app:argType="integer" />
+        <argument
+                android:name="minute"
+                app:argType="integer" />
+        <argument
+                android:name="second"
+                app:argType="integer" />
+        <argument
+                android:name="miles"
+                app:argType="integer" />
+        <argument
+                android:name="milesTens"
+                app:argType="integer" />
+        <argument
+                android:name="milesOnes"
+                app:argType="integer" />
     </fragment>
 </navigation>

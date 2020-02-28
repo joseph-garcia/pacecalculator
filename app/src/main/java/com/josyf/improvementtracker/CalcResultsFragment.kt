@@ -14,6 +14,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.josyf.improvementtracker.Model.CalculationViewModel
 import kotlinx.android.synthetic.main.activity_calculate.*
 import com.josyf.improvementtracker.Model.RunningEntry
@@ -40,18 +41,14 @@ class CalcResultsFragment : Fragment() {
     private var goalDistance: Double = 1.0
     private var adjustedTimeInSeconds: Int = 0
 
-    private val model: CalculationViewModel by viewModels()
+    private val args: CalcResultsFragmentArgs by navArgs()
 
     // this happens first
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_calculate)
 
-        val nameObserver = Observer<Int>{newName ->
-            println("hi i am $newName")
-        }
-        model.hourSelected.observe(this, nameObserver)
-        println("${model.hourSelected.value} is the hourSelected here")
+
     }
 
 
@@ -78,6 +75,7 @@ class CalcResultsFragment : Fragment() {
         //val model: CalculationViewModel by viewModels()
 
 
+        println("the hour of the args is ${args.hour} wow ezpz")
 
 
 
@@ -247,12 +245,12 @@ class CalcResultsFragment : Fragment() {
 //        milesOnesSelected = intent.getIntExtra("mileSelOnes", 0)
 //        val calcSelected = intent.getStringExtra("calcSel")
 
-        hourSelected = 0
-        minuteSelected = 0
-        secondSelected = 0
-        milesSelected = 0
-        milesTensSelected = 0
-        milesOnesSelected = 0
+        hourSelected = args.hour
+        minuteSelected = args.minute
+        secondSelected = args.second
+        milesSelected = args.miles
+        milesTensSelected = args.milesTens
+        milesOnesSelected = args.milesOnes
     }
 
 }

@@ -123,13 +123,17 @@ class PaceCalcFragment : Fragment() {
             //startActivity(Intent(this, Calculate::class.java))
             //d("numOut", "$test1.text")
 
-            val model: CalculationViewModel by viewModels()
-            val numberThree = 3
-            model.hourSelected.value = numberThree
-            println("from paceCalcFragment: ${model.hourSelected.value}")
 
 
-            val action = PaceCalcFragmentDirections.toCalculation()
+
+            val action = PaceCalcFragmentDirections.toCalculation(
+                hourSelected,
+                minuteSelected,
+                secondSelected,
+                milesSelected,
+                milesTensSelected,
+                milesOnesSelected
+            )
             Navigation.findNavController(view!!).navigate(action)
         }
     }
