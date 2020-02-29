@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.activity_calculate.*
 import com.josyf.improvementtracker.Services.DataService.runningEntries
+import com.josyf.improvementtracker.db.EntryDatabase
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -117,6 +118,8 @@ class CalcResultsFragment : Fragment() {
 //            runningEntries[runningEntries.lastIndex].timeDifference = timeDifference
 //            println(adjustedTimeInSeconds)
 //            println("list length is: ${runningEntries.size}")
+
+
 
             val action = CalcResultsFragmentDirections.toEntryLog()
             Navigation.findNavController(it).navigate(action)
@@ -235,6 +238,7 @@ class CalcResultsFragment : Fragment() {
         milesSelected = args.miles
         milesTensSelected = args.milesTens
         milesOnesSelected = args.milesOnes
+        println("bleh")
     }
 
 }

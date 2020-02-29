@@ -25,8 +25,6 @@ data class Entry(
     var timeDifference: String,
     val image: String
 ):Serializable{
-    // Serializing encodes the data in a way that we can store it and deserialize it later
-    // Let's make an id property and let it be our primarykey. Autogenerate lets SQLite generate the unique id
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 }

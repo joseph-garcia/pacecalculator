@@ -11,17 +11,15 @@ import androidx.room.RoomDatabase
     entities = [Entry::class],
     version = 1
 )
-abstract class EntryDatabase : RoomDatabase() {
-    abstract fun entryDao() : EntryDAO
-
+abstract class EntryDatabase : RoomDatabase(){
+    abstract fun getEntryDao() : EntryDAO
 
     companion object {
-        //create an instance of our DB and volatize it to guarantee the instance is coming from main thread and not cache
         @Volatile private var instance: RoomDatabase? = null
 
         private val LOCK = Any()
 
-        operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
+        operator fun invoke(context: Context) = instance ?: synchronized(LOCK){
             instance ?: buildDatabase(context).also {
                 instance = it
             }
