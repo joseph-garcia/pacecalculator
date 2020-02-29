@@ -85,7 +85,7 @@ class LoopingFragment : BaseFragment() {
         launch {
             context?.let{
                 //val entries = EntryDatabase(it).entryDAO().getAllEntries()
-                val entries = EntryDatabase(it).getEntryDao().getAllEntries()
+                val entries = EntryDatabase(it).entryDao().getAllEntries()
 
                 //entryRecyclerMenu.adapter = EntryAdapter(entries)
             }

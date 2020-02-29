@@ -12,10 +12,10 @@ import androidx.room.RoomDatabase
     version = 1
 )
 abstract class EntryDatabase : RoomDatabase(){
-    abstract fun getEntryDao() : EntryDAO
+    abstract fun entryDao() : EntryDAO
 
     companion object {
-        @Volatile private var instance: RoomDatabase? = null
+        @Volatile private var instance : EntryDatabase? = null
 
         private val LOCK = Any()
 
@@ -30,6 +30,5 @@ abstract class EntryDatabase : RoomDatabase(){
             EntryDatabase::class.java,
             "entrydatabase"
         ).build()
-
     }
 }
