@@ -5,17 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.josyf.improvementtracker.Services.BaseFragment
 import kotlinx.android.synthetic.main.activity_calculate.*
 import com.josyf.improvementtracker.Services.DataService.runningEntries
+import com.josyf.improvementtracker.db.Entry
 import com.josyf.improvementtracker.db.EntryDatabase
+import kotlinx.coroutines.launch
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
 // The logic behind the main Pace Calculator xml view.
-class CalcResultsFragment : Fragment() {
+class CalcResultsFragment : BaseFragment() {
 
     // Each variable corresponds to differing numerical values from the view.
     // It's separated like this, because it's separated in the view as well.
@@ -90,19 +94,18 @@ class CalcResultsFragment : Fragment() {
 //        }
 
         // SEND TO JOURNAL BUTTON
-        sendButton.setOnClickListener {
+        sendButton.setOnClickListener {view ->
             //val toast = Toast.makeText(applicationContext, "Ouch!", Toast.LENGTH_SHORT)
             //toast.show()
 
 
 
-
-//            val timeString = timeStringify(hourSelected, minuteSelected, secondSelected)
-//            val paceString = paceText
+            val timeString = timeStringify(hourSelected, minuteSelected, secondSelected)
+            val distanceString = distanceStringify(milesSelected, milesTensSelected, milesOnesSelected)
+            val paceString = paceText
 //            //val paceString = "pace strting here"
-//            val distanceString = distanceStringify(milesSelected, milesTensSelected, milesOnesSelected)
-//            val dateString = "Feb 18, 2020"
-//            val adjustedTime: String = adjustedPace(minuteSelected, secondSelected, milesSelected, milesTensSelected, milesOnesSelected, goalDistance)
+            val dateString = "Feb 18, 2020"
+            val adjustedTime: String = adjustedPace(minuteSelected, secondSelected, milesSelected, milesTensSelected, milesOnesSelected, goalDistance)
 //            DataService.runningEntries.add(RunningEntry(
 //                timeString,
 //                distanceString,
@@ -119,10 +122,21 @@ class CalcResultsFragment : Fragment() {
 //            println(adjustedTimeInSeconds)
 //            println("list length is: ${runningEntries.size}")
 
+            launch {
+                context?.let{
+                    val testEntry = Entry(timeString, distanceString, paceString, dateString, adjustedTime,100,"timeDiff", "entrytemplate")
+                    EntryDatabase(it).entryDao().addEntry(testEntry)
+                    val toast = Toast.makeText(context, "New entry added!", Toast.LENGTH_LONG)
+                    toast.show()
+                    val timeDifference = getTimeDifference()
+                }
+            }
 
 
+
+            // navigate to the entry log
             val action = CalcResultsFragmentDirections.toEntryLog()
-            Navigation.findNavController(it).navigate(action)
+            Navigation.findNavController(view).navigate(action)
 
         }
 
@@ -133,26 +147,34 @@ class CalcResultsFragment : Fragment() {
 
     fun getTimeDifference() : String {
         // if the list of entries > 1:
-        val differenceValue:Int
-        var timeDiffString:String
-        if (runningEntries.size > 1) {
-            //     get the value of current adjustedTimeInSeconds
-            val lastIndex = runningEntries.lastIndex
-            //     get the value of previous adjustedTimeInSeconds, and subtract current - previous
-            differenceValue = runningEntries[lastIndex].adjustedTimeInSeconds - runningEntries[lastIndex - 1].adjustedTimeInSeconds
-            timeDiffString = differenceValue.toString()
-        } else return ""
+        var differenceValue:Int = 0
+        var timeDiffString:String = ""
+        launch {
+            context?.let {
+                if (EntryDatabase(context!!).entryDao().getAllEntries().size > 1) {
+                    //     get the value of current adjustedTimeInSeconds
+                    val lastIndex = runningEntries.lastIndex
+                    //     get the value of previous adjustedTimeInSeconds, and subtract current - previous
+                    differenceValue =
+                        runningEntries[lastIndex].adjustedTimeInSeconds - runningEntries[lastIndex - 1].adjustedTimeInSeconds
+                    timeDiffString = differenceValue.toString()
+                }
 
-        if (differenceValue > 0) {
-            //make value red and append a + in front
-            timeDiffString = "+$timeDiffString"
-        } else if (differenceValue < 0) {
-            //     make value green and append a - in front
-            timeDiffString = "$timeDiffString"
+                if (differenceValue > 0) {
+                    //make value red and append a + in front
+                    timeDiffString = "+$timeDiffString"
+                } else if (differenceValue < 0) {
+                    //     make value green and append a - in front
+                    timeDiffString = "$timeDiffString"
+                }
+                // append an s after the string
+                timeDiffString = "${timeDiffString}s"
+                //return timeDiffString
+            }
+
         }
-        // append an s after the string
-        timeDiffString = "${timeDiffString}s"
         return timeDiffString
+
     }
 
     fun timeStringify(hour:Int, minute:Int, second:Int) : String {

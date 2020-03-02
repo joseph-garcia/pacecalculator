@@ -12,15 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.josyf.improvementtracker.Model.RunningEntry
 import com.josyf.improvementtracker.R
 import com.josyf.improvementtracker.Services.DataService.runningEntries
+import com.josyf.improvementtracker.db.Entry
 
 // The adapter that provides a binding from RunningEntry (from Model package) to the RecyclerView list items (from entry_list_item.xml)
-class EntryAdapter(val context: Context, val entries: List<RunningEntry>) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
+class EntryAdapter(val context: Context, val entries: List<Entry>) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
 
 
 
     // called when new viewholders are needed. kind of similar to inflate XML views--but only when there isn't an existing one to recycle
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryViewHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.entry_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false)
         return EntryViewHolder(view)
     }
 
@@ -31,7 +32,7 @@ class EntryAdapter(val context: Context, val entries: List<RunningEntry>) : Recy
 
     // function that is called by the recycler view to display the data at the specified location
     override fun onBindViewHolder(holder: EntryViewHolder, position: Int) {
-        holder?.bindEntry(runningEntries[position], context)
+        holder.bindEntry(runningEntries[position], context)
 
         //area for updating (navigating? when an entry is clicked on, this happens)
 //        holder.view.setOnClickListener{
@@ -44,14 +45,13 @@ class EntryAdapter(val context: Context, val entries: List<RunningEntry>) : Recy
     // let's add a viewholder, this is responsible for the data binding--or to prepare the child view to display the data corresponding to its position in the adapter
     inner class EntryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val entryImage = itemView?.findViewById<ImageView>(R.id.entryImage)
-        val entryTime = itemView?.findViewById<TextView>(R.id.entryTime)
-        val entryDifference = itemView?.findViewById<TextView>(R.id.entryDiff)
-
-        val entryDistance = itemView?.findViewById<TextView>(R.id.entryDistance)
-        val entryDate = itemView?.findViewById<TextView>(R.id.entryDate)
-        val entryAdjusted = itemView?.findViewById<TextView>(R.id.entryAdjusted)
-        val entryPace = itemView?.findViewById<TextView>(R.id.entryPace)
+        private val entryImage = itemView.findViewById<ImageView>(R.id.entryImage)
+        private val entryTime = itemView.findViewById<TextView>(R.id.entryTime)
+        private val entryDifference: TextView = itemView.findViewById<TextView>(R.id.entryDiff)
+        private val entryDistance = itemView.findViewById<TextView>(R.id.entryDistance)
+        private val entryDate = itemView.findViewById<TextView>(R.id.entryDate)
+        private val entryAdjusted = itemView.findViewById<TextView>(R.id.entryAdjusted)
+        private val entryPace = itemView.findViewById<TextView>(R.id.entryPace)
 
         // actual binding shia leboeuf
         fun bindEntry(entry: RunningEntry, context: Context) {
@@ -61,12 +61,12 @@ class EntryAdapter(val context: Context, val entries: List<RunningEntry>) : Recy
 
             println("time difference is ${entry.timeDifference}")
             if ((entry.timeDifference).contains("-")) {
-                entryDifference?.setTextColor(Color.GREEN)
+                entryDifference.setTextColor(Color.GREEN)
             } else {
-                entryDifference?.setTextColor(Color.RED)
+                entryDifference.setTextColor(Color.RED)
             }
 
-            entryDifference?.text = entry.timeDifference
+            entryDifference.text = entry.timeDifference
 
             entryDistance?.text = entry.distanceString
             entryDate?.text = entry.dateString

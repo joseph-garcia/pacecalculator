@@ -23,7 +23,8 @@ class LoopingFragment : BaseFragment() {
 
 
         // set adapter that we declared but didn't initialize before
-        adapter = EntryAdapter(this.requireContext(), DataService.runningEntries)
+        // this is from original Sesrvices package -- adapter = EntryAdapter(this.requireContext(), DataService.runningEntries)
+        //adapter = EntryAdapter(this.requireContext(), DataService.runningEntries)
 
     }
 
@@ -86,8 +87,7 @@ class LoopingFragment : BaseFragment() {
             context?.let{
                 //val entries = EntryDatabase(it).entryDAO().getAllEntries()
                 val entries = EntryDatabase(it).entryDao().getAllEntries()
-
-                //entryRecyclerMenu.adapter = EntryAdapter(entries)
+                entryRecyclerMenu.adapter = EntryAdapter(it,entries)
             }
         }
 
