@@ -32,7 +32,8 @@ class EntryAdapter(val context: Context, val entries: List<Entry>) : RecyclerVie
 
     // function that is called by the recycler view to display the data at the specified location
     override fun onBindViewHolder(holder: EntryViewHolder, position: Int) {
-        holder.bindEntry(runningEntries[position], context)
+        holder.bindEntry(entries[position], context)
+
 
         //area for updating (navigating? when an entry is clicked on, this happens)
 //        holder.view.setOnClickListener{
@@ -54,7 +55,7 @@ class EntryAdapter(val context: Context, val entries: List<Entry>) : RecyclerVie
         private val entryPace = itemView.findViewById<TextView>(R.id.entryPace)
 
         // actual binding shia leboeuf
-        fun bindEntry(entry: RunningEntry, context: Context) {
+        fun bindEntry(entry: Entry, context: Context) {
             val resourceId = context.resources.getIdentifier(entry.image, "drawable", context.packageName)
             entryImage?.setImageResource(resourceId)
             entryTime?.text = entry.timeString

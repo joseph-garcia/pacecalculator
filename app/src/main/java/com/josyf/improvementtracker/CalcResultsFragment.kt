@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_calculate.*
 import com.josyf.improvementtracker.Services.DataService.runningEntries
 import com.josyf.improvementtracker.db.Entry
 import com.josyf.improvementtracker.db.EntryDatabase
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -124,11 +125,16 @@ class CalcResultsFragment : BaseFragment() {
 
             launch {
                 context?.let{
-                    val testEntry = Entry(timeString, distanceString, paceString, dateString, adjustedTime,100,"timeDiff", "entrytemplate")
-                    EntryDatabase(it).entryDao().addEntry(testEntry)
+                    val testEntry = Entry(timeString, distanceString, paceString, dateString, adjustedTime,100,"n/a", "entrytemplate")
+                    val dbAccess = EntryDatabase(it).entryDao()
+                    //EntryDatabase(it).entryDao().addEntry(testEntry)
+                    dbAccess.addEntry(testEntry)
                     val toast = Toast.makeText(context, "New entry added!", Toast.LENGTH_LONG)
                     toast.show()
                     val timeDifference = getTimeDifference()
+                    val entryList = dbAccess.getAllEntries()
+                    entryList[entryList.lastIndex].timeDifference = timeDifference
+
                 }
             }
 
@@ -145,11 +151,11 @@ class CalcResultsFragment : BaseFragment() {
 
 
 
-    fun getTimeDifference() : String {
+    suspend fun getTimeDifference() : String {
         // if the list of entries > 1:
         var differenceValue:Int = 0
         var timeDiffString:String = ""
-        launch {
+        async {
             context?.let {
                 if (EntryDatabase(context!!).entryDao().getAllEntries().size > 1) {
                     //     get the value of current adjustedTimeInSeconds
@@ -169,13 +175,15 @@ class CalcResultsFragment : BaseFragment() {
                 }
                 // append an s after the string
                 timeDiffString = "${timeDiffString}s"
-                //return timeDiffString
+                return@async timeDiffString
             }
-
-        }
+            println("balwijbalwieb $timeDiffString")
+        }.await()
         return timeDiffString
 
     }
+
+
 
     fun timeStringify(hour:Int, minute:Int, second:Int) : String {
         if (hour != 0) {
