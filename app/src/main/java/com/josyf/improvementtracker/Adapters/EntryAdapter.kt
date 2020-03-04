@@ -60,7 +60,7 @@ class EntryAdapter(val context: Context, val entries: List<Entry>) : RecyclerVie
             entryImage?.setImageResource(resourceId)
             entryTime?.text = entry.timeString
 
-            println("time difference is ${entry.timeDifference}")
+            println("In bindEntry - timeDiff - ${entry.timeDifference}")
             if ((entry.timeDifference).contains("-")) {
                 entryDifference.setTextColor(Color.GREEN)
             } else {

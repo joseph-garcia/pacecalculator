@@ -106,7 +106,8 @@ class CalcResultsFragment : BaseFragment() {
             val paceString = paceText
 //            //val paceString = "pace strting here"
             val dateString = "Feb 18, 2020"
-            val adjustedTime: String = adjustedPace(minuteSelected, secondSelected, milesSelected, milesTensSelected, milesOnesSelected, goalDistance)
+            val adjustedTimeInSeconds: Int = adjustedPaceInSeconds(hourSelected, minuteSelected, secondSelected, milesSelected, milesTensSelected, milesOnesSelected, goalDistance)
+            val adjustedTime: String = getPaceFromSeconds(adjustedTimeInSeconds)
 //            DataService.runningEntries.add(RunningEntry(
 //                timeString,
 //                distanceString,
@@ -125,38 +126,77 @@ class CalcResultsFragment : BaseFragment() {
 
             launch {
                 context?.let{
-                    val testEntry = Entry(timeString, distanceString, paceString, dateString, adjustedTime,100,"n/a", "entrytemplate")
+                    println("adjustedTime: $adjustedTime")
+                    println("adjustedTimeInSeconds: $adjustedTimeInSeconds")
+                    val testEntry = Entry(timeString, distanceString, paceString, dateString, adjustedTimeInSeconds,adjustedTime,"n/a", "entrytemplate")
+                    getTimeDifference2(testEntry)
                     val dbAccess = EntryDatabase(it).entryDao()
                     //EntryDatabase(it).entryDao().addEntry(testEntry)
                     dbAccess.addEntry(testEntry)
                     val toast = Toast.makeText(context, "New entry added!", Toast.LENGTH_LONG)
                     toast.show()
-                    val timeDifference = getTimeDifference()
-                    val entryList = dbAccess.getAllEntries()
-                    entryList[entryList.lastIndex].timeDifference = timeDifference
+
+                    // navigate to the entry log
+                    val action = CalcResultsFragmentDirections.toEntryLog()
+                    Navigation.findNavController(view).navigate(action)
 
                 }
             }
 
 
 
-            // navigate to the entry log
-            val action = CalcResultsFragmentDirections.toEntryLog()
-            Navigation.findNavController(view).navigate(action)
+
 
         }
 
     }
 
 
+    // test new timediff func
+    suspend fun getTimeDifference2(entry: Entry) {
+        // initialize timeDiff string and differencevalue int
+        var timeDiffString:String = ""
+        var differenceValue:Int = 0
+        // check if any entries exist in the list already
+        async {
+            context?.let {
+                // if isEmpty, keep timeDiffString as ""
 
+                if (EntryDatabase(it).entryDao().getAllEntries().isEmpty()) {
+                    entry.timeDifference = ""
+                } else { //if not, check the timeDiff value of the last item in the list
+                    val entryList = EntryDatabase(it).entryDao().getAllEntries()
+                    val lastItem = entryList[0]
+                    // calculate the timeDiff
+                    differenceValue = entry.adjustedTimeInSeconds - lastItem.adjustedTimeInSeconds
+                    timeDiffString = differenceValue.toString()
+
+                    if (differenceValue > 0) {
+                        //make value red and append a + in front
+                        timeDiffString = "+$timeDiffString"
+                    } else if (differenceValue < 0) {
+                        //     make value green and append a - in front
+                        timeDiffString = "$timeDiffString"
+                    }
+                    // append an s after the string
+                    timeDiffString = "${timeDiffString}s"
+                    entry.timeDifference = timeDiffString
+                }
+                val ListToPrint = (EntryDatabase(it).entryDao().getAllEntries())
+                println("the size of the list is ${ListToPrint.size}")
+
+            }
+        }.await()
+        EntryDatabase(context!!).entryDao().updateEntry(entry)
+        println("now it should be updated... ${entry.timeDifference}")
+    }
 
     suspend fun getTimeDifference() : String {
-        // if the list of entries > 1:
         var differenceValue:Int = 0
         var timeDiffString:String = ""
         async {
             context?.let {
+                // if the list of entries > 1:
                 if (EntryDatabase(context!!).entryDao().getAllEntries().size > 1) {
                     //     get the value of current adjustedTimeInSeconds
                     val lastIndex = runningEntries.lastIndex
@@ -202,7 +242,7 @@ class CalcResultsFragment : BaseFragment() {
         return "$miles.$milesTens$milesOnes miles"
     }
 
-    fun getMinutesFromSeconds(seconds:Int) : String {
+    fun getPaceFromSeconds(seconds:Int) : String {
         // Get raw decimal value (ie 90 seconds >> 1.5)
         val minuteDouble = (seconds/60.0)
         // Get floor of the minute value to return (ie 1.5 >> 1)
@@ -214,17 +254,18 @@ class CalcResultsFragment : BaseFragment() {
         return paceStringify(minuteValue.toDouble(), secondValue)
     }
 
-    fun adjustedPace(minutes:Int, seconds:Int, miles:Int, milesTens:Int, milesOnes: Int, goalMiles:Double) : String {
+    fun adjustedPaceInSeconds(hours: Int, minutes:Int, seconds:Int, miles:Int, milesTens:Int, milesOnes: Int, goalMiles:Double) : Int {
         //Race time predictor algorithm from Pete Riegel
         //T2 = T1 x ((D2/D1)^1.06) where T1 is the given time, D1 is the given distance, D2 is the distance to predict a time for, and T2 is the calculated time for D2.
         // adjustedPace = runDurationInMinutes * ((goalMiles/milesRan)^1.06)
         val milesRan:Double = miles + (milesTens * 0.10) + (milesOnes * 0.01)
-        val runDurationInMinutes:Double = minutes + (seconds/60.0)
+        val runDurationInMinutes:Double = (hours * 60) + minutes + (seconds/60.0)
         val adjustedPace:Double = runDurationInMinutes * ((goalMiles/milesRan).pow(1.06))
         val minuteValue = adjustedPace.toInt()
         val secondsValue = ((adjustedPace - minuteValue) * 60).roundToInt()
-        adjustedTimeInSeconds = (minuteValue * 60) + secondsValue
-        return (getMinutesFromSeconds(adjustedTimeInSeconds))
+        val adjustedTimeInSeconds = (minuteValue * 60) + secondsValue
+        return adjustedTimeInSeconds
+        //return (getMinutesFromSeconds(adjustedTimeInSeconds))
 
     }
 

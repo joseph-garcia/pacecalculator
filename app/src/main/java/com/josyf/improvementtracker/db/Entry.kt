@@ -20,8 +20,8 @@ data class Entry(
     val distanceString: String,
     val paceString: String,
     val dateString: String,
-    val adjustedTime: String,
     val adjustedTimeInSeconds: Int,
+    val adjustedTime: String,
     var timeDifference: String,
     val image: String
 ):Serializable{
