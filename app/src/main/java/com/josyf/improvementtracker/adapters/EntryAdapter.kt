@@ -1,4 +1,4 @@
-package com.josyf.improvementtracker.Adapters
+package com.josyf.improvementtracker.adapters
 
 import android.content.Context
 import android.graphics.Color
@@ -7,15 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.josyf.improvementtracker.Model.RunningEntry
 import com.josyf.improvementtracker.R
-import com.josyf.improvementtracker.Services.DataService.runningEntries
 import com.josyf.improvementtracker.db.Entry
 
 // The adapter that provides a binding from RunningEntry (from Model package) to the RecyclerView list items (from entry_list_item.xml)
-class EntryAdapter(val context: Context, val entries: List<Entry>) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
+class EntryAdapter(private val context: Context, private val entries: List<Entry>) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
 
 
 
@@ -43,7 +40,7 @@ class EntryAdapter(val context: Context, val entries: List<Entry>) : RecyclerVie
 //        }
     }
 
-    // let's add a viewholder, this is responsible for the data binding--or to prepare the child view to display the data corresponding to its position in the adapter
+    // let's add a ViewHolder, this is responsible for the data binding--or to prepare the child view to display the data corresponding to its position in the adapter
     inner class EntryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val entryImage = itemView.findViewById<ImageView>(R.id.entryImage)

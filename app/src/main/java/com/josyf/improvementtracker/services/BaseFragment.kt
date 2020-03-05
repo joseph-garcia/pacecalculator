@@ -1,4 +1,4 @@
-package com.josyf.improvementtracker.Services
+package com.josyf.improvementtracker.services
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -8,16 +8,6 @@
         android:background="@drawable/gradient_bg"
         android:orientation="vertical">
 
-    <Button
-            android:id="@+id/backBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
