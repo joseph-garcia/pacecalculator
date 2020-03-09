@@ -1,15 +1,24 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="josephsTheme">
+        <!-- theme for versions < API 21 -->
+
+    </style>
+
+    <style name="josephsTheme" parent="Theme.MaterialComponents.NoActionBar" >
+        <!-- parent theme for all pre-lollipop and lolipop above versions ie all devices -->
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-    </style>
+        
+        <item name="materialButtonStyle">@style/AppButton</item>
 
-    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar" >
-        <item name="android:textColorPrimary">@android:color/black</item>
+    </style>
+    
+    <style name="AppButton" parent="Widget.MaterialComponents.Button">
+
     </style>
 
 </resources>

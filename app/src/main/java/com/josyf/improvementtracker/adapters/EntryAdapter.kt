@@ -29,7 +29,7 @@ class EntryAdapter(private val context: Context, private val entries: List<Entry
 
     // function that is called by the recycler view to display the data at the specified location
     override fun onBindViewHolder(holder: EntryViewHolder, position: Int) {
-        holder.bindEntry(entries[position], context)
+        holder.bindEntry(entries[position])
 
 
         //area for updating (navigating? when an entry is clicked on, this happens)
@@ -43,7 +43,7 @@ class EntryAdapter(private val context: Context, private val entries: List<Entry
     // let's add a ViewHolder, this is responsible for the data binding--or to prepare the child view to display the data corresponding to its position in the adapter
     inner class EntryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val entryImage = itemView.findViewById<ImageView>(R.id.entryImage)
+//        private val entryImage = itemView.findViewById<ImageView>(R.id.entryImage)
         private val entryTime = itemView.findViewById<TextView>(R.id.entryTime)
         private val entryDifference: TextView = itemView.findViewById<TextView>(R.id.entryDiff)
         private val entryDistance = itemView.findViewById<TextView>(R.id.entryDistance)
@@ -52,14 +52,16 @@ class EntryAdapter(private val context: Context, private val entries: List<Entry
         private val entryPace = itemView.findViewById<TextView>(R.id.entryPace)
 
         // actual binding shia leboeuf
-        fun bindEntry(entry: Entry, context: Context) {
-            val resourceId = context.resources.getIdentifier(entry.image, "drawable", context.packageName)
-            entryImage?.setImageResource(resourceId)
+        fun bindEntry(entry: Entry) {
+            //val resourceId = context.resources.getIdentifier(entry.image, "drawable", context.packageName)
+            //entryImage?.setImageResource(resourceId)
             entryTime?.text = entry.timeString
 
             println("In bindEntry - timeDiff - ${entry.timeDifference}")
-            if ((entry.timeDifference).contains("-")) {
+            if ((entry.timeDifference).contains("-") && (entry.timeDifference != "--")) {
                 entryDifference.setTextColor(Color.GREEN)
+            } else if (entry.timeDifference == "--"){
+                entryDifference.setTextColor(Color.WHITE)
             } else {
                 entryDifference.setTextColor(Color.RED)
             }

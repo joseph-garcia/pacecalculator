@@ -22,8 +22,7 @@ data class Entry(
     val dateString: String,
     val adjustedTimeInSeconds: Int,
     val adjustedTime: String,
-    var timeDifference: String,
-    val image: String
+    var timeDifference: String
 ):Serializable{
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

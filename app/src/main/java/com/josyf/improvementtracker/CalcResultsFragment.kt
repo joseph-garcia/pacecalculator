@@ -84,7 +84,7 @@ class CalcResultsFragment : BaseFragment() {
                 context?.let{
                     println("adjustedTime: $adjustedTime")
                     println("adjustedTimeInSeconds: $adjustedTimeInSeconds")
-                    val testEntry = Entry(timeString, distanceString, paceString, dateString, adjustedTimeInSeconds,adjustedTime,"n/a", "entrytemplate")
+                    val testEntry = Entry(timeString, distanceString, paceString, dateString, adjustedTimeInSeconds,adjustedTime,"n/a")
                     getTimeDifference(testEntry)
                     val dbAccess = EntryDatabase(it).entryDao()
                     dbAccess.addEntry(testEntry)
@@ -114,7 +114,7 @@ class CalcResultsFragment : BaseFragment() {
                 val entryList = entryDB.getAllEntries()
                 // if isEmpty, keep timeDiffString as ""
                 if (entryList.isEmpty()) {
-                    entry.timeDifference = ""
+                    entry.timeDifference = "--"
                 } else { //if not, check the timeDiff value of the first item in the list
                     val lastItem = entryList[0]
                     // calculate the timeDiff

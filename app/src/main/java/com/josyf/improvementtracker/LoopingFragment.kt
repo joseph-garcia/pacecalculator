@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.josyf.improvementtracker.adapters.EntryAdapter
 import com.josyf.improvementtracker.services.BaseFragment
 import com.josyf.improvementtracker.db.EntryDatabase
-import kotlinx.android.synthetic.main.fragment_looping.*
+import kotlinx.android.synthetic.main.entry_list_view.*
 import kotlinx.coroutines.launch
 
 class LoopingFragment : BaseFragment() {
@@ -26,7 +26,7 @@ class LoopingFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // takes the XML info and shows it
-        return inflater.inflate(R.layout.fragment_looping, container, false)
+        return inflater.inflate(R.layout.entry_list_view, container, false)
     }
 
 

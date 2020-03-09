@@ -11,7 +11,6 @@
         android:layout_height="match_parent"
         android:id="@+id/drawer_layout"
         android:fitsSystemWindows="true"
-        android:background="@drawable/gradient_bg"
         tools:context=".MainActivity"
         tools:openDrawer="start">
 
