@@ -11,12 +11,13 @@ import com.josyf.improvementtracker.db.EntryDatabase
 import kotlinx.android.synthetic.main.entry_list_view.*
 import kotlinx.coroutines.launch
 
-class LoopingFragment : BaseFragment() {
+class JournalFragment : BaseFragment() {
     lateinit var adapter: EntryAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activity?.title = "Journal"
     }
 
 

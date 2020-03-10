@@ -11,6 +11,12 @@ import kotlinx.android.synthetic.main.fragment_calculator.*
 
 
 class PaceCalcFragment : Fragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.title = "Pace Calculator"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

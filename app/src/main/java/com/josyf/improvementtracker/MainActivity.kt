@@ -60,9 +60,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().replace(
                 R.id.fragment_container,
-                LoopingFragment()
+                JournalFragment()
             ).commit()
-            navigationView.setCheckedItem(R.id.ic_row)
+            navigationView.setCheckedItem(R.id.ic_journal)
         }
 
 
@@ -70,10 +70,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         when (p0.itemId) {
-            R.id.ic_row -> {
+            R.id.ic_pace -> {
                 navController.navigate(R.id.paceCalcFragment)
             }
-            R.id.ic_loop -> {
+            R.id.ic_journal -> {
                 navController.navigate(R.id.loopingFragment)
             }
         }

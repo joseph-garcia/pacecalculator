@@ -6,7 +6,7 @@
 
     </style>
 
-    <style name="josephsTheme" parent="Theme.MaterialComponents.NoActionBar" >
+    <style name="josephsTheme" parent="Theme.MaterialComponents.Light.NoActionBar" >
         <!-- parent theme for all pre-lollipop and lolipop above versions ie all devices -->
 
         <item name="colorPrimary">@color/colorPrimary</item>

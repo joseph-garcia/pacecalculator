@@ -6,13 +6,14 @@
     <!-- Only select one menu item within this group -->
     <group android:checkableBehavior="single">
         <item
-                android:id="@+id/ic_row"
-                android:icon="@drawable/ic_row"
-                android:title="Rowing"></item>
+                android:id="@+id/ic_journal"
+                android:icon="@drawable/ic_journal"
+                android:title="@string/journal" />
         <item
-                android:id="@+id/ic_loop"
-                android:icon="@drawable/ic_loop"
-                android:title="Looping"></item>
+                android:id="@+id/ic_pace"
+                android:icon="@drawable/ic_pace"
+                android:title="@string/pace_calculator" />
+
     </group>
 
     <!-- these won't stay selected when we choose them, but

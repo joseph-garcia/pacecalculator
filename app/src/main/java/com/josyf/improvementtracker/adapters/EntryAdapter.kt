@@ -59,9 +59,9 @@ class EntryAdapter(private val context: Context, private val entries: List<Entry
 
             println("In bindEntry - timeDiff - ${entry.timeDifference}")
             if ((entry.timeDifference).contains("-") && (entry.timeDifference != "--")) {
-                entryDifference.setTextColor(Color.GREEN)
+                entryDifference.setTextColor(Color.parseColor("#64dd17"))
             } else if (entry.timeDifference == "--"){
-                entryDifference.setTextColor(Color.WHITE)
+                entryDifference.setTextColor(Color.BLACK)
             } else {
                 entryDifference.setTextColor(Color.RED)
             }
