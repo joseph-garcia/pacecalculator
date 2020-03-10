@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="176dp"
         android:gravity="bottom"
         android:padding="16dp">
 
-        <ImageButton
-                android:id="@+id/image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher_round"
-                android:onClick="clickImage"
-                android:background="?android:selectableItemBackground"/>
+        <androidx.cardview.widget.CardView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:cardCornerRadius="60dp"
+                >
+
+
+                <ImageButton
+                        android:id="@+id/image_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:selectableItemBackground"
+                        android:onClick="clickImage"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_launcher_round" />
+
+        </androidx.cardview.widget.CardView>
+
 
         <TextView
                 android:layout_width="wrap_content"

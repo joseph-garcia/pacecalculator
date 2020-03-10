@@ -5,20 +5,27 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.Navigation
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.android.material.navigation.NavigationView
+import com.josyf.improvementtracker.db.ImageURI
+import com.josyf.improvementtracker.db.ImageURIDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -151,12 +158,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            image_view.setImageURI(data?.data)
+            GlobalScope.launch {
+                data?.let {
+                    val imageData = data.data
+                    val imageURI = ImageURI(imageData!!.toString())
+                    val imageDB = ImageURIDatabase(baseContext).ImageDAO()
+                    imageDB.addEntry(imageURI)
+                    Handler(Looper.getMainLooper()).post(Runnable {
+                        image_view.setImageURI(imageURI.imageAddress.toUri())
+                    })
+                }
+            }
         }
 
     }
-
 
 
 }
