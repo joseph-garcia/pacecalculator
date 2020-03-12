@@ -10,6 +10,8 @@ import android.os.Handler
 import android.os.Looper
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +25,9 @@ import com.google.android.material.navigation.NavigationView
 import com.josyf.improvementtracker.db.ImageURI
 import com.josyf.improvementtracker.db.ImageURIDatabase
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.nav_header.*
+import kotlinx.android.synthetic.main.nav_header.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -56,6 +60,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // NavigationView navigationView = findViewById(R.id.nav_view)
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
+        val navHeaderView = findViewById<ImageButton>(R.id.image_view)
 
         val toggle = ActionBarDrawerToggle(
             this,
@@ -69,6 +74,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // takes care of rotating hamburger icon
         toggle.syncState()
 
+        //println("nav view is hopefully here:  ${navigationView.nav_view}")
+        println("image view is hopefully here: ${navigationView.getHeaderView(0).image_view}")
+        val imageView = navigationView.getHeaderView(0).image_view
+        showImageFromDb(imageView)
+
+
 
 
         if (savedInstanceState == null) {
@@ -79,6 +90,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             navigationView.setCheckedItem(R.id.ic_journal)
         }
 
+        println("on create: $image_view")
+
+    }
+
+
+    override fun onStart() {
+        super.onStart()
 
     }
 
@@ -133,9 +151,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun pickImageFromGallery() {
 
         // Intent to pick image
-        val intent = Intent(Intent.ACTION_PICK)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+    fun showImageFromDb(imgView : ImageView) {
+        GlobalScope.launch {
+            baseContext.let {
+                val imageList = ImageURIDatabase(applicationContext).ImageDAO().getAllEntries()
+                if (imageList.isNotEmpty()) {
+                    val imageItem = imageList[0]
+                    imgView.setImageURI(imageItem.imageAddress.toUri())
+                    println(imageItem.imageAddress)
+                    println("not empty")
+                    println("image list is : $imageList")
+                } else {
+                    println("lol empty")
+                }
+            }
+
+        }
     }
 
 
@@ -159,19 +195,38 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        // if user selects a photo, launch the async task
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             GlobalScope.launch {
                 data?.let {
+                    // bind the image data to a URI string
                     val imageData = data.data
                     val imageURI = ImageURI(imageData!!.toString())
-                    val imageDB = ImageURIDatabase(baseContext).ImageDAO()
-                    imageDB.addEntry(imageURI)
+
+                    // get syntax for calling dao functions
+                    val imageDB = ImageURIDatabase(applicationContext).ImageDAO()
+
+                    // make var for imageURI list
+                    val imageList = imageDB.getAllEntries()
+
+                    // if an element already exists in the list,
+                    if (imageList.isNotEmpty()) {
+                        // update the list
+                        imageDB.updateEntry(imageList[0])
+                    } else {
+                        //add to the list
+                        imageDB.addEntry(imageURI)
+                    }
                     Handler(Looper.getMainLooper()).post(Runnable {
                         image_view.setImageURI(imageURI.imageAddress.toUri())
                     })
+
                 }
+
             }
+
         }
+
 
     }
 

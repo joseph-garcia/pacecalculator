@@ -7,11 +7,12 @@ interface EntryDAO{
     @Insert
     suspend fun addEntry(entry: Entry)
 
+    @Insert
+    suspend fun addMultipleEntries(vararg entry: Entry)
+
     @Query("SELECT * FROM entry ORDER BY id DESC")
     suspend fun getAllEntries() : List<Entry>
 
-    @Insert
-    suspend fun addMultipleEntries(vararg entry: Entry)
 
     @Delete
     suspend fun deleteEntry(entry: Entry)

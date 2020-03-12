@@ -10,6 +10,9 @@ interface ImageURI_DAO{
     @Query("SELECT * FROM ImageURI ORDER BY id DESC")
     suspend fun getAllEntries() : List<ImageURI>
 
+    @Query("SELECT * FROM ImageURI where id = :id LIMIT 1")
+    fun loadImageById(id: Int) : List<ImageURI>
+
     @Insert
     suspend fun addMultipleEntries(vararg imageURI: ImageURI)
 
