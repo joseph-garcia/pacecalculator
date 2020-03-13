@@ -25,13 +25,22 @@
 
         </androidx.cardview.widget.CardView>
 
-
+<!--
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
                 android:text="username"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                -->
+
+        <EditText
+                android:id="@+id/editNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:inputType="text"
+                android:hint="Edit Name..."/>
 
 
 

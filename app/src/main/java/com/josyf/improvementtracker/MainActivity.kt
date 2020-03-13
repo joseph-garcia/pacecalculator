@@ -2,12 +2,17 @@ package com.josyf.improvementtracker
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.*
+import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -83,11 +88,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         showImageFromDb(imageButtonFromNavHeader)
 
 
+        // show / listen for name and name changes
+        val pref = getPreferences(Context.MODE_PRIVATE)
+        val name = pref.getString("NAME", "")
+        navHeader.editNameText.setText(name)
 
 
-
-
-
+        navHeader.editNameText.onSubmit { submit() }
 
 
 
@@ -115,6 +122,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     }
+
+
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         when (p0.itemId) {
@@ -259,5 +268,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
+    fun EditText.onSubmit(func: () -> Unit) {
+        setOnEditorActionListener{_, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                func()
+            }
+            true
+        }
+    }
+
+    fun submit() {
+        // create shared preferences
+        val pref = getPreferences(Context.MODE_PRIVATE)
+        val editor = pref.edit()
+
+        // save name
+        editor.putString("NAME", editNameText.text.toString())
+
+        // commit changes
+        editor.commit()
+
+        Toast.makeText(applicationContext, "Saved ${editNameText.text.toString()}", Toast.LENGTH_SHORT).show()
+
+    }
 
 }
