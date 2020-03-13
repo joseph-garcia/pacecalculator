@@ -4,14 +4,11 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.net.Uri
+import android.os.*
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +22,6 @@ import com.google.android.material.navigation.NavigationView
 import com.josyf.improvementtracker.db.ImageURI
 import com.josyf.improvementtracker.db.ImageURIDatabase
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.nav_header.view.*
 import kotlinx.coroutines.GlobalScope
@@ -35,10 +31,14 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var navController:NavController
+    private lateinit var navigationView : NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //val navView = findViewById<NavigationView>(R.id.nav_view)
+
+
 
         // Check if we running android 5.0 or higher
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //we need a reference to our navigation view
         // NavigationView navigationView = findViewById(R.id.nav_view)
-        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
         val navHeaderView = findViewById<ImageButton>(R.id.image_view)
 
@@ -75,9 +75,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         //println("nav view is hopefully here:  ${navigationView.nav_view}")
-        println("image view is hopefully here: ${navigationView.getHeaderView(0).image_view}")
-        val imageView = navigationView.getHeaderView(0).image_view
-        showImageFromDb(imageView)
+//        println("image view is hopefully here: ${navigationView.getHeaderView(0).image_view}")
+//        val imageView = navigationView.getHeaderView(0).image_view
+
+        val navHeader = navigationView.getHeaderView(0)
+        val imageButtonFromNavHeader = navHeader.image_view
+        showImageFromDb(imageButtonFromNavHeader)
+
+
+
+
+
+
 
 
 
@@ -97,6 +106,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onStart() {
         super.onStart()
+
+
+//        val img = findViewById<ImageButton>(R.id.image_view)
+//        //img.setImageResource(R.drawable.duck)
+//        img.setImageResource(R.drawable.duck)
+
+
 
     }
 
@@ -156,18 +172,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
-    fun showImageFromDb(imgView : ImageView) {
+    fun showImageFromDb(imgButton: ImageButton) {
         GlobalScope.launch {
             baseContext.let {
                 val imageList = ImageURIDatabase(applicationContext).ImageDAO().getAllEntries()
+
+
+
                 if (imageList.isNotEmpty()) {
                     val imageItem = imageList[0]
-                    imgView.setImageURI(imageItem.imageAddress.toUri())
+
+                    Handler(Looper.getMainLooper()).post(Runnable {
+                        imgButton.setImageURI(imageItem.imageAddress.toUri())
+                    })
+
                     println(imageItem.imageAddress)
                     println("not empty")
                     println("image list is : $imageList")
                 } else {
-                    println("lol empty")
+                    imgButton.setImageResource(R.drawable.duck)
                 }
             }
 
@@ -211,6 +234,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                     // if an element already exists in the list,
                     if (imageList.isNotEmpty()) {
+                        // replace first element in list with our new imageURI
+                        imageList[0].imageAddress = imageURI.imageAddress
+
                         // update the list
                         imageDB.updateEntry(imageList[0])
                     } else {
@@ -220,6 +246,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     Handler(Looper.getMainLooper()).post(Runnable {
                         image_view.setImageURI(imageURI.imageAddress.toUri())
                     })
+
+                    val uri : Uri = imageURI.imageAddress.toUri()
+                    /////////////////////////////////////////////////////////////////////////////////
 
                 }
 

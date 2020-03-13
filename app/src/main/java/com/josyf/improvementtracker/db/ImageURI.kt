@@ -17,7 +17,7 @@ import java.io.Serializable
 
 @Entity
 data class ImageURI(
-    val imageAddress : String
+    var imageAddress : String
 ): Serializable {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.RoomDatabase
 import com.josyf.improvementtracker.adapters.EntryAdapter
 import com.josyf.improvementtracker.services.BaseFragment
 import com.josyf.improvementtracker.db.EntryDatabase
+import com.josyf.improvementtracker.db.ImageURI
 import com.josyf.improvementtracker.db.ImageURIDatabase
 import kotlinx.android.synthetic.main.entry_list_view.*
 import kotlinx.android.synthetic.main.nav_header.*
@@ -57,36 +59,18 @@ class JournalFragment : BaseFragment() {
         }
 
     refreshPic.setOnClickListener{view ->
-        showImageFromDb()
-    }
-
-
-    }
-
-
-    fun showImageFromDb() {
-        GlobalScope.launch {
-            context.let {
-                val imageList = ImageURIDatabase(it!!).ImageDAO().getAllEntries()
-                if (imageList.isNotEmpty()) {
-                    val imageItem = imageList[0]
-//                    Handler(Looper.getMainLooper()).post(Runnable {
-//                        image_view.setImageURI(imageItem.imageAddress.toUri())
-//                    })
-                    Handler(Looper.getMainLooper()).post(Runnable {
-                        println("please dont be null: $image_view")
-                    })
-                    println("image_view is: $image_view")
-                    println("image address is ${imageItem.imageAddress}")
-                    println("image id is ${imageItem.id}")
-
-                } else {
-                    println("lol empty")
-                }
+        launch {
+            context?.let{
+               ImageURIDatabase(it).ImageDAO().deleteAll(ImageURIDatabase(it).ImageDAO().getAllEntries())
             }
-
         }
     }
+
+
+    }
+
+
+
 
 
 

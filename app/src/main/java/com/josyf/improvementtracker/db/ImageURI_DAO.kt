@@ -19,6 +19,9 @@ interface ImageURI_DAO{
     @Delete
     suspend fun deleteEntry(imageURI: ImageURI)
 
+    @Delete
+    suspend fun deleteAll(images : List<ImageURI>)
+
     @Update
     suspend fun updateEntry(imageURI: ImageURI)
 
