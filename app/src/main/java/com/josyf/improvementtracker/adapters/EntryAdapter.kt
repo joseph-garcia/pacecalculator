@@ -7,12 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.josyf.improvementtracker.R
 import com.josyf.improvementtracker.db.Entry
+import com.josyf.improvementtracker.db.EntryDatabase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 // The adapter that provides a binding from RunningEntry (from Model package) to the RecyclerView list items (from entry_list_item.xml)
-class EntryAdapter(private val context: Context, private val entries: List<Entry>) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
+class EntryAdapter(private val context: Context, private val entries: MutableList<Entry>) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
 
 
 
@@ -27,17 +32,47 @@ class EntryAdapter(private val context: Context, private val entries: List<Entry
         return entries.count()
     }
 
+    fun removeItem(position: Int) {
+        entries.removeAt(position)
+        notifyDataSetChanged()
+        GlobalScope.launch {
+            context?.let {
+                val entries = EntryDatabase(it).entryDao().getAllEntries()
+                EntryDatabase(it).entryDao().deleteEntry(entries[position])
+            }
+        }
+
+    }
+
+    fun removeEntryFromView(position: Int) {
+        Toast.makeText(context, "Entry removed", Toast.LENGTH_SHORT).show()
+
+        GlobalScope.launch {
+            context?.let {
+                val entries = EntryDatabase(it).entryDao().getAllEntries()
+                EntryDatabase(it).entryDao().deleteEntry(entries[position])
+            }
+        }
+
+        removeItem(position)
+        notifyDataSetChanged()
+    }
+
+
+
     // function that is called by the recycler view to display the data at the specified location
     override fun onBindViewHolder(holder: EntryViewHolder, position: Int) {
         holder.bindEntry(entries[position])
 
 
-        //area for updating (navigating? when an entry is clicked on, this happens)
-//        holder.view.setOnClickListener{
-//            val action = HomeFragmentDirections.actionAddNote()
-//            action.note = notes[position]
-//            Navigation.findNavController(it).navigate(action)
-//        }
+        holder.itemView.setOnCreateContextMenuListener { contextMenu, _, _ ->
+            contextMenu.add("Delete").setOnMenuItemClickListener {
+                removeEntryFromView(position)
+                Toast.makeText(context, "Entry removed", Toast.LENGTH_SHORT).show()
+                true
+            }
+        }
+
     }
 
     // let's add a ViewHolder, this is responsible for the data binding--or to prepare the child view to display the data corresponding to its position in the adapter

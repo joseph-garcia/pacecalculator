@@ -10,10 +10,12 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.RoomDatabase
 import com.josyf.improvementtracker.adapters.EntryAdapter
+import com.josyf.improvementtracker.db.Entry
 import com.josyf.improvementtracker.services.BaseFragment
 import com.josyf.improvementtracker.db.EntryDatabase
 import com.josyf.improvementtracker.db.ImageURI
 import com.josyf.improvementtracker.db.ImageURIDatabase
+import kotlinx.android.synthetic.main.entry_list_item.*
 import kotlinx.android.synthetic.main.entry_list_view.*
 import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.coroutines.GlobalScope
@@ -51,21 +53,24 @@ class JournalFragment : BaseFragment() {
 
         launch {
             context?.let{
-                //val entries = EntryDatabase(it).entryDAO().getAllEntries()
                 val entries = EntryDatabase(it).entryDao().getAllEntries()
                 println("is empty: ${entries.isEmpty()}")
-                entryRecyclerMenu.adapter = EntryAdapter(it,entries)
+                entryRecyclerMenu.adapter = EntryAdapter(it, entries as MutableList<Entry>)
+
             }
         }
 
-    refreshPic.setOnClickListener{view ->
-        launch {
-            context?.let{
-               ImageURIDatabase(it).ImageDAO().deleteAll(ImageURIDatabase(it).ImageDAO().getAllEntries())
+        refreshPic.setOnClickListener{view ->
+            launch {
+                context?.let{
+                   ImageURIDatabase(it).ImageDAO().deleteAll(ImageURIDatabase(it).ImageDAO().getAllEntries())
+                }
             }
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
     }
 

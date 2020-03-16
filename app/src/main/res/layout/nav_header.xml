@@ -5,7 +5,10 @@
         android:layout_width="match_parent"
         android:layout_height="176dp"
         android:gravity="bottom"
-        android:padding="16dp">
+        android:padding="16dp"
+
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <androidx.cardview.widget.CardView
                 android:layout_width="70dp"
@@ -40,7 +43,10 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
                 android:inputType="text"
+                android:background="@android:color/transparent"
                 android:hint="Edit Name..."/>
+
+
 
 
 

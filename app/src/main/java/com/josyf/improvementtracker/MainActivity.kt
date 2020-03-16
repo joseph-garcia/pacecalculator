@@ -4,14 +4,13 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.*
-import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
@@ -79,10 +78,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // takes care of rotating hamburger icon
         toggle.syncState()
 
-        //println("nav view is hopefully here:  ${navigationView.nav_view}")
-//        println("image view is hopefully here: ${navigationView.getHeaderView(0).image_view}")
-//        val imageView = navigationView.getHeaderView(0).image_view
-
         val navHeader = navigationView.getHeaderView(0)
         val imageButtonFromNavHeader = navHeader.image_view
         showImageFromDb(imageButtonFromNavHeader)
@@ -107,19 +102,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         println("on create: $image_view")
-
-    }
-
-
-    override fun onStart() {
-        super.onStart()
-
-
-//        val img = findViewById<ImageButton>(R.id.image_view)
-//        //img.setImageResource(R.drawable.duck)
-//        img.setImageResource(R.drawable.duck)
-
-
 
     }
 
@@ -289,7 +271,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         editor.commit()
 
         Toast.makeText(applicationContext, "Saved ${editNameText.text.toString()}", Toast.LENGTH_SHORT).show()
+        editNameText.clearFocus()
+        nav_view.hideKeyboard()
 
+
+    }
+
+    fun View.hideKeyboard() {
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
 }
