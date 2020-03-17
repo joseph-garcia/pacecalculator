@@ -14,6 +14,7 @@
                 android:icon="@drawable/ic_pace"
                 android:title="@string/pace_calculator" />
 
+
     </group>
 
     <!-- these won't stay selected when we choose them, but

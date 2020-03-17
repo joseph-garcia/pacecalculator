@@ -8,13 +8,15 @@ import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_calculator.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class PaceCalcFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.title = "Pace Calculator"
+        activity?.title = "Add Entry"
     }
 
     override fun onCreateView(
@@ -50,6 +52,8 @@ class PaceCalcFragment : Fragment() {
         setMaxMin(mainMilesPicker, 1, 99)
         setMaxMin(mainMilesTensPicker, 0, 9)
         setMaxMin(mainMilesOnesPicker, 0, 9)
+
+
 
         // Change Hour Selected from User
         var hourSelected = 0
@@ -89,6 +93,11 @@ class PaceCalcFragment : Fragment() {
         }
 
 
+        //
+        initDate()
+
+
+
 
         calculateBtn.setOnClickListener {
 
@@ -98,15 +107,51 @@ class PaceCalcFragment : Fragment() {
                 secondSelected,
                 milesSelected,
                 milesTensSelected,
-                milesOnesSelected
+                milesOnesSelected,
+                dayPickedText.text.toString().toInt(),
+                yearPickedText.text.toString().toInt(),
+                monthPickedText.text.toString()
             )
             Navigation.findNavController(view!!).navigate(action)
         }
     }
 
-    fun setMaxMin(numPicker : NumberPicker, min : Int, max : Int) {
+    private fun setMaxMin(numPicker : NumberPicker, min : Int, max : Int) {
         numPicker.minValue = min
         numPicker.maxValue = max
     }
+
+    private fun initDate() {
+        val cal: Calendar = Calendar.getInstance()
+        val monthDate = SimpleDateFormat("MMMM")
+        val monthName: String = monthDate.format(cal.getTime())
+        val dayDate = SimpleDateFormat("dd")
+        val dayName: String = dayDate.format(cal.getTime())
+        val yearDate = SimpleDateFormat("yyyy")
+        val yearName: String = yearDate.format(cal.getTime())
+
+        monthPickedText.text = monthName
+        dayPickedText.text = dayName
+        yearPickedText.text = yearName
+
+    }
+
+//    fun getMonthInt(monthString : String) : Int {
+//        return when (monthString) {
+//            "January" -> 1
+//            "February" -> 2
+//            "March" -> 3
+//            "April" -> 4
+//            "May" -> 5
+//            "June" -> 6
+//            "July" -> 7
+//            "August" -> 8
+//            "September" -> 9
+//            "October" -> 10
+//            "November" -> 11
+//            "December" -> 12
+//            else -> 0
+//        }
+//    }
 
 }

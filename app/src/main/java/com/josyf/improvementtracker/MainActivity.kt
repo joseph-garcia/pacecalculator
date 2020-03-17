@@ -2,6 +2,7 @@ package com.josyf.improvementtracker
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -26,10 +27,13 @@ import com.google.android.material.navigation.NavigationView
 import com.josyf.improvementtracker.db.ImageURI
 import com.josyf.improvementtracker.db.ImageURIDatabase
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_calculator.*
 import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.nav_header.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -41,6 +45,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //val navView = findViewById<NavigationView>(R.id.nav_view)
+
+
+        // get and assign date
+        val today = Calendar.getInstance()
+        val dateString = SimpleDateFormat("MMMM d, Y").format(today.time)
 
 
 
@@ -153,6 +162,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             // OS is < marshmallow
             pickImageFromGallery()
         }
+    }
+
+    //scratch test
+    fun pickDate(view: View) {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+
+        val month = c.get(Calendar.MONTH)
+        // get and format month name
+        val month_date : SimpleDateFormat = SimpleDateFormat("MMMM", Locale.getDefault())
+        val monthName = month_date.format(c.time)
+
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, mDay ->
+            // set to textview
+            monthPickedText.text = monthName
+            dayPickedText.text = mDay.toString()
+            yearPickedText.text = mYear.toString()
+        }, year, month, day)
+        // show dialog
+        dpd.show()
+
     }
 
     fun pickImageFromGallery() {

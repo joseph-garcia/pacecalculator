@@ -2,18 +2,28 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent" android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/comma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=","
+            android:textSize="28sp"
+            app:layout_constraintBottom_toBottomOf="@+id/dayPickedText"
+            app:layout_constraintStart_toEndOf="@+id/dayPickedText"
+            app:layout_constraintTop_toTopOf="@+id/dayPickedText" />
 
     <ImageView
             android:id="@+id/imageView3"
             android:layout_width="405dp"
             android:layout_height="525dp"
-            android:layout_marginBottom="10dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/calculateBtn"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/roundedsquare"
             tools:visibility="invisible" />
 
@@ -21,12 +31,13 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:text="Time"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="@+id/imageView3"
+            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+            app:layout_constraintTop_toBottomOf="@+id/monthPickedText" />
 
     <TextView
             android:id="@+id/Distance"
@@ -120,7 +131,7 @@
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.468"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -173,5 +184,48 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/minuteText"
             app:layout_constraintTop_toTopOf="@+id/minuteText" />
+
+    <TextView
+            android:id="@+id/monthPickedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:onClick="pickDate"
+            android:text="January"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toStartOf="@+id/dayPickedText"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+            android:id="@+id/dayPickedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="12dp"
+            android:onClick="pickDate"
+            android:text="1"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toBottomOf="@+id/monthPickedText"
+            app:layout_constraintEnd_toStartOf="@+id/yearPickedText"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/monthPickedText"
+            app:layout_constraintTop_toTopOf="@+id/monthPickedText"
+            app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+            android:id="@+id/yearPickedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="pickDate"
+            android:text="2020"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toBottomOf="@+id/dayPickedText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/dayPickedText"
+            app:layout_constraintTop_toTopOf="@+id/dayPickedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

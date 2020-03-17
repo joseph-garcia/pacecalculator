@@ -32,11 +32,11 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
         return entries.count()
     }
 
-    fun removeItem(position: Int) {
+    private fun removeItem(position: Int) {
         entries.removeAt(position)
         notifyDataSetChanged()
         GlobalScope.launch {
-            context?.let {
+            context.let {
                 val entries = EntryDatabase(it).entryDao().getAllEntries()
                 EntryDatabase(it).entryDao().deleteEntry(entries[position])
             }
@@ -44,25 +44,14 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
 
     }
 
-    fun removeEntryFromView(position: Int) {
-        Toast.makeText(context, "Entry removed", Toast.LENGTH_SHORT).show()
-
-        GlobalScope.launch {
-            context?.let {
-                val entries = EntryDatabase(it).entryDao().getAllEntries()
-                EntryDatabase(it).entryDao().deleteEntry(entries[position])
-            }
-        }
-
-        removeItem(position)
-        notifyDataSetChanged()
-    }
 
 
 
     // function that is called by the recycler view to display the data at the specified location
     override fun onBindViewHolder(holder: EntryViewHolder, position: Int) {
         holder.bindEntry(entries[position])
+
+
 
 
         holder.itemView.setOnCreateContextMenuListener { contextMenu, _, _ ->
@@ -75,6 +64,23 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
 
     }
 
+    private fun sortEntries(entries : MutableList<Entry>) {
+
+    }
+
+    private fun removeEntryFromView(position: Int) {
+        Toast.makeText(context, "Entry removed", Toast.LENGTH_SHORT).show()
+
+        GlobalScope.launch {
+            context.let {
+                val entries = EntryDatabase(it).entryDao().getAllEntries()
+                EntryDatabase(it).entryDao().deleteEntry(entries[position])
+            }
+        }
+
+        removeItem(position)
+        notifyDataSetChanged()
+    }
     // let's add a ViewHolder, this is responsible for the data binding--or to prepare the child view to display the data corresponding to its position in the adapter
     inner class EntryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

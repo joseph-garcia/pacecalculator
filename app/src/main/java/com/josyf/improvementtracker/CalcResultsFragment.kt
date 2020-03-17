@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.activity_calculate.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -34,6 +36,11 @@ class CalcResultsFragment : BaseFragment() {
     private var minutePace : Double = 0.0
     private var remainderSeconds : Double = 0.0
     private var goalDistance: Double = 1.0
+
+    private var monthSelected : String = ""
+    private var daySelected : Int = 0
+    private var yearSelected : Int = 0
+
 
     private val args: CalcResultsFragmentArgs by navArgs()
 
@@ -75,7 +82,8 @@ class CalcResultsFragment : BaseFragment() {
             val timeString = timeStringify(hourSelected, minuteSelected, secondSelected)
             val distanceString = distanceStringify(milesSelected, milesTensSelected, milesOnesSelected)
             val paceString = paceText
-            val dateString = "Feb 18, 2020"
+            //val dateString = SimpleDateFormat("MMMM d, Y", Locale.getDefault()).format(Calendar.getInstance().time)
+            val dateString = dateStringify(monthSelected, daySelected, yearSelected)
             val adjustedTimeInSeconds: Int = adjustedPaceInSeconds(hourSelected, minuteSelected, secondSelected, milesSelected, milesTensSelected, milesOnesSelected, goalDistance)
             val adjustedTime: String = getPaceFromSeconds(adjustedTimeInSeconds)
 
@@ -135,7 +143,9 @@ class CalcResultsFragment : BaseFragment() {
         println("now it should be updated... ${entry.timeDifference}")
     }
 
-
+    private fun dateStringify(month: String, day: Int, year: Int) : String {
+        return "$month $day, $year"
+    }
 
 
     private fun timeStringify(hour:Int, minute:Int, second:Int) : String {
@@ -221,6 +231,10 @@ class CalcResultsFragment : BaseFragment() {
         milesSelected = args.miles
         milesTensSelected = args.milesTens
         milesOnesSelected = args.milesOnes
+        monthSelected = args.month
+        daySelected = args.day
+        yearSelected = args.year
+
         println("bleh")
     }
 

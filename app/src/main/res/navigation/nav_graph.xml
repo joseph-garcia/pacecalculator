@@ -46,5 +46,14 @@
         <argument
                 android:name="milesOnes"
                 app:argType="integer" />
+        <argument
+                android:name="day"
+                app:argType="integer" />
+        <argument
+                android:name="year"
+                app:argType="integer" />
+        <argument
+                android:name="month"
+                app:argType="string" />
     </fragment>
 </navigation>
