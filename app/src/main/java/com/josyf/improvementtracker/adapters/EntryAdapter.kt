@@ -2,6 +2,7 @@ package com.josyf.improvementtracker.adapters
 
 import android.content.Context
 import android.graphics.Color
+import android.os.Debug
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,9 +36,11 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
     private fun removeItem(position: Int) {
         entries.removeAt(position)
         notifyDataSetChanged()
+
         GlobalScope.launch {
             context.let {
                 val entries = EntryDatabase(it).entryDao().getAllEntries()
+                println("entries is: $entries")
                 EntryDatabase(it).entryDao().deleteEntry(entries[position])
             }
         }
@@ -75,12 +78,66 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
             context.let {
                 val entries = EntryDatabase(it).entryDao().getAllEntries()
                 EntryDatabase(it).entryDao().deleteEntry(entries[position])
+
+                recalculateDifferenceValues(entries)
+
             }
         }
 
         removeItem(position)
         notifyDataSetChanged()
     }
+
+    private suspend fun recalculateDifferenceValues(list: List<Entry>) {
+        println("List is length: ${list.count()}")
+        var count = 0
+        while (count <= list.count() - 1) {
+            if (list.count() == 1) {
+                count += 1
+                println("I'm in the first if statement")
+                return
+            }
+            // if count is at the end of the list, assign the last "--"
+            if ((count == list.count() - 1)) {
+                list[count].timeDifference = "--"
+                count += 1
+                println("I'm in the second if statement")
+                break
+            }
+            // extract numbers from the timeDifference string and subtract them to get diffNum
+            //val firstStringOriginal = list[count].timeDifference
+            //val firstStringNew = stringToNum(firstStringOriginal)
+            //if (list[count+1].timeDifference != "") {
+            //val secondStringOriginal = list[count+1].timeDifference
+            //val secondStringNew = stringToNum(secondStringOriginal)
+            else {
+                val firstNum = list[count].adjustedTimeInSeconds
+                val nextNum = list[count+1].adjustedTimeInSeconds
+                val differenceNum : Int = firstNum - nextNum
+                list[count].timeDifference = differenceNum.toString()
+            }
+            //val differenceNum : Int = firstNum - nextNum
+            //} else {
+            //    val differenceNum : Int = firstStringNew -
+            //}
+
+
+
+
+            //list[count].timeDifference = differenceNum.toString()
+            EntryDatabase(context).entryDao().updateEntry(list[count])
+            count += 1
+            println("Outside the if statements. Incrementing count")
+        }
+
+
+    }
+
+    private fun stringToNum(string: String) : Int {
+        val strippedString = string.replace("[^0-9]".toRegex(), "")
+        return strippedString.toInt()
+    }
+
     // let's add a ViewHolder, this is responsible for the data binding--or to prepare the child view to display the data corresponding to its position in the adapter
     inner class EntryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

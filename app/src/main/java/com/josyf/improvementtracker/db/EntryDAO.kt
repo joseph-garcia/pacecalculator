@@ -20,5 +20,7 @@ interface EntryDAO{
     @Update
     suspend fun updateEntry(entry: Entry)
 
-    //get length
+    fun startTime() {
+
+    }
 }
