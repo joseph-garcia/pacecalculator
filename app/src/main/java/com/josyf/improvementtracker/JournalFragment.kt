@@ -63,7 +63,14 @@ class JournalFragment : BaseFragment() {
         refreshPic.setOnClickListener{view ->
             launch {
                 context?.let{
-                   ImageURIDatabase(it).ImageDAO().deleteAll(ImageURIDatabase(it).ImageDAO().getAllEntries())
+                        val dbAccess = EntryDatabase(it).entryDao()
+                        dbAccess.addEntry(Entry("2h:15m:0s", "13.10 miles", "10:18/mi", "March 1, 2020", 530, "8:50", "--" ))
+                        dbAccess.addEntry(Entry("2h:10m:0s", "13.10 miles", "9:55/mi", "March 3, 2020", 510, "8:30", "-20s" ))
+                        dbAccess.addEntry(Entry("2h:7m:0s", "13.10 miles", "9:41/mi", "March 5, 2020", 498, "8:18", "-12s" ))
+                        dbAccess.addEntry(Entry("2h:14m:0s", "13.10 miles", "10:13/mi", "March 7, 2020", 526, "8:46", "+28s" ))
+                        dbAccess.addEntry(Entry("2h:5m:0s", "13.10 miles", "9:32/mi", "March 11, 2020", 491, "8:11", "-35s" ))
+                        dbAccess.addEntry(Entry("2h:0m:0s", "13.10 miles", "9:09/mi", "March 15, 2020", 470, "7:50", "-20s" ))
+                        dbAccess.addEntry(Entry("1h:56m:0s", "13.10 miles", "8:51/mi", "March 19, 2020", 454, "7:34", "-16s" ))
                 }
             }
         }

@@ -127,14 +127,7 @@ class CalcResultsFragment : BaseFragment() {
                     val lastItem = entryList[0]
                     // calculate the timeDiff
                     differenceValue = entry.adjustedTimeInSeconds - lastItem.adjustedTimeInSeconds
-                    timeDiffString = differenceValue.toString()
-
-                    if (differenceValue > 0) {
-                        //make value red and append a + in front
-                        timeDiffString = "+$timeDiffString"
-                    }
-                    // append an s after the string
-                    timeDiffString = "${timeDiffString}s"
+                    timeDiffString = formatDifferenceValue(differenceValue)
                     entry.timeDifference = timeDiffString
                 }
             }
@@ -142,6 +135,15 @@ class CalcResultsFragment : BaseFragment() {
         EntryDatabase(context!!).entryDao().updateEntry(entry)
         println("now it should be updated... ${entry.timeDifference}")
     }
+
+//    fun formatDifferenceValue(diffValue:Int) : String {
+//        var timeDiffString = diffValue.toString()
+//        if (diffValue > 0) {
+//            timeDiffString = "+$timeDiffString"
+//        }
+//        timeDiffString = "${timeDiffString}s"
+//        return timeDiffString
+//    }
 
     private fun dateStringify(month: String, day: Int, year: Int) : String {
         return "$month $day, $year"

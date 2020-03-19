@@ -14,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.josyf.improvementtracker.R
 import com.josyf.improvementtracker.db.Entry
 import com.josyf.improvementtracker.db.EntryDatabase
+import com.josyf.improvementtracker.formatDifferenceValue
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 // The adapter that provides a binding from RunningEntry (from Model package) to the RecyclerView list items (from entry_list_item.xml)
-class EntryAdapter(private val context: Context, private val entries: MutableList<Entry>) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
 
+
+class EntryAdapter(private val context: Context, private val entries: MutableList<Entry>) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
 
 
     // called when new viewholders are needed. kind of similar to inflate XML views--but only when there isn't an existing one to recycle
@@ -34,13 +36,12 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
     }
 
     private fun removeItem(position: Int) {
-        entries.removeAt(position)
-        notifyDataSetChanged()
+//        entries.removeAt(position)
+        //notifyDataSetChanged()
 
         GlobalScope.launch {
             context.let {
                 val entries = EntryDatabase(it).entryDao().getAllEntries()
-                println("entries is: $entries")
                 EntryDatabase(it).entryDao().deleteEntry(entries[position])
             }
         }
@@ -52,15 +53,20 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
 
     // function that is called by the recycler view to display the data at the specified location
     override fun onBindViewHolder(holder: EntryViewHolder, position: Int) {
+
         holder.bindEntry(entries[position])
 
 
 
 
+        // adds the Delete context menu to itself
         holder.itemView.setOnCreateContextMenuListener { contextMenu, _, _ ->
             contextMenu.add("Delete").setOnMenuItemClickListener {
                 removeEntryFromView(position)
                 Toast.makeText(context, "Entry removed", Toast.LENGTH_SHORT).show()
+                println("The list is of length: ${entries.count()}")
+                recalculateDifferenceValues(entries, position)
+                notifyDataSetChanged()
                 true
             }
         }
@@ -74,64 +80,65 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
     private fun removeEntryFromView(position: Int) {
         Toast.makeText(context, "Entry removed", Toast.LENGTH_SHORT).show()
 
+        // deletes itself!
         GlobalScope.launch {
             context.let {
-                val entries = EntryDatabase(it).entryDao().getAllEntries()
-                EntryDatabase(it).entryDao().deleteEntry(entries[position])
+                //val entries = EntryDatabase(it).entryDao().getAllEntries()
 
-                recalculateDifferenceValues(entries)
+                EntryDatabase(context).entryDao().deleteEntry(entries[position])
+                //recalculateDifferenceValues(entries, position)
+                //notifyDataSetChanged()
+                entries.removeAt(position)
+
 
             }
+
         }
 
-        removeItem(position)
-        notifyDataSetChanged()
+        //entries.removeAt(position)
+
+        //removeItem(position)
+        //notifyDataSetChanged()
+//        for (i in entries) {
+//            println("Post-delete: diffValue is ${i.timeDifference}")
+//        }
+
     }
 
-    private suspend fun recalculateDifferenceValues(list: List<Entry>) {
-        println("List is length: ${list.count()}")
-        var count = 0
-        while (count <= list.count() - 1) {
-            if (list.count() == 1) {
-                count += 1
-                println("I'm in the first if statement")
-                return
+    private fun recalculateDifferenceValues(entries : List<Entry>, position: Int) {
+        // list[position - 1]  should be the entry that's taken its place--the one that needs its diffValue recalculated
+        // set newTimeDiff value = list[position].adjustedPaceInSeconds value - list[position-1].adjustedPaceInSeconds value
+        // if the item IS the first element in the list:
+            // assign the list[i] timeDiff value to "--"
+        // else: reassign the list[i] timeDiff value to this new Value
+        // update the list[i] value
+        // notifyDataSetChanged
+        //println("entries[position] is ${entries[position-1]}")
+        if (0 != position) {
+            val newTimeDiff : Int = (entries[position-1].adjustedTimeInSeconds - entries[position].adjustedTimeInSeconds)
+            entries[position-1].timeDifference = formatDifferenceValue(newTimeDiff)
+            notifyItemChanged(position-1)
+            GlobalScope.launch {
+                context.let {
+                    EntryDatabase(it).entryDao().updateEntry(entries[position-1])
+                }
             }
-            // if count is at the end of the list, assign the last "--"
-            if ((count == list.count() - 1)) {
-                list[count].timeDifference = "--"
-                count += 1
-                println("I'm in the second if statement")
-                break
-            }
-            // extract numbers from the timeDifference string and subtract them to get diffNum
-            //val firstStringOriginal = list[count].timeDifference
-            //val firstStringNew = stringToNum(firstStringOriginal)
-            //if (list[count+1].timeDifference != "") {
-            //val secondStringOriginal = list[count+1].timeDifference
-            //val secondStringNew = stringToNum(secondStringOriginal)
-            else {
-                val firstNum = list[count].adjustedTimeInSeconds
-                val nextNum = list[count+1].adjustedTimeInSeconds
-                val differenceNum : Int = firstNum - nextNum
-                list[count].timeDifference = differenceNum.toString()
-            }
-            //val differenceNum : Int = firstNum - nextNum
-            //} else {
-            //    val differenceNum : Int = firstStringNew -
-            //}
-
-
-
-
-            //list[count].timeDifference = differenceNum.toString()
-            EntryDatabase(context).entryDao().updateEntry(list[count])
-            count += 1
-            println("Outside the if statements. Incrementing count")
+            println("Position is $position")
         }
 
 
+
+
+//        removeItem(position)
+//        notifyDataSetChanged()
+
+
+
     }
+
+
+
+
 
     private fun stringToNum(string: String) : Int {
         val strippedString = string.replace("[^0-9]".toRegex(), "")
@@ -153,6 +160,7 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
         fun bindEntry(entry: Entry) {
             //val resourceId = context.resources.getIdentifier(entry.image, "drawable", context.packageName)
             //entryImage?.setImageResource(resourceId)
+
             entryTime?.text = entry.timeString
 
             println("In bindEntry - timeDiff - ${entry.timeDifference}")
@@ -164,14 +172,24 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
                 entryDifference.setTextColor(Color.RED)
             }
 
+//            entryDifference.text = entry.timeDifference
+//
+//            entryDistance?.text = entry.distanceString
+//            entryDate?.text = entry.dateString
+//            entryAdjusted?.text = entry.adjustedTime
+//            entryPace?.text = entry.paceString
+            assignTextViews(entry)
+
+
+        }
+
+        fun assignTextViews(entry: Entry) {
             entryDifference.text = entry.timeDifference
 
             entryDistance?.text = entry.distanceString
             entryDate?.text = entry.dateString
             entryAdjusted?.text = entry.adjustedTime
             entryPace?.text = entry.paceString
-
-
         }
     }
 }

@@ -314,4 +314,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
+
+
 }
+
+
+fun formatDifferenceValue(diffValue:Int) : String {
+    var timeDiffString = diffValue.toString()
+    if (diffValue > 0) {
+        timeDiffString = "+$timeDiffString"
+    }
+    timeDiffString = "${timeDiffString}s"
+    return timeDiffString
+}
+
+
