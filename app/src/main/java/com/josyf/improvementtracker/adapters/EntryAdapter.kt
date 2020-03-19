@@ -1,22 +1,24 @@
 package com.josyf.improvementtracker.adapters
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.os.Debug
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import com.josyf.improvementtracker.MainActivity
 import com.josyf.improvementtracker.R
 import com.josyf.improvementtracker.db.Entry
 import com.josyf.improvementtracker.db.EntryDatabase
 import com.josyf.improvementtracker.formatDifferenceValue
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
 
 // The adapter that provides a binding from RunningEntry (from Model package) to the RecyclerView list items (from entry_list_item.xml)
 
@@ -26,7 +28,8 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
 
     // called when new viewholders are needed. kind of similar to inflate XML views--but only when there isn't an existing one to recycle
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false)
         return EntryViewHolder(view)
     }
 
@@ -35,21 +38,6 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
         return entries.count()
     }
 
-    private fun removeItem(position: Int) {
-//        entries.removeAt(position)
-        //notifyDataSetChanged()
-
-        GlobalScope.launch {
-            context.let {
-                val entries = EntryDatabase(it).entryDao().getAllEntries()
-                EntryDatabase(it).entryDao().deleteEntry(entries[position])
-            }
-        }
-
-    }
-
-
-
 
     // function that is called by the recycler view to display the data at the specified location
     override fun onBindViewHolder(holder: EntryViewHolder, position: Int) {
@@ -57,53 +45,62 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
         holder.bindEntry(entries[position])
 
 
-
-
         // adds the Delete context menu to itself
         holder.itemView.setOnCreateContextMenuListener { contextMenu, _, _ ->
             contextMenu.add("Delete").setOnMenuItemClickListener {
-                removeEntryFromView(position)
+                GlobalScope.launch {
+                    removeEntryFromView(position)
+                }
+
                 Toast.makeText(context, "Entry removed", Toast.LENGTH_SHORT).show()
-                println("The list is of length: ${entries.count()}")
-                recalculateDifferenceValues(entries, position)
-                notifyDataSetChanged()
+                //println("The list is of length: ${entries.count()}")
+                //recalculateDifferenceValues(entries, position)
+                //notifyDataSetChanged()
                 true
             }
         }
 
     }
 
-    private fun sortEntries(entries : MutableList<Entry>) {
+    private fun sortEntries(entries: MutableList<Entry>) {
 
     }
 
-    private fun removeEntryFromView(position: Int) {
-        Toast.makeText(context, "Entry removed", Toast.LENGTH_SHORT).show()
+    private suspend fun removeEntryFromView(position: Int) {
+        //Toast.makeText(context, "Entry removed", Toast.LENGTH_SHORT).show()
 
         // deletes itself!
-        GlobalScope.launch {
-            context.let {
-                //val entries = EntryDatabase(it).entryDao().getAllEntries()
+        EntryDatabase(context).entryDao().deleteEntry(entries[position])
+        //recalculateDifferenceValues(entries, position)
+        //notifyDataSetChanged()
+        entries.removeAt(position)
 
-                EntryDatabase(context).entryDao().deleteEntry(entries[position])
-                //recalculateDifferenceValues(entries, position)
-                //notifyDataSetChanged()
-                entries.removeAt(position)
+        if (entries.count() == position) {
+            entries[position - 1].timeDifference = "--"
+            notifyItemChanged(position-1)
+            EntryDatabase(context).entryDao().updateEntry(entries[position - 1])
+            notifyDataSetChanged()
+        }
+        if (0 != position) {
+            val newTimeDiff: Int =
+                (entries[position - 1].adjustedTimeInSeconds - entries[position].adjustedTimeInSeconds)
+            entries[position - 1].timeDifference = formatDifferenceValue(newTimeDiff)
+            notifyItemChanged(position - 1)
+            EntryDatabase(context).entryDao().updateEntry(entries[position - 1])
+            notifyDataSetChanged()
+        }
+
+        println("Position is $position")
+
+        val handler = Handler(Looper.getMainLooper())
+        handler.post {
+            notifyDataSetChanged()
+        }
 
 
-            }
 
         }
 
-        //entries.removeAt(position)
-
-        //removeItem(position)
-        //notifyDataSetChanged()
-//        for (i in entries) {
-//            println("Post-delete: diffValue is ${i.timeDifference}")
-//        }
-
-    }
 
     private fun recalculateDifferenceValues(entries : List<Entry>, position: Int) {
         // list[position - 1]  should be the entry that's taken its place--the one that needs its diffValue recalculated
