@@ -69,19 +69,38 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
     private suspend fun removeEntryFromView(position: Int) {
         //Toast.makeText(context, "Entry removed", Toast.LENGTH_SHORT).show()
 
-        // deletes itself!
+
+        // deletes itself from the Database
         EntryDatabase(context).entryDao().deleteEntry(entries[position])
-        //recalculateDifferenceValues(entries, position)
-        //notifyDataSetChanged()
+
+        // this removes the above particular entry from the EntryAdapter list
         entries.removeAt(position)
 
-        if (entries.count() == position) {
+        println("Entries length is: ${entries.count()}")
+        println("Entries position is: $position")
+
+        var isOneLeft : Boolean = false
+        if (entries.count() == 0) {
+            isOneLeft = true
+            println("this is firing off")
+        }
+
+
+        // ### Since the entry is already removed, here we handle recalculation of the entry that took its place ###
+        // if the position index (the deleted entry) was the LAST entry, set the timeDifference of
+        // the second-to-last entry to --, as this is now the new baseline entry
+        // NOTE: Also we need to account for if there is only one entry left in the list
+        if (entries.count() == position && !isOneLeft) {
             entries[position - 1].timeDifference = "--"
             notifyItemChanged(position-1)
             EntryDatabase(context).entryDao().updateEntry(entries[position - 1])
             notifyDataSetChanged()
+            println("HELLO! I WAS HIDING!")
         }
-        if (0 != position) {
+
+        // if this is the FIRST entry (at the top), skip on ahead and just delete as usual.
+        // else, set a new timeDifference value for the upper entry (position-1)
+        else if (0 != position && !isOneLeft) {
             val newTimeDiff: Int =
                 (entries[position - 1].adjustedTimeInSeconds - entries[position].adjustedTimeInSeconds)
             entries[position - 1].timeDifference = formatDifferenceValue(newTimeDiff)
