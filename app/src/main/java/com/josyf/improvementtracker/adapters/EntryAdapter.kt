@@ -16,7 +16,10 @@ import com.josyf.improvementtracker.R
 import com.josyf.improvementtracker.db.Entry
 import com.josyf.improvementtracker.db.EntryDatabase
 import com.josyf.improvementtracker.formatDifferenceValue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
@@ -69,52 +72,63 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
     private suspend fun removeEntryFromView(position: Int) {
         //Toast.makeText(context, "Entry removed", Toast.LENGTH_SHORT).show()
 
-
-        // deletes itself from the Database
-        EntryDatabase(context).entryDao().deleteEntry(entries[position])
-
-        // this removes the above particular entry from the EntryAdapter list
-        entries.removeAt(position)
-
         println("Entries length is: ${entries.count()}")
         println("Entries position is: $position")
 
-        var isOneLeft : Boolean = false
-        if (entries.count() == 0) {
-            isOneLeft = true
-            println("this is firing off")
-        }
+
+        //var isOneLeft : Boolean = false
+
 
 
         // ### Since the entry is already removed, here we handle recalculation of the entry that took its place ###
         // if the position index (the deleted entry) was the LAST entry, set the timeDifference of
         // the second-to-last entry to --, as this is now the new baseline entry
         // NOTE: Also we need to account for if there is only one entry left in the list
-        if (entries.count() == position && !isOneLeft) {
-            entries[position - 1].timeDifference = "--"
-            notifyItemChanged(position-1)
-            EntryDatabase(context).entryDao().updateEntry(entries[position - 1])
-            notifyDataSetChanged()
-            println("HELLO! I WAS HIDING!")
+        CoroutineScope(IO).launch {
+            val isOneLeft : Boolean = async {
+                if (entries.count() == 1) {
+                    println("this is firing off")
+                    return@async true
+                } else return@async false
+            }.await()
+            val mainValueChanged = async {
+                if (entries.count() == (position+1) && !isOneLeft) {
+                    val previousPosition = position-1
+                    entries[previousPosition].timeDifference = "--"
+                    //notifyItemChanged(previousPosition)
+                    EntryDatabase(context).entryDao().updateEntry(entries[previousPosition])
+                    //notifyDataSetChanged()
+                    println("HELLO! I WAS HIDING! this should always happen first")
+                }
+                // if this is the FIRST entry (at the top), skip on ahead and just delete as usual.
+                // else, set a new timeDifference value for the upper entry (position-1)
+                else if (0 != position && !isOneLeft) {
+                    val previousPosition = position-1
+                    val nextPosition = position+1
+                    val newTimeDiff: Int = (entries[previousPosition].adjustedTimeInSeconds - entries[nextPosition].adjustedTimeInSeconds)
+                    entries[previousPosition].timeDifference = formatDifferenceValue(newTimeDiff)
+                    //notifyItemChanged(position - 1)
+                    EntryDatabase(context).entryDao().updateEntry(entries[previousPosition])
+                    //notifyDataSetChanged()
+                }
+            }.await()
+            val deleteFromDb = async {
+                // deletes itself from the Database
+                EntryDatabase(context).entryDao().deleteEntry(entries[position])
+                // this removes the above particular entry from the EntryAdapter list
+                entries.removeAt(position)
+                println("this always second")
+                val handler = Handler(Looper.getMainLooper())
+                handler.post {
+                    notifyDataSetChanged()
+                }
+            }
         }
 
-        // if this is the FIRST entry (at the top), skip on ahead and just delete as usual.
-        // else, set a new timeDifference value for the upper entry (position-1)
-        else if (0 != position && !isOneLeft) {
-            val newTimeDiff: Int =
-                (entries[position - 1].adjustedTimeInSeconds - entries[position].adjustedTimeInSeconds)
-            entries[position - 1].timeDifference = formatDifferenceValue(newTimeDiff)
-            notifyItemChanged(position - 1)
-            EntryDatabase(context).entryDao().updateEntry(entries[position - 1])
-            notifyDataSetChanged()
-        }
 
-        println("Position is $position")
 
-        val handler = Handler(Looper.getMainLooper())
-        handler.post {
-            notifyDataSetChanged()
-        }
+
+
 
 
 
