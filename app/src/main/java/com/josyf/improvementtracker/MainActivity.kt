@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -191,6 +192,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Intent to pick image
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.addFlags(
+            Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    or Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+                    or Intent.FLAG_GRANT_PREFIX_URI_PERMISSION
+        )
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
@@ -206,7 +213,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val imageItem = imageList[0]
 
                     Handler(Looper.getMainLooper()).post(Runnable {
-                        imgButton.setImageURI(imageItem.imageAddress.toUri())
+                        try {
+                            imgButton.setImageURI(imageItem.imageAddress.toUri())
+                        } catch (e: SecurityException) {
+                            imgButton.setImageResource(R.drawable.duck)
+                        }
+
                     })
 
                     println(imageItem.imageAddress)
@@ -238,6 +250,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -245,9 +258,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             GlobalScope.launch {
                 data?.let {
+
                     // bind the image data to a URI string
                     val imageData = data.data
                     val imageURI = ImageURI(imageData!!.toString())
+
+                    val takeFlags : Int = data.flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                    this@MainActivity.contentResolver!!.takePersistableUriPermission(imageData, takeFlags)
+
+
 
                     // get syntax for calling dao functions
                     val imageDB = ImageURIDatabase(applicationContext).ImageDAO()
