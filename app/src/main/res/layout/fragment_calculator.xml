@@ -6,186 +6,6 @@
         android:layout_height="match_parent">
 
     <TextView
-            android:id="@+id/comma"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=","
-            android:textSize="28sp"
-            app:layout_constraintBottom_toBottomOf="@+id/dayPickedText"
-            app:layout_constraintStart_toEndOf="@+id/dayPickedText"
-            app:layout_constraintTop_toTopOf="@+id/dayPickedText" />
-
-    <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="405dp"
-            android:layout_height="525dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/calculateBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/roundedsquare"
-            tools:visibility="invisible" />
-
-    <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:layout_marginTop="32dp"
-            android:text="Time"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView3"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/monthPickedText" />
-
-    <TextView
-            android:id="@+id/Distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Miles"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView3"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/numberpicker_main_minutes" />
-
-    <NumberPicker
-            android:id="@+id/numberpicker_main_hours"
-            android:layout_width="64dp"
-            android:layout_height="177dp"
-            android:theme="@style/josephsTheme"
-            app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_minutes"
-            app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_minutes"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/numberpicker_main_minutes"></NumberPicker>
-
-    <NumberPicker
-            android:id="@+id/numberpicker_main_minutes"
-            android:layout_width="64dp"
-            android:layout_height="177dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:theme="@style/josephsTheme"
-            app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_seconds"
-            app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_seconds"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/numberpicker_main_hours"
-            app:layout_constraintTop_toTopOf="@+id/numberpicker_main_seconds"></NumberPicker>
-
-    <NumberPicker
-            android:id="@+id/numberpicker_main_miles"
-            android:layout_width="64dp"
-            android:layout_height="177dp"
-            android:theme="@style/josephsTheme"
-            app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_milesTens"
-            app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_milesTens"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/numberpicker_main_milesTens"></NumberPicker>
-
-    <NumberPicker
-            android:id="@+id/numberpicker_main_milesTens"
-            android:layout_width="64dp"
-            android:layout_height="177dp"
-            android:theme="@style/josephsTheme"
-            app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_milesOnes"
-            app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_milesOnes"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/numberpicker_main_miles"
-            app:layout_constraintTop_toTopOf="@+id/numberpicker_main_milesOnes"></NumberPicker>
-
-    <NumberPicker
-            android:id="@+id/numberpicker_main_milesOnes"
-            android:layout_width="64dp"
-            android:layout_height="177dp"
-            android:layout_marginTop="10dp"
-            android:theme="@style/josephsTheme"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/numberpicker_main_milesTens"
-            app:layout_constraintTop_toBottomOf="@+id/Distance"></NumberPicker>
-
-    <NumberPicker
-            android:id="@+id/numberpicker_main_seconds"
-            android:layout_width="64dp"
-            android:layout_height="177dp"
-            android:layout_marginTop="10dp"
-            android:theme="@style/josephsTheme"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/numberpicker_main_minutes"
-            app:layout_constraintTop_toBottomOf="@+id/secondText"></NumberPicker>
-
-    <Button
-            android:id="@+id/calculateBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="Calculate Pace"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="."
-            android:textSize="42sp"
-            app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_miles"
-            app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_milesTens"
-            app:layout_constraintStart_toEndOf="@+id/numberpicker_main_miles"
-            app:layout_constraintTop_toTopOf="@+id/numberpicker_main_miles"
-            app:layout_constraintVertical_bias="0.55" />
-
-    <TextView
-            android:id="@+id/hoursText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Hours"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toStartOf="@+id/minuteText"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-            android:id="@+id/minuteText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
-            android:text="Minutes"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="@+id/hoursText"
-            app:layout_constraintEnd_toStartOf="@+id/imageView3"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="@+id/hoursText" />
-
-    <TextView
-            android:id="@+id/secondText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Seconds"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="@+id/minuteText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/minuteText"
-            app:layout_constraintTop_toTopOf="@+id/minuteText" />
-
-    <TextView
             android:id="@+id/monthPickedText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -216,6 +36,16 @@
             app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+            android:id="@+id/comma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=","
+            android:textSize="28sp"
+            app:layout_constraintBottom_toBottomOf="@+id/dayPickedText"
+            app:layout_constraintStart_toEndOf="@+id/dayPickedText"
+            app:layout_constraintTop_toTopOf="@+id/dayPickedText" />
+
+    <TextView
             android:id="@+id/yearPickedText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -227,5 +57,175 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/dayPickedText"
             app:layout_constraintTop_toTopOf="@+id/dayPickedText" />
+
+    <TextView
+            android:id="@+id/TIME"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_marginTop="32dp"
+            android:text="Time"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView3"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="@+id/imageView3"
+            app:layout_constraintTop_toBottomOf="@+id/monthPickedText" />
+
+    <TextView
+            android:id="@+id/hoursText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Hours"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@+id/minuteText"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TIME" />
+
+    <TextView
+            android:id="@+id/minuteText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:text="Minutes"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@+id/hoursText"
+            app:layout_constraintEnd_toStartOf="@+id/imageView3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="@+id/hoursText" />
+
+    <TextView
+            android:id="@+id/secondText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seconds"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@+id/minuteText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/minuteText"
+            app:layout_constraintTop_toTopOf="@+id/minuteText" />
+
+    <NumberPicker
+            android:id="@+id/numberpicker_main_hours"
+            android:layout_width="64dp"
+            android:layout_height="177dp"
+            android:theme="@style/josephsTheme"
+            app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_minutes"
+            app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_minutes"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/numberpicker_main_minutes" />
+
+    <NumberPicker
+            android:id="@+id/numberpicker_main_minutes"
+            android:layout_width="64dp"
+            android:layout_height="177dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:theme="@style/josephsTheme"
+            app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_seconds"
+            app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_seconds"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/numberpicker_main_hours"
+            app:layout_constraintTop_toTopOf="@+id/numberpicker_main_seconds" />
+
+    <NumberPicker
+            android:id="@+id/numberpicker_main_seconds"
+            android:layout_width="64dp"
+            android:layout_height="177dp"
+            android:layout_marginTop="10dp"
+            android:theme="@style/josephsTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/numberpicker_main_minutes"
+            app:layout_constraintTop_toBottomOf="@+id/secondText" />
+
+    <TextView
+            android:id="@+id/Distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Miles"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView3"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="@+id/imageView3"
+            app:layout_constraintTop_toBottomOf="@+id/numberpicker_main_minutes" />
+
+    <NumberPicker
+            android:id="@+id/numberpicker_main_miles"
+            android:layout_width="64dp"
+            android:layout_height="177dp"
+            android:theme="@style/josephsTheme"
+            app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_milesTens"
+            app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_milesTens"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/numberpicker_main_milesTens" />
+
+    <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."
+            android:textSize="42sp"
+            app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_miles"
+            app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_milesTens"
+            app:layout_constraintStart_toEndOf="@+id/numberpicker_main_miles"
+            app:layout_constraintTop_toTopOf="@+id/numberpicker_main_miles"
+            app:layout_constraintVertical_bias="0.55" />
+
+    <NumberPicker
+            android:id="@+id/numberpicker_main_milesTens"
+            android:layout_width="64dp"
+            android:layout_height="177dp"
+            android:theme="@style/josephsTheme"
+            app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_milesOnes"
+            app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_milesOnes"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/numberpicker_main_miles"
+            app:layout_constraintTop_toTopOf="@+id/numberpicker_main_milesOnes" />
+
+    <NumberPicker
+            android:id="@+id/numberpicker_main_milesOnes"
+            android:layout_width="64dp"
+            android:layout_height="177dp"
+            android:layout_marginTop="10dp"
+            android:theme="@style/josephsTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/numberpicker_main_milesTens"
+            app:layout_constraintTop_toBottomOf="@+id/Distance" />
+
+    <Button
+            android:id="@+id/calculateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="Calculate Pace"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="405dp"
+            android:layout_height="525dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/calculateBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/roundedsquare"
+            tools:visibility="invisible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

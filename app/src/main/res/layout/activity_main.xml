@@ -12,7 +12,8 @@
         android:id="@+id/drawer_layout"
         android:fitsSystemWindows="true"
         tools:context=".MainActivity"
-        tools:openDrawer="start">
+        tools:openDrawer="start"
+        android:background="@color/colorOffWhite">
 
 
 
