@@ -223,7 +223,8 @@ class CalcResultsFragment : BaseFragment() {
         // Tack on the decimals
         mileSelectedDecimals = milesSelected.toDouble() + (milesTensSelected * 0.10) + (milesOnesSelected * 0.01)
         // and Display the miles value
-        milesNumText.text = mileSelectedDecimals.toString()
+        //milesNumText.text = mileSelectedDecimals.toString()
+        milesNumText.text = "%.2f".format(mileSelectedDecimals).toDouble().toString()
     }
 
 

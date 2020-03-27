@@ -54,8 +54,17 @@ class JournalFragment : BaseFragment() {
         launch {
             context?.let{
                 val entries = EntryDatabase(it).entryDao().getAllEntries()
-                println("is empty: ${entries.isEmpty()}")
                 entryRecyclerMenu.adapter = EntryAdapter(it, entries as MutableList<Entry>)
+                if (entries.isEmpty()) {
+                    println("Is empty. Printing thingy")
+                    emptyText.visibility = View.VISIBLE
+                    hamburgerImage.visibility = View.VISIBLE
+                    emptyText2.visibility = View.VISIBLE
+                } else {
+                    emptyText.visibility = View.INVISIBLE
+                    hamburgerImage.visibility = View.INVISIBLE
+                    emptyText2.visibility = View.INVISIBLE
+                }
 
             }
         }
@@ -65,6 +74,8 @@ class JournalFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
     }
+
+
 
 
 

@@ -1,5 +1,6 @@
 package com.josyf.improvementtracker
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_calculator.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,6 +19,7 @@ class PaceCalcFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.title = "Add Entry"
+
     }
 
     override fun onCreateView(
@@ -112,7 +115,42 @@ class PaceCalcFragment : Fragment() {
                 yearPickedText.text.toString().toInt(),
                 monthPickedText.text.toString()
             )
+
+            activity?.findViewById<NavigationView>(R.id.nav_view)?.setCheckedItem(R.id.ic_journal)
             Navigation.findNavController(view!!).navigate(action)
+
+
+
+        }
+
+        changeDateBtn.setOnClickListener {
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+
+            val month = c.get(Calendar.MONTH)
+            // get and format month name
+            val month_date : SimpleDateFormat = SimpleDateFormat("MMMM", Locale.getDefault())
+            val monthName = month_date.format(c.time)
+
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            val dpd = DatePickerDialog(context!!, DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, mDay ->
+                // set to textview
+                println("date picker in here")
+
+                println("c: $c")
+                println("year : $year")
+                println("month: $month")
+                println("val day: $day")
+                println("monthName $monthName")
+                println("mDay: $mDay")
+
+                monthPickedText.text = monthName
+                dayPickedText.text = mDay.toString()
+                yearPickedText.text = mYear.toString()
+            }, year, month, day)
+            // show dialog
+            dpd.show()
         }
     }
 
@@ -135,6 +173,8 @@ class PaceCalcFragment : Fragment() {
         yearPickedText.text = yearName
 
     }
+
+
 
 //    fun getMonthInt(monthString : String) : Int {
 //        return when (monthString) {

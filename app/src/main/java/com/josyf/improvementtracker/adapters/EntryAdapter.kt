@@ -1,6 +1,7 @@
 package com.josyf.improvementtracker.adapters
 
 import android.app.Activity
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.graphics.Color
 import android.os.Handler
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.josyf.improvementtracker.JournalFragment
 import com.josyf.improvementtracker.MainActivity
 import com.josyf.improvementtracker.R
 import com.josyf.improvementtracker.db.Entry
@@ -21,6 +23,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.w3c.dom.Text
 
 
 // The adapter that provides a binding from RunningEntry (from Model package) to the RecyclerView list items (from entry_list_item.xml)
@@ -109,7 +112,6 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
                     entries[previousPosition].timeDifference = formatDifferenceValue(newTimeDiff)
                     //notifyItemChanged(position - 1)
                     EntryDatabase(context).entryDao().updateEntry(entries[previousPosition])
-                    //notifyDataSetChanged()
                 }
             }.await()
             val deleteFromDb = async {
@@ -185,6 +187,7 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
         private val entryDate = itemView.findViewById<TextView>(R.id.entryDate)
         private val entryAdjusted = itemView.findViewById<TextView>(R.id.entryAdjusted)
         private val entryPace = itemView.findViewById<TextView>(R.id.entryPace)
+
 
         // actual binding shia leboeuf
         fun bindEntry(entry: Entry) {
