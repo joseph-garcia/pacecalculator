@@ -72,8 +72,8 @@ class CalcResultsFragment : BaseFragment() {
 
         // calculates pace and binds pace text to view
         val totalSeconds = 3600*(hourSelected) + 60*(minuteSelected) + secondSelected
-        val paceText = getPaceStringFromSeconds(totalSeconds) + "/mi"
-        paceStringText.text = paceText
+        val paceText = getPaceStringFromSeconds(totalSeconds)
+        paceStringText.text = "$paceText/mi"
 
 
         // SEND TO JOURNAL BUTTON
@@ -157,6 +157,21 @@ class CalcResultsFragment : BaseFragment() {
         return "${minute}m:${second}s"
     }
 
+    private fun timeNumify(hour:Int, minute:Int, second:Int) : String {
+        var minuteString : String = minute.toString()
+        var secondString : String = second.toString()
+        if (minute < 10) {
+            minuteString = "0$minuteString"
+        }
+        if (second < 10) {
+            secondString = "0$secondString"
+        }
+        if (hour != 0) {
+            return "$hour:$minuteString:$secondString"
+        }
+        return "$minute:$second"
+    }
+
     private fun paceStringify(minutePace:Double, secondPace:Double) : String {
         return if (secondPace < 10) {
             "${minutePace.toInt()}:0${secondPace.toInt()}"
@@ -196,10 +211,14 @@ class CalcResultsFragment : BaseFragment() {
 
     private fun displayValues() {
 
-        hoursNumText.text = hourSelected.toString()
-        minutesNumText.text = minuteSelected.toString()
-        secondsNumText.text = secondSelected.toString()
+        //hoursNumText.text = hourSelected.toString()
+        //minutesNumText.text = minuteSelected.toString()
+        //secondsNumText.text = secondSelected.toString()
+
         //milesNumText.text = milesSelected.toString()
+        dateText.text = "$monthSelected $daySelected, $yearSelected"
+        totalTimeText.text = timeNumify(hourSelected, minuteSelected, secondSelected)
+        adjMileTime.text = getPaceFromSeconds(adjustedPaceInSeconds(hourSelected, minuteSelected, secondSelected, milesSelected, milesTensSelected, milesOnesSelected, goalDistance))
 
         // Tack on the decimals
         mileSelectedDecimals = milesSelected.toDouble() + (milesTensSelected * 0.10) + (milesOnesSelected * 0.01)

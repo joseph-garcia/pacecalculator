@@ -179,6 +179,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, mDay ->
             // set to textview
+            println("date picker in here")
+
+            println("c: $c")
+            println("year : $year")
+            println("month: $month")
+            println("val day: $day")
+            println("monthName $monthName")
+            println("mDay: $mDay")
+
             monthPickedText.text = monthName
             dayPickedText.text = mDay.toString()
             yearPickedText.text = mYear.toString()

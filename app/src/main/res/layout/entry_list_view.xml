@@ -20,15 +20,7 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-            android:id="@+id/refreshPic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="52dp"
-            android:layout_marginBottom="32dp"
-            android:text="Add Dummy Data"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
