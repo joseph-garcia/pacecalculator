@@ -49,7 +49,7 @@ class PaceCalcFragment : Fragment() {
         val mainMilesOnesPicker = numberpicker_main_milesOnes
 
         // Set picker max/min bounds
-        setMaxMin(mainHourPicker, 0, 5)
+        setMaxMin(mainHourPicker, 0, 4)
         setMaxMin(mainMinutePicker, 0, 59)
         setMaxMin(mainSecondPicker, 0, 59)
         setMaxMin(mainMilesPicker, 1, 26)
@@ -103,6 +103,8 @@ class PaceCalcFragment : Fragment() {
 
 
         calculateBtn.setOnClickListener {
+
+
 
             val action = PaceCalcFragmentDirections.toCalculation(
                 hourSelected,

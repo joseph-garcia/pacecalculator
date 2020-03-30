@@ -96,10 +96,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // show / listen for name and name changes
         val pref = getPreferences(Context.MODE_PRIVATE)
         val name = pref.getString("NAME", "")
-
-
         navHeader.editNameText.setText(name)
-        navHeader.editNameText.onSubmit { submit() }
+
+
+        navHeader.editNameText.onSubmit {
+            if (editNameText.text.length > 16) {
+                Toast.makeText(applicationContext, "16 character limit! Please try again.", Toast.LENGTH_SHORT).show()
+                navHeader.editNameText.setText(name)
+                return@onSubmit
+            } else {
+                submit()
+            }
+        }
 
 
 
