@@ -13,6 +13,7 @@
         <androidx.cardview.widget.CardView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                app:cardCornerRadius="60dp"
                 >
 
 
@@ -23,7 +24,7 @@
                         android:background="?android:selectableItemBackground"
                         android:onClick="clickImage"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/round_button"/>
+                        android:src="@mipmap/ic_launcher_round" />
 
         </androidx.cardview.widget.CardView>
 
@@ -41,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
+                android:paddingLeft="4dp"
                 android:inputType="text"
                 android:background="@android:color/transparent"
                 android:hint="Edit Name..."/>

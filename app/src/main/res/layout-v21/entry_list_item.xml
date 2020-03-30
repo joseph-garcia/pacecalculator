@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+    <com.google.android.material.card.MaterialCardView
+            android:id="@+id/entryImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="5dp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:scaleType="centerCrop"
+            app:cardCornerRadius="8dp"
+            app:cardPreventCornerOverlap="false"
+
+            app:cardUseCompatPadding="true"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+
+            <TextView
+                    android:id="@+id/entryTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/entryPace"
+                    app:layout_constraintEnd_toEndOf="@+id/entryPace"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/entryPace"
+                    app:layout_constraintTop_toBottomOf="@+id/entryDistance"
+                    tools:text="1h:30m:5s" />
+
+            <TextView
+                    android:id="@+id/entryPace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/entryAdjusted"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/entryTime"
+                    tools:text="8:30/mi" />
+
+            <TextView
+                    android:id="@+id/entryDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/entryTime"
+                    app:layout_constraintEnd_toEndOf="@+id/entryTime"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/entryTime"
+                    app:layout_constraintTop_toBottomOf="@+id/entryDate"
+                    tools:text="15 miles" />
+
+            <TextView
+                    android:id="@+id/entryDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/entryDistance"
+                    app:layout_constraintEnd_toEndOf="@+id/entryDistance"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/entryDistance"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="Feb 13th, 2020" />
+
+            <TextView
+                    android:id="@+id/entryAdjusted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toTopOf="@+id/adjustedTimeText"
+                    app:layout_constraintEnd_toEndOf="@+id/adjustedTimeText"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/adjustedTimeText"
+                    app:layout_constraintTop_toBottomOf="@+id/oneMileText"
+                    tools:text="6m:20s" />
+
+            <TextView
+                    android:id="@+id/oneMileText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1 Mile"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/entryAdjusted"
+                    app:layout_constraintEnd_toEndOf="@+id/entryAdjusted"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/entryAdjusted"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                    android:id="@+id/adjustedTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adjusted Time"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/entryAdjusted" />
+
+            <TextView
+                    android:id="@+id/improvementText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:text="Improvement"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/entryDiff"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.912"
+                    app:layout_constraintStart_toEndOf="@+id/entryAdjusted"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                    android:id="@+id/entryDiff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/improvementText"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/improvementText"
+                    app:layout_constraintTop_toBottomOf="@+id/improvementText"
+                    tools:text="+2.5s" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</RelativeLayout>

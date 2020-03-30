@@ -96,9 +96,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // show / listen for name and name changes
         val pref = getPreferences(Context.MODE_PRIVATE)
         val name = pref.getString("NAME", "")
+
+
         navHeader.editNameText.setText(name)
-
-
         navHeader.editNameText.onSubmit { submit() }
 
 
