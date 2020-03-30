@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // get and assign date
         val today = Calendar.getInstance()
-        val dateString = SimpleDateFormat("MMMM d, Y").format(today.time)
+        val dateString = SimpleDateFormat("MMMM d, y").format(today.time)
 
 
 

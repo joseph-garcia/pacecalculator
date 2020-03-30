@@ -7,14 +7,11 @@
     </style>
 
     <style name="josephsTheme" parent="Theme.MaterialComponents.Light.NoActionBar" >
-        <!-- parent theme for all pre-lollipop and lolipop above versions ie all devices -->
-
+        <!-- parent theme for all pre-lollipop and lolipop above versions ie ALL devices -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        
         <item name="materialButtonStyle">@style/AppButton</item>
-
     </style>
     
     <style name="AppButton" parent="Widget.MaterialComponents.Button">

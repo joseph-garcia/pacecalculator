@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme" parent="josephsTheme">
-        <!-- Customize your theme here. -->
+        <!-- theme for versions >= API 21 -->
 
 
     </style>

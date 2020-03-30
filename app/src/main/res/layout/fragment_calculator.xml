@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -7,280 +9,302 @@
 
 
 
-    <TextView
-            android:id="@+id/monthPickedText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="January"
-            android:textSize="28sp"
-            app:layout_constraintEnd_toStartOf="@+id/dayPickedText"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-            android:id="@+id/dayPickedText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="12dp"
-            android:text="1"
-            android:textSize="28sp"
-            app:layout_constraintBottom_toBottomOf="@+id/monthPickedText"
-            app:layout_constraintEnd_toStartOf="@+id/yearPickedText"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/monthPickedText"
-            app:layout_constraintTop_toTopOf="@+id/monthPickedText" />
-
-
-    <TextView
-            android:id="@+id/comma"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=","
-            android:textSize="28sp"
-            app:layout_constraintBottom_toBottomOf="@+id/dayPickedText"
-            app:layout_constraintStart_toEndOf="@+id/dayPickedText"
-            app:layout_constraintTop_toTopOf="@+id/dayPickedText" />
-
-    <TextView
-            android:id="@+id/yearPickedText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2020"
-            android:textSize="28sp"
-            app:layout_constraintBottom_toBottomOf="@+id/dayPickedText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/dayPickedText"
-            app:layout_constraintTop_toTopOf="@+id/dayPickedText" />
-
-    <com.google.android.material.card.MaterialCardView
-            android:id="@+id/upperCard"
-            android:layout_width="300dp"
-            android:layout_height="270dp"
-            android:layout_marginTop="8dp"
-            android:elevation="5dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-
-            android:scaleType="centerCrop"
-            app:cardCornerRadius="8dp"
-            app:cardPreventCornerOverlap="false"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/monthPickedText">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                    android:id="@+id/TIME"
+                    android:id="@+id/monthPickedText"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp"
-                    android:layout_marginTop="12dp"
-                    android:text="Time"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_height="wrap_content"
+                    android:text="January"
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+                    app:layout_constraintEnd_toStartOf="@+id/dayPickedText"
                     app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                    android:id="@+id/hoursText"
-                    android:layout_width="64dp"
-                    android:layout_height="wrap_content"
-                    android:text="Hours"
-                    android:textAlignment="center"
-                    app:layout_constraintBottom_toBottomOf="@+id/minuteText"
-                    app:layout_constraintEnd_toStartOf="@+id/minuteText"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintHorizontal_chainStyle="spread"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/minuteText" />
-
-            <TextView
-                    android:id="@+id/minuteText"
-                    android:layout_width="64dp"
-                    android:layout_height="wrap_content"
-                    android:text="Minutes"
-                    android:textAlignment="center"
-                    app:layout_constraintBottom_toBottomOf="@+id/secondText"
-                    app:layout_constraintEnd_toStartOf="@+id/secondText"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/hoursText"
-                    app:layout_constraintTop_toTopOf="@+id/secondText" />
-
-            <TextView
-                    android:id="@+id/secondText"
-                    android:layout_width="64dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="Seconds"
-                    android:textAlignment="center"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/minuteText"
-                    app:layout_constraintTop_toBottomOf="@+id/TIME" />
-
-            <NumberPicker
-                    android:id="@+id/numberpicker_main_hours"
-                    android:layout_width="64dp"
-                    android:layout_height="177dp"
-                    android:theme="@style/josephsTheme"
-                    app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_minutes"
-                    app:layout_constraintEnd_toEndOf="@+id/hoursText"
-                    app:layout_constraintStart_toStartOf="@+id/hoursText"
-                    app:layout_constraintTop_toTopOf="@+id/numberpicker_main_minutes" />
-
-            <NumberPicker
-                    android:id="@+id/numberpicker_main_minutes"
-                    android:layout_width="64dp"
-                    android:layout_height="177dp"
-                    android:theme="@style/josephsTheme"
-                    app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_seconds"
-                    app:layout_constraintEnd_toEndOf="@+id/minuteText"
-                    app:layout_constraintStart_toStartOf="@+id/minuteText"
-                    app:layout_constraintTop_toTopOf="@+id/numberpicker_main_seconds" />
-
-            <NumberPicker
-                    android:id="@+id/numberpicker_main_seconds"
-                    android:layout_width="64dp"
-                    android:layout_height="177dp"
-                    android:layout_marginTop="12dp"
-                    android:theme="@style/josephsTheme"
-                    app:layout_constraintEnd_toEndOf="@+id/secondText"
-                    app:layout_constraintStart_toStartOf="@+id/secondText"
-                    app:layout_constraintTop_toBottomOf="@+id/secondText" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-
-    <com.google.android.material.card.MaterialCardView
-            android:id="@+id/lowerCard"
-            android:layout_width="300dp"
-            android:layout_height="230dp"
-            android:layout_marginTop="8dp"
-            android:elevation="25dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:scaleType="centerCrop"
-            app:cardCornerRadius="8dp"
-
-            app:cardPreventCornerOverlap="false"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/upperCard">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                    android:id="@+id/Distance"
-                    android:layout_width="75dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="Miles"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            <NumberPicker
-                    android:id="@+id/numberpicker_main_miles"
-                    android:layout_width="64dp"
-                    android:layout_height="177dp"
-                    android:layout_marginTop="4dp"
-                    android:theme="@style/josephsTheme"
-                    app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_milesTens"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintHorizontal_chainStyle="spread"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Distance" />
-
-            <TextView
-                    android:id="@+id/dot"
+                    android:id="@+id/dayPickedText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="."
-                    android:textSize="42sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_miles"
-                    app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_milesTens"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="12dp"
+                    android:text="1"
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/monthPickedText"
+                    app:layout_constraintEnd_toStartOf="@+id/yearPickedText"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/numberpicker_main_miles"
-                    app:layout_constraintTop_toTopOf="@+id/numberpicker_main_miles"
-                    app:layout_constraintVertical_bias="0.525" />
+                    app:layout_constraintStart_toEndOf="@+id/monthPickedText"
+                    app:layout_constraintTop_toTopOf="@+id/monthPickedText" />
 
-            <NumberPicker
-                    android:id="@+id/numberpicker_main_milesTens"
-                    android:layout_width="64dp"
-                    android:layout_height="177dp"
-                    android:theme="@style/josephsTheme"
-                    app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_miles"
-                    app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_milesOnes"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/numberpicker_main_miles"
-                    app:layout_constraintTop_toTopOf="@+id/numberpicker_main_miles" />
 
-            <NumberPicker
-                    android:id="@+id/numberpicker_main_milesOnes"
-                    android:layout_width="64dp"
-                    android:layout_height="177dp"
-                    android:theme="@style/josephsTheme"
-                    app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_milesTens"
+            <TextView
+                    android:id="@+id/comma"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=","
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/dayPickedText"
+                    app:layout_constraintStart_toEndOf="@+id/dayPickedText"
+                    app:layout_constraintTop_toTopOf="@+id/dayPickedText" />
+
+            <TextView
+                    android:id="@+id/yearPickedText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2020"
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/dayPickedText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/numberpicker_main_milesTens"
-                    app:layout_constraintTop_toTopOf="@+id/numberpicker_main_milesTens" />
+                    app:layout_constraintStart_toEndOf="@+id/dayPickedText"
+                    app:layout_constraintTop_toTopOf="@+id/dayPickedText" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/upperCard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:elevation="5dp"
+                        android:paddingLeft="5dp"
+
+                        android:paddingRight="5dp"
+                        android:scaleType="centerCrop"
+                        app:cardCornerRadius="8dp"
+                        app:cardPreventCornerOverlap="false"
+                        app:cardUseCompatPadding="true"
+                        app:layout_constraintBottom_toTopOf="@+id/lowerCard"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView
+                                android:id="@+id/TIME"
+                                android:layout_width="wrap_content"
+                                android:layout_height="28dp"
+                                android:layout_marginTop="12dp"
+                                android:text="Time"
+                                android:textAlignment="center"
+                                android:textSize="24sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                                android:id="@+id/hoursText"
+                                android:layout_width="64dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="24dp"
+                                android:layout_marginEnd="24dp"
+                                android:text="Hours"
+                                android:textAlignment="center"
+                                app:layout_constraintBottom_toBottomOf="@+id/minuteText"
+                                app:layout_constraintEnd_toStartOf="@+id/minuteText"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintHorizontal_chainStyle="spread"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/minuteText" />
+
+                        <TextView
+                                android:id="@+id/minuteText"
+                                android:layout_width="64dp"
+                                android:layout_height="wrap_content"
+                                android:text="Minutes"
+                                android:textAlignment="center"
+                                app:layout_constraintBottom_toBottomOf="@+id/secondText"
+                                app:layout_constraintEnd_toStartOf="@+id/secondText"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toEndOf="@+id/hoursText"
+                                app:layout_constraintTop_toTopOf="@+id/secondText" />
+
+                        <TextView
+                                android:id="@+id/secondText"
+                                android:layout_width="64dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="24dp"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginEnd="24dp"
+                                android:text="Seconds"
+                                android:textAlignment="center"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toEndOf="@+id/minuteText"
+                                app:layout_constraintTop_toBottomOf="@+id/TIME" />
+
+                        <NumberPicker
+                                android:id="@+id/numberpicker_main_hours"
+                                android:layout_width="64dp"
+                                android:layout_height="177dp"
+                                android:theme="@style/josephsTheme"
+                                app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_minutes"
+                                app:layout_constraintEnd_toEndOf="@+id/hoursText"
+                                app:layout_constraintStart_toStartOf="@+id/hoursText"
+                                app:layout_constraintTop_toTopOf="@+id/numberpicker_main_minutes" />
+
+                        <NumberPicker
+                                android:id="@+id/numberpicker_main_minutes"
+                                android:layout_width="64dp"
+                                android:layout_height="177dp"
+                                android:theme="@style/josephsTheme"
+                                app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_seconds"
+                                app:layout_constraintEnd_toEndOf="@+id/minuteText"
+                                app:layout_constraintStart_toStartOf="@+id/minuteText"
+                                app:layout_constraintTop_toTopOf="@+id/numberpicker_main_seconds" />
+
+                        <NumberPicker
+                                android:id="@+id/numberpicker_main_seconds"
+                                android:layout_width="64dp"
+                                android:layout_height="177dp"
+                                android:layout_marginTop="12dp"
+                                android:theme="@style/josephsTheme"
+                                app:layout_constraintEnd_toEndOf="@+id/secondText"
+                                app:layout_constraintStart_toStartOf="@+id/secondText"
+                                app:layout_constraintTop_toBottomOf="@+id/secondText" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
 
-    </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/lowerCard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="25dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:scaleType="centerCrop"
+                        app:cardCornerRadius="8dp"
 
-    <com.google.android.material.button.MaterialButton
-            android:id="@+id/calculateBtn"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/colorAccent"
-            android:text="Calculate Pace"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lowerCard"
-            app:cornerRadius="15dp"
-            />
+                        app:cardPreventCornerOverlap="false"
+                        app:cardUseCompatPadding="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
 
-    <ImageButton
-            android:id="@+id/changeDateBtn"
-            android:layout_width="35dp"
-            android:layout_height="30dp"
-            android:background="@android:color/transparent"
-            android:tint="@color/colorPrimaryLight"
-            app:layout_constraintBottom_toBottomOf="@+id/yearPickedText"
-            app:layout_constraintStart_toEndOf="@+id/yearPickedText"
-            app:layout_constraintTop_toTopOf="@+id/yearPickedText"
-            app:srcCompat="@drawable/ic_manual" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView
+                                android:id="@+id/Distance"
+                                android:layout_width="75dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="Miles"
+                                android:textAlignment="center"
+                                android:textSize="24sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        <NumberPicker
+                                android:id="@+id/numberpicker_main_miles"
+                                android:layout_width="64dp"
+                                android:layout_height="177dp"
+                                android:layout_marginStart="24dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginEnd="24dp"
+                                android:theme="@style/josephsTheme"
+                                app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_milesTens"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintHorizontal_chainStyle="spread"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/Distance" />
+
+                        <TextView
+                                android:id="@+id/dot"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="."
+                                android:textSize="42sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_miles"
+                                app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_milesTens"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toEndOf="@+id/numberpicker_main_miles"
+                                app:layout_constraintTop_toTopOf="@+id/numberpicker_main_miles"
+                                app:layout_constraintVertical_bias="0.525" />
+
+                        <NumberPicker
+                                android:id="@+id/numberpicker_main_milesTens"
+                                android:layout_width="64dp"
+                                android:layout_height="177dp"
+                                android:theme="@style/josephsTheme"
+                                app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_miles"
+                                app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_milesOnes"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toEndOf="@+id/numberpicker_main_miles"
+                                app:layout_constraintTop_toTopOf="@+id/numberpicker_main_miles" />
+
+                        <NumberPicker
+                                android:id="@+id/numberpicker_main_milesOnes"
+                                android:layout_width="64dp"
+                                android:layout_height="177dp"
+                                android:layout_marginStart="24dp"
+                                android:layout_marginEnd="24dp"
+                                android:theme="@style/josephsTheme"
+                                app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_milesTens"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toEndOf="@+id/numberpicker_main_milesTens"
+                                app:layout_constraintTop_toTopOf="@+id/numberpicker_main_milesTens" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/calculateBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorAccent"
+                    android:text="Calculate Pace"
+                    android:textColor="@android:color/black"
+                    app:cornerRadius="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
+            <ImageButton
+                    android:id="@+id/changeDateBtn"
+                    android:layout_width="35dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/transparent"
+                    android:tint="@color/colorPrimaryLight"
+                    app:layout_constraintBottom_toBottomOf="@+id/yearPickedText"
+                    app:layout_constraintStart_toEndOf="@+id/yearPickedText"
+                    app:layout_constraintTop_toTopOf="@+id/yearPickedText"
+                    app:srcCompat="@drawable/ic_manual" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
