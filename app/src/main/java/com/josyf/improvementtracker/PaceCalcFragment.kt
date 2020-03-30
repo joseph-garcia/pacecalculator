@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.android.material.navigation.NavigationView
@@ -104,22 +105,26 @@ class PaceCalcFragment : Fragment() {
 
         calculateBtn.setOnClickListener {
 
+            if (inBounds(hourSelected, minuteSelected, secondSelected)) {
+                val action = PaceCalcFragmentDirections.toCalculation(
+                    hourSelected,
+                    minuteSelected,
+                    secondSelected,
+                    milesSelected,
+                    milesTensSelected,
+                    milesOnesSelected,
+                    dayPickedText.text.toString().toInt(),
+                    yearPickedText.text.toString().toInt(),
+                    monthPickedText.text.toString()
+                )
+
+                activity?.findViewById<NavigationView>(R.id.nav_view)?.setCheckedItem(R.id.ic_journal)
+                Navigation.findNavController(view!!).navigate(action)
+            } else {
+                Toast.makeText(context, "Please select a time greater than three and a half minutes for better accuracy.", Toast.LENGTH_LONG).show()
+            }
 
 
-            val action = PaceCalcFragmentDirections.toCalculation(
-                hourSelected,
-                minuteSelected,
-                secondSelected,
-                milesSelected,
-                milesTensSelected,
-                milesOnesSelected,
-                dayPickedText.text.toString().toInt(),
-                yearPickedText.text.toString().toInt(),
-                monthPickedText.text.toString()
-            )
-
-            activity?.findViewById<NavigationView>(R.id.nav_view)?.setCheckedItem(R.id.ic_journal)
-            Navigation.findNavController(view!!).navigate(action)
 
 
 
@@ -174,6 +179,12 @@ class PaceCalcFragment : Fragment() {
         dayPickedText.text = dayName
         yearPickedText.text = yearName
 
+    }
+
+    private fun inBounds(hourSelected : Int, minuteSelected : Int, secondSelected : Int) : Boolean {
+        return if (hourSelected != 0) {
+            true
+        } else return ((minuteSelected * 60) + secondSelected) > 210
     }
 
 
