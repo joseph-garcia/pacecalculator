@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="176dp"
@@ -23,7 +23,8 @@
                         android:background="?android:selectableItemBackground"
                         android:onClick="clickImage"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/round_button"/>
+                        android:src="@drawable/round_button"
+                        android:contentDescription="@string/nav_header_changepic_button" />
 
         </androidx.cardview.widget.CardView>
 
@@ -41,9 +42,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
+                android:paddingStart="4dp"
                 android:inputType="text"
                 android:background="@android:color/transparent"
-                android:hint="Edit Name..."/>
+                android:hint="@string/nav_header_edit_name"
+                android:importantForAutofill="no"
+                tools:ignore="RtlSymmetry" />
 
 
 

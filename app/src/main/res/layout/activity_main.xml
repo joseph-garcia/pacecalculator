@@ -33,13 +33,12 @@
             android:background="@color/colorPrimary"
             android:id="@+id/toolbar"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            android:elevation="4dp">
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         </androidx.appcompat.widget.Toolbar>
 
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"

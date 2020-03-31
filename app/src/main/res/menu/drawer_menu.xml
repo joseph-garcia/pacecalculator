@@ -13,22 +13,5 @@
                 android:id="@+id/ic_pace"
                 android:icon="@drawable/ic_pace"
                 android:title="@string/pace_calculator" />
-
-
     </group>
-
-    <!-- these won't stay selected when we choose them, but
-    they will instead execute an action -->
-
-    <!--
-    <item android:title="TitleHere">
-        <menu>
-            <item android:id="@+id/nav_share"
-                android:icon="@drawable/idhere"
-                android:title="stringHere"></item>
-        </menu>
-    </item>
-
-    -->
-
 </menu>

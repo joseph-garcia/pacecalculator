@@ -22,14 +22,15 @@
                     android:id="@+id/monthPickedText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="January"
+                    android:text=""
                     android:textSize="28sp"
                     app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
                     app:layout_constraintEnd_toStartOf="@+id/dayPickedText"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="January" />
 
             <TextView
                     android:id="@+id/dayPickedText"
@@ -37,20 +38,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="12dp"
-                    android:text="1"
                     android:textSize="28sp"
                     app:layout_constraintBottom_toBottomOf="@+id/monthPickedText"
                     app:layout_constraintEnd_toStartOf="@+id/yearPickedText"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/monthPickedText"
-                    app:layout_constraintTop_toTopOf="@+id/monthPickedText" />
+                    app:layout_constraintTop_toTopOf="@+id/monthPickedText"
+                    tools:text="1" />
 
 
             <TextView
                     android:id="@+id/comma"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=","
+                    android:text="@string/fragment_calc_comma"
                     android:textSize="28sp"
                     app:layout_constraintBottom_toBottomOf="@+id/dayPickedText"
                     app:layout_constraintStart_toEndOf="@+id/dayPickedText"
@@ -60,13 +61,13 @@
                     android:id="@+id/yearPickedText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2020"
                     android:textSize="28sp"
                     app:layout_constraintBottom_toBottomOf="@+id/dayPickedText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/dayPickedText"
-                    app:layout_constraintTop_toTopOf="@+id/dayPickedText" />
+                    app:layout_constraintTop_toTopOf="@+id/dayPickedText"
+                    tools:text="2020" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout3"
@@ -83,7 +84,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:elevation="5dp"
                         android:paddingLeft="5dp"
 
                         android:paddingRight="5dp"
@@ -108,7 +108,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="28dp"
                                 android:layout_marginTop="12dp"
-                                android:text="Time"
+                                android:text="@string/fragment_calc_time"
                                 android:textAlignment="center"
                                 android:textSize="24sp"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -122,7 +122,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="24dp"
                                 android:layout_marginEnd="24dp"
-                                android:text="Hours"
+                                android:text="@string/fragment_calc_hours"
                                 android:textAlignment="center"
                                 app:layout_constraintBottom_toBottomOf="@+id/minuteText"
                                 app:layout_constraintEnd_toStartOf="@+id/minuteText"
@@ -135,7 +135,7 @@
                                 android:id="@+id/minuteText"
                                 android:layout_width="64dp"
                                 android:layout_height="wrap_content"
-                                android:text="Minutes"
+                                android:text="@string/fragment_calc_minutes"
                                 android:textAlignment="center"
                                 app:layout_constraintBottom_toBottomOf="@+id/secondText"
                                 app:layout_constraintEnd_toStartOf="@+id/secondText"
@@ -150,7 +150,7 @@
                                 android:layout_marginStart="24dp"
                                 android:layout_marginTop="12dp"
                                 android:layout_marginEnd="24dp"
-                                android:text="Seconds"
+                                android:text="@string/fragment_calc_seconds"
                                 android:textAlignment="center"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.5"
@@ -196,7 +196,6 @@
                         android:id="@+id/lowerCard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:elevation="25dp"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:scaleType="centerCrop"
@@ -221,7 +220,7 @@
                                 android:layout_width="75dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="12dp"
-                                android:text="Miles"
+                                android:text="@string/fragment_calc_miles"
                                 android:textAlignment="center"
                                 android:textSize="24sp"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -247,7 +246,7 @@
                                 android:id="@+id/dot"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="."
+                                android:text="@string/fragment_calc_point"
                                 android:textSize="42sp"
                                 app:layout_constraintBottom_toBottomOf="@+id/numberpicker_main_miles"
                                 app:layout_constraintEnd_toStartOf="@+id/numberpicker_main_milesTens"
@@ -291,7 +290,7 @@
                     android:id="@+id/calculateBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Calculate Pace"
+                    android:text="@string/fragment_calc_calc_pace"
                     android:textColor="@android:color/white"
                     app:cornerRadius="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -309,7 +308,8 @@
                     app:layout_constraintBottom_toBottomOf="@+id/yearPickedText"
                     app:layout_constraintStart_toEndOf="@+id/yearPickedText"
                     app:layout_constraintTop_toTopOf="@+id/yearPickedText"
-                    app:srcCompat="@drawable/ic_manual" />
+                    app:srcCompat="@drawable/ic_manual"
+                    android:contentDescription="@string/fragment_calc_date_change_desc" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

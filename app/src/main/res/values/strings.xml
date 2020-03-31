@@ -7,4 +7,24 @@
     <string name="journal">Journal</string>
     <string name="activ_calc_miles">Miles</string>
     <string name="activ_calc_pace">Pace</string>
+    <string name="activ_calc_add_to_journal">Add to Journal</string>
+    <string name="activ_calc_time">Time</string>
+    <string name="activ_calc_adj_mile_time">Adjusted 1 Mile Time</string>
+    <string name="entry_item_one_mile">1 Mile</string>
+    <string name="entry_item_adj_time">Adjusted Time</string>
+    <string name="entry_item_improvement">Improvement</string>
+    <string name="list_view_tap_the">No entries yet! Tap the</string>
+    <string name="entry_view_hamburger_menu_content_desc">Menu button</string>
+    <string name="entry_view_to_add_entry">to Add Entry.</string>
+    <string name="fragment_calc_comma">,</string>
+    <string name="fragment_calc_time">Time</string>
+    <string name="fragment_calc_hours">Hours</string>
+    <string name="fragment_calc_minutes">Minutes</string>
+    <string name="fragment_calc_seconds">Seconds</string>
+    <string name="fragment_calc_miles">Miles</string>
+    <string name="fragment_calc_point">.</string>
+    <string name="fragment_calc_calc_pace">Calculate Pace</string>
+    <string name="fragment_calc_date_change_desc">Change date button</string>
+    <string name="nav_header_changepic_button">Change profile picture button</string>
+    <string name="nav_header_edit_name">Edit Name…</string>
 </resources>
