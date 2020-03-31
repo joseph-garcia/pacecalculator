@@ -51,12 +51,12 @@ class JournalFragment : BaseFragment() {
 
         entryRecyclerMenu.layoutManager = layoutManager
 
+        // print "No entries yet! Tap hamburger to add"
         launch {
             context?.let{
                 val entries = EntryDatabase(it).entryDao().getAllEntries()
                 entryRecyclerMenu.adapter = EntryAdapter(it, entries as MutableList<Entry>)
                 if (entries.isEmpty()) {
-                    println("Is empty. Printing thingy")
                     emptyText.visibility = View.VISIBLE
                     hamburgerImage.visibility = View.VISIBLE
                     emptyText2.visibility = View.VISIBLE
@@ -68,11 +68,6 @@ class JournalFragment : BaseFragment() {
 
             }
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
     }
 
 

@@ -15,8 +15,6 @@ import kotlinx.android.synthetic.main.activity_calculate.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -25,6 +23,10 @@ class CalcResultsFragment : BaseFragment() {
 
     // Each variable corresponds to differing numerical values from the view.
     // It's separated like this, because it's separated in the view as well.
+    private var monthSelected : String = ""
+    private var daySelected : Int = 0
+    private var yearSelected : Int = 0
+
     private var hourSelected : Int = 0
     private var minuteSelected : Int = 0
     private var secondSelected : Int = 0
@@ -37,21 +39,9 @@ class CalcResultsFragment : BaseFragment() {
     private var remainderSeconds : Double = 0.0
     private var goalDistance: Double = 1.0
 
-    private var monthSelected : String = ""
-    private var daySelected : Int = 0
-    private var yearSelected : Int = 0
-
-
     private val args: CalcResultsFragmentArgs by navArgs()
 
-    // this happens first
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_calculate)
-    }
-
-
-    //this happens second
+    //this happens second (after onCreate)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -67,7 +57,7 @@ class CalcResultsFragment : BaseFragment() {
         // initialize the variables carried through from MainActivity
         getArgs()
 
-        // Display the values passed from Pace Calculator (not actually visible until Calculate Pace is pressed)
+        // Display the values passed from PaceCalcFragment
         displayValues()
 
         // calculates pace and binds pace text to view
@@ -81,8 +71,6 @@ class CalcResultsFragment : BaseFragment() {
 
             val timeString = timeStringify(hourSelected, minuteSelected, secondSelected)
             val distanceString = distanceStringify(milesSelected, milesTensSelected, milesOnesSelected)
-            val paceString = paceText
-            //val dateString = SimpleDateFormat("MMMM d, Y", Locale.getDefault()).format(Calendar.getInstance().time)
             val dateString = dateStringify(monthSelected, daySelected, yearSelected)
             val adjustedTimeInSeconds: Int = adjustedPaceInSeconds(hourSelected, minuteSelected, secondSelected, milesSelected, milesTensSelected, milesOnesSelected, goalDistance)
             val adjustedTime: String = getPaceFromSeconds(adjustedTimeInSeconds)
@@ -90,9 +78,9 @@ class CalcResultsFragment : BaseFragment() {
 
             launch {
                 context?.let{
-                    println("adjustedTime: $adjustedTime")
-                    println("adjustedTimeInSeconds: $adjustedTimeInSeconds")
-                    val testEntry = Entry(timeString, distanceString, paceString, dateString, adjustedTimeInSeconds,adjustedTime,"n/a")
+
+                    val testEntry = Entry(timeString, distanceString,
+                        paceText, dateString, adjustedTimeInSeconds,adjustedTime,"n/a")
                     getTimeDifference(testEntry)
                     val dbAccess = EntryDatabase(it).entryDao()
                     dbAccess.addEntry(testEntry)
@@ -133,22 +121,11 @@ class CalcResultsFragment : BaseFragment() {
             }
         }
         EntryDatabase(context!!).entryDao().updateEntry(entry)
-        println("now it should be updated... ${entry.timeDifference}")
     }
-
-//    fun formatDifferenceValue(diffValue:Int) : String {
-//        var timeDiffString = diffValue.toString()
-//        if (diffValue > 0) {
-//            timeDiffString = "+$timeDiffString"
-//        }
-//        timeDiffString = "${timeDiffString}s"
-//        return timeDiffString
-//    }
 
     private fun dateStringify(month: String, day: Int, year: Int) : String {
         return "$month $day, $year"
     }
-
 
     private fun timeStringify(hour:Int, minute:Int, second:Int) : String {
         if (hour != 0) {
@@ -204,18 +181,11 @@ class CalcResultsFragment : BaseFragment() {
         val minuteValue = adjustedPace.toInt()
         val secondsValue = ((adjustedPace - minuteValue) * 60).roundToInt()
         return (minuteValue * 60) + secondsValue
-        //return (getMinutesFromSeconds(adjustedTimeInSeconds))
-
     }
 
 
     private fun displayValues() {
 
-        //hoursNumText.text = hourSelected.toString()
-        //minutesNumText.text = minuteSelected.toString()
-        //secondsNumText.text = secondSelected.toString()
-
-        //milesNumText.text = milesSelected.toString()
         dateText.text = "$monthSelected $daySelected, $yearSelected"
         totalTimeText.text = timeNumify(hourSelected, minuteSelected, secondSelected)
         adjMileTime.text = getPaceFromSeconds(adjustedPaceInSeconds(hourSelected, minuteSelected, secondSelected, milesSelected, milesTensSelected, milesOnesSelected, goalDistance))
@@ -223,7 +193,6 @@ class CalcResultsFragment : BaseFragment() {
         // Tack on the decimals
         mileSelectedDecimals = milesSelected.toDouble() + (milesTensSelected * 0.10) + (milesOnesSelected * 0.01)
         // and Display the miles value
-        //milesNumText.text = mileSelectedDecimals.toString()
         milesNumText.text = "%.2f".format(mileSelectedDecimals).toDouble().toString()
     }
 
@@ -256,8 +225,6 @@ class CalcResultsFragment : BaseFragment() {
         monthSelected = args.month
         daySelected = args.day
         yearSelected = args.year
-
-        println("bleh")
     }
 
 }

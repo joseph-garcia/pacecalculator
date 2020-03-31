@@ -40,19 +40,15 @@ import java.util.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var navController:NavController
-    lateinit var navigationView : NavigationView
+    private lateinit var navigationView : NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //val navView = findViewById<NavigationView>(R.id.nav_view)
-
 
         // get and assign date
         val today = Calendar.getInstance()
         val dateString = SimpleDateFormat("MMMM d, y").format(today.time)
-
-
 
         // Check if we running android 5.0 or higher
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -60,8 +56,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         } else { // for below api 21
             // implement this feature without material design
         }
-
-
 
         navController = Navigation.findNavController(this, R.id.fragment)
 
@@ -71,7 +65,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
 
         //we need a reference to our navigation view
-        // NavigationView navigationView = findViewById(R.id.nav_view)
         navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
         val navHeaderView = findViewById<ImageButton>(R.id.image_view)
@@ -173,39 +166,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    //scratch test
-    fun pickDate(view: View) {
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-
-        val month = c.get(Calendar.MONTH)
-        // get and format month name
-        val month_date : SimpleDateFormat = SimpleDateFormat("MMMM", Locale.getDefault())
-        val monthName = month_date.format(c.time)
-
-        val day = c.get(Calendar.DAY_OF_MONTH)
-
-        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, mDay ->
-            // set to textview
-            println("date picker in here")
-
-            println("c: $c")
-            println("year : $year")
-            println("month: $month")
-            println("val day: $day")
-            println("monthName $monthName")
-            println("mDay: $mDay")
-
-            monthPickedText.text = monthName
-            dayPickedText.text = mDay.toString()
-            yearPickedText.text = mYear.toString()
-        }, year, month, day)
-        // show dialog
-        dpd.show()
-
-    }
-
-    fun pickImageFromGallery() {
+    private fun pickImageFromGallery() {
 
         // Intent to pick image
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -219,13 +180,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
-    fun showImageFromDb(imgButton: ImageButton) {
+    private fun showImageFromDb(imgButton: ImageButton) {
         GlobalScope.launch {
             baseContext.let {
                 val imageList = ImageURIDatabase(applicationContext).ImageDAO().getAllEntries()
-
-
-
                 if (imageList.isNotEmpty()) {
                     val imageItem = imageList[0]
 
@@ -239,13 +197,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     })
 
                     println(imageItem.imageAddress)
-                    println("not empty")
-                    println("image list is : $imageList")
                 } else {
                     imgButton.setImageResource(R.drawable.duck)
                 }
             }
-
         }
     }
 
@@ -257,7 +212,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     ) {
         when(requestCode) {
             PERMISSION_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission from popup granted
                     pickImageFromGallery()
                 } else {
@@ -283,8 +238,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val takeFlags : Int = data.flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                     this@MainActivity.contentResolver!!.takePersistableUriPermission(imageData, takeFlags)
 
-
-
                     // get syntax for calling dao functions
                     val imageDB = ImageURIDatabase(applicationContext).ImageDAO()
 
@@ -307,19 +260,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     })
 
                     val uri : Uri = imageURI.imageAddress.toUri()
-                    /////////////////////////////////////////////////////////////////////////////////
-
                 }
-
             }
-
         }
-
-
     }
 
-    fun EditText.onSubmit(func: () -> Unit) {
-        setOnEditorActionListener{_, actionId, _ ->
+    private fun EditText.onSubmit(func: () -> Unit) {
+        setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 func()
             }
@@ -327,7 +274,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun submit() {
+    private fun submit() {
         // create shared preferences
         val pref = getPreferences(Context.MODE_PRIVATE)
         val editor = pref.edit()
@@ -345,13 +292,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    fun View.hideKeyboard() {
+    private fun View.hideKeyboard() {
         val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
-
-
-
 }
 
 

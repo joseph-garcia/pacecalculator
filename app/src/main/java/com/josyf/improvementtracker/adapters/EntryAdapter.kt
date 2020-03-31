@@ -1,7 +1,5 @@
 package com.josyf.improvementtracker.adapters
 
-import android.app.Activity
-import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.graphics.Color
 import android.os.Handler
@@ -12,8 +10,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.josyf.improvementtracker.JournalFragment
-import com.josyf.improvementtracker.MainActivity
 import com.josyf.improvementtracker.R
 import com.josyf.improvementtracker.db.Entry
 import com.josyf.improvementtracker.db.EntryDatabase
@@ -23,16 +19,15 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 
 
-// The adapter that provides a binding from RunningEntry (from Model package) to the RecyclerView list items (from entry_list_item.xml)
+// The adapter that provides a binding from entry database to the RecyclerView list items (from entry_list_item.xml)
 
 
 class EntryAdapter(private val context: Context, private val entries: MutableList<Entry>) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>() {
 
 
-    // called when new viewholders are needed. kind of similar to inflate XML views--but only when there isn't an existing one to recycle
+    // called when new viewHolders are needed. kind of similar to inflate XML views--but only when there isn't an existing one to recycle
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false)
@@ -59,34 +54,16 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
                 }
 
                 Toast.makeText(context, "Entry removed", Toast.LENGTH_SHORT).show()
-                //println("The list is of length: ${entries.count()}")
-                //recalculateDifferenceValues(entries, position)
-                //notifyDataSetChanged()
                 true
             }
         }
 
     }
 
-    private fun sortEntries(entries: MutableList<Entry>) {
-
-    }
-
     private suspend fun removeEntryFromView(position: Int) {
-        //Toast.makeText(context, "Entry removed", Toast.LENGTH_SHORT).show()
 
-        println("Entries length is: ${entries.count()}")
-        println("Entries position is: $position")
-
-
-        //var isOneLeft : Boolean = false
-
-
-
-        // ### Since the entry is already removed, here we handle recalculation of the entry that took its place ###
-        // if the position index (the deleted entry) was the LAST entry, set the timeDifference of
-        // the second-to-last entry to --, as this is now the new baseline entry
-        // NOTE: Also we need to account for if there is only one entry left in the list
+        // We need to account for if there is only one entry left in the list
+        // If so, return isOneLeft true so we can move on to deletion and nothing else
         CoroutineScope(IO).launch {
             val isOneLeft : Boolean = async {
                 if (entries.count() == 1) {
@@ -94,14 +71,12 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
                     return@async true
                 } else return@async false
             }.await()
+            // If last entry was deleted: Set its upper entry to -- as the new baseline
             val mainValueChanged = async {
                 if (entries.count() == (position+1) && !isOneLeft) {
                     val previousPosition = position-1
                     entries[previousPosition].timeDifference = "--"
-                    //notifyItemChanged(previousPosition)
                     EntryDatabase(context).entryDao().updateEntry(entries[previousPosition])
-                    //notifyDataSetChanged()
-                    println("HELLO! I WAS HIDING! this should always happen first")
                 }
                 // if this is the FIRST entry (at the top), skip on ahead and just delete as usual.
                 // else, set a new timeDifference value for the upper entry (position-1)
@@ -110,10 +85,10 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
                     val nextPosition = position+1
                     val newTimeDiff: Int = (entries[previousPosition].adjustedTimeInSeconds - entries[nextPosition].adjustedTimeInSeconds)
                     entries[previousPosition].timeDifference = formatDifferenceValue(newTimeDiff)
-                    //notifyItemChanged(position - 1)
                     EntryDatabase(context).entryDao().updateEntry(entries[previousPosition])
                 }
             }.await()
+            // Now that all logic is handled, delete the entry and update recyclerview
             val deleteFromDb = async {
                 // deletes itself from the Database
                 EntryDatabase(context).entryDao().deleteEntry(entries[position])
@@ -126,58 +101,9 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
                 }
             }
         }
-
-
-
-
-
-
-
-
-        }
-
-
-    private fun recalculateDifferenceValues(entries : List<Entry>, position: Int) {
-        // list[position - 1]  should be the entry that's taken its place--the one that needs its diffValue recalculated
-        // set newTimeDiff value = list[position].adjustedPaceInSeconds value - list[position-1].adjustedPaceInSeconds value
-        // if the item IS the first element in the list:
-            // assign the list[i] timeDiff value to "--"
-        // else: reassign the list[i] timeDiff value to this new Value
-        // update the list[i] value
-        // notifyDataSetChanged
-        //println("entries[position] is ${entries[position-1]}")
-        if (0 != position) {
-            val newTimeDiff : Int = (entries[position-1].adjustedTimeInSeconds - entries[position].adjustedTimeInSeconds)
-            entries[position-1].timeDifference = formatDifferenceValue(newTimeDiff)
-            notifyItemChanged(position-1)
-            GlobalScope.launch {
-                context.let {
-                    EntryDatabase(it).entryDao().updateEntry(entries[position-1])
-                }
-            }
-            println("Position is $position")
-        }
-
-
-
-
-//        removeItem(position)
-//        notifyDataSetChanged()
-
-
-
     }
 
-
-
-
-
-    private fun stringToNum(string: String) : Int {
-        val strippedString = string.replace("[^0-9]".toRegex(), "")
-        return strippedString.toInt()
-    }
-
-    // let's add a ViewHolder, this is responsible for the data binding--or to prepare the child view to display the data corresponding to its position in the adapter
+    // here, we add the ViewHolder, this is responsible for the data binding--or to prepare the child view to display the data corresponding to its position in the adapter
     inner class EntryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 //        private val entryImage = itemView.findViewById<ImageView>(R.id.entryImage)
@@ -189,14 +115,11 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
         private val entryPace = itemView.findViewById<TextView>(R.id.entryPace)
 
 
-        // actual binding shia leboeuf
+        // actual binding
         fun bindEntry(entry: Entry) {
-            //val resourceId = context.resources.getIdentifier(entry.image, "drawable", context.packageName)
-            //entryImage?.setImageResource(resourceId)
 
             entryTime?.text = entry.timeString
 
-            println("In bindEntry - timeDiff - ${entry.timeDifference}")
             if ((entry.timeDifference).contains("-") && (entry.timeDifference != "--")) {
                 entryDifference.setTextColor(Color.parseColor("#64dd17"))
             } else if (entry.timeDifference == "--"){
@@ -204,19 +127,10 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
             } else {
                 entryDifference.setTextColor(Color.RED)
             }
-
-//            entryDifference.text = entry.timeDifference
-//
-//            entryDistance?.text = entry.distanceString
-//            entryDate?.text = entry.dateString
-//            entryAdjusted?.text = entry.adjustedTime
-//            entryPace?.text = entry.paceString
             assignTextViews(entry)
-
-
         }
 
-        fun assignTextViews(entry: Entry) {
+        private fun assignTextViews(entry: Entry) {
             entryDifference.text = entry.timeDifference
 
             entryDistance?.text = entry.distanceString

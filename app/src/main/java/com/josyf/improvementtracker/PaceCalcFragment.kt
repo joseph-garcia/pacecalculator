@@ -20,21 +20,16 @@ class PaceCalcFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.title = "Add Entry"
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-
-
-
     ): View? {
         // takes the XML info and shows it
         val view = inflater.inflate(R.layout.fragment_calculator, container, false)
         return view
-
     }
 
 
@@ -56,7 +51,6 @@ class PaceCalcFragment : Fragment() {
         setMaxMin(mainMilesPicker, 1, 26)
         setMaxMin(mainMilesTensPicker, 0, 9)
         setMaxMin(mainMilesOnesPicker, 0, 9)
-
 
 
         // Change Hour Selected from User
@@ -96,12 +90,7 @@ class PaceCalcFragment : Fragment() {
             milesOnesSelected = newVal
         }
 
-
-        //
         initDate()
-
-
-
 
         calculateBtn.setOnClickListener {
 
@@ -123,35 +112,20 @@ class PaceCalcFragment : Fragment() {
             } else {
                 Toast.makeText(context, "Please select a time greater than three and a half minutes for better accuracy.", Toast.LENGTH_LONG).show()
             }
-
-
-
-
-
         }
 
         changeDateBtn.setOnClickListener {
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
-
             val month = c.get(Calendar.MONTH)
+
             // get and format month name
             val month_date : SimpleDateFormat = SimpleDateFormat("MMMM", Locale.getDefault())
             val monthName = month_date.format(c.time)
-
             val day = c.get(Calendar.DAY_OF_MONTH)
 
             val dpd = DatePickerDialog(context!!, DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, mDay ->
                 // set to textview
-                println("date picker in here")
-
-                println("c: $c")
-                println("year : $year")
-                println("month: $month")
-                println("val day: $day")
-                println("monthName $monthName")
-                println("mDay: $mDay")
-
                 monthPickedText.text = monthName
                 dayPickedText.text = mDay.toString()
                 yearPickedText.text = mYear.toString()
@@ -186,25 +160,4 @@ class PaceCalcFragment : Fragment() {
             true
         } else return ((minuteSelected * 60) + secondSelected) > 210
     }
-
-
-
-//    fun getMonthInt(monthString : String) : Int {
-//        return when (monthString) {
-//            "January" -> 1
-//            "February" -> 2
-//            "March" -> 3
-//            "April" -> 4
-//            "May" -> 5
-//            "June" -> 6
-//            "July" -> 7
-//            "August" -> 8
-//            "September" -> 9
-//            "October" -> 10
-//            "November" -> 11
-//            "December" -> 12
-//            else -> 0
-//        }
-//    }
-
 }

@@ -19,8 +19,4 @@ interface EntryDAO{
 
     @Update
     suspend fun updateEntry(entry: Entry)
-
-    fun startTime() {
-
-    }
 }
