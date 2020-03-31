@@ -5,4 +5,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="pace_calculator">Add Entry</string>
     <string name="journal">Journal</string>
+    <string name="activ_calc_miles">Miles</string>
+    <string name="activ_calc_pace">Pace</string>
 </resources>
