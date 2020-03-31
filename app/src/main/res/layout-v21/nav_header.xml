@@ -24,7 +24,7 @@
                         android:background="?android:selectableItemBackground"
                         android:onClick="clickImage"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:src="@mipmap/ic_launcher" />
 
         </androidx.cardview.widget.CardView>
 
