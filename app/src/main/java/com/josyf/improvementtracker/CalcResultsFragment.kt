@@ -64,7 +64,7 @@ class CalcResultsFragment : BaseFragment() {
 
         // calculates pace and binds pace text to view
         val totalSeconds = 3600*(hourSelected) + 60*(minuteSelected) + secondSelected
-        val paceText = getPaceStringFromSeconds(totalSeconds)
+        val paceText = "${getPaceStringFromSeconds(totalSeconds)}/mi"
         paceStringText.text = "$paceText/mi"
 
 
