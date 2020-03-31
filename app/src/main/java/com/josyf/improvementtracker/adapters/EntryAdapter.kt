@@ -108,7 +108,7 @@ class EntryAdapter(private val context: Context, private val entries: MutableLis
 
 //        private val entryImage = itemView.findViewById<ImageView>(R.id.entryImage)
         private val entryTime = itemView.findViewById<TextView>(R.id.entryTime)
-        private val entryDifference: TextView = itemView.findViewById<TextView>(R.id.entryDiff)
+        private val entryDifference: TextView = itemView.findViewById(R.id.entryDiff)
         private val entryDistance = itemView.findViewById<TextView>(R.id.entryDistance)
         private val entryDate = itemView.findViewById<TextView>(R.id.entryDate)
         private val entryAdjusted = itemView.findViewById<TextView>(R.id.entryAdjusted)

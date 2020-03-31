@@ -2,11 +2,9 @@ package com.josyf.improvementtracker
 
 import android.Manifest
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.*
 import android.view.MenuItem
 import android.view.View
@@ -28,13 +26,10 @@ import com.google.android.material.navigation.NavigationView
 import com.josyf.improvementtracker.db.ImageURI
 import com.josyf.improvementtracker.db.ImageURIDatabase
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_calculator.*
 import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.nav_header.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -46,17 +41,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // get and assign date
-        val today = Calendar.getInstance()
-        val dateString = SimpleDateFormat("MMMM d, y").format(today.time)
-
-        // Check if we running android 5.0 or higher
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // call some material design APIs here
-        } else { // for below api 21
-            // implement this feature without material design
-        }
-
         navController = Navigation.findNavController(this, R.id.fragment)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -65,9 +49,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
 
         //we need a reference to our navigation view
-        navigationView = findViewById<NavigationView>(R.id.nav_view)
+        navigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
-        val navHeaderView = findViewById<ImageButton>(R.id.image_view)
 
         val toggle = ActionBarDrawerToggle(
             this,
@@ -145,15 +128,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     companion object {
-        private val IMAGE_PICK_CODE = 1000
-        private val PERMISSION_CODE = 1001
+        private const val IMAGE_PICK_CODE = 1000
+        private const val PERMISSION_CODE = 1001
     }
 
-    fun clickImage(view : View) {
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    fun clickImage(view: View) {
         // if OS >= marshmallow, request runtime permission
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
+                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
                 // show popup to request runtime permission
                 requestPermissions(permissions, PERMISSION_CODE)
             } else {
@@ -166,6 +150,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun pickImageFromGallery() {
 
         // Intent to pick image
@@ -187,14 +173,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (imageList.isNotEmpty()) {
                     val imageItem = imageList[0]
 
-                    Handler(Looper.getMainLooper()).post(Runnable {
+                    Handler(Looper.getMainLooper()).post {
                         try {
                             imgButton.setImageURI(imageItem.imageAddress.toUri())
                         } catch (e: SecurityException) {
                             imgButton.setImageResource(R.drawable.duck)
                         }
 
-                    })
+                    }
 
                     println(imageItem.imageAddress)
                 } else {
@@ -205,6 +191,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -222,7 +210,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -255,11 +243,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         //add to the list
                         imageDB.addEntry(imageURI)
                     }
-                    Handler(Looper.getMainLooper()).post(Runnable {
+                    Handler(Looper.getMainLooper()).post {
                         image_view.setImageURI(imageURI.imageAddress.toUri())
-                    })
-
-                    val uri : Uri = imageURI.imageAddress.toUri()
+                    }
                 }
             }
         }
@@ -283,9 +269,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         editor.putString("NAME", editNameText.text.toString())
 
         // commit changes
-        editor.commit()
+        editor.apply()
 
-        Toast.makeText(applicationContext, "Saved ${editNameText.text.toString()}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, "Saved ${editNameText.text}", Toast.LENGTH_SHORT).show()
         editNameText.clearFocus()
         nav_view.hideKeyboard()
 

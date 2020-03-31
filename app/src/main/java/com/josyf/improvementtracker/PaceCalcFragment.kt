@@ -1,5 +1,6 @@
 package com.josyf.improvementtracker
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,8 +29,7 @@ class PaceCalcFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // takes the XML info and shows it
-        val view = inflater.inflate(R.layout.fragment_calculator, container, false)
-        return view
+        return inflater.inflate(R.layout.fragment_calculator, container, false)
     }
 
 
@@ -120,11 +120,11 @@ class PaceCalcFragment : Fragment() {
             val month = c.get(Calendar.MONTH)
 
             // get and format month name
-            val month_date : SimpleDateFormat = SimpleDateFormat("MMMM", Locale.getDefault())
-            val monthName = month_date.format(c.time)
+            val monthDate = SimpleDateFormat("MMMM", Locale.getDefault())
+            val monthName = monthDate.format(c.time)
             val day = c.get(Calendar.DAY_OF_MONTH)
 
-            val dpd = DatePickerDialog(context!!, DatePickerDialog.OnDateSetListener{ _, mYear, mMonth, mDay ->
+            val dpd = DatePickerDialog(context!!, DatePickerDialog.OnDateSetListener{ _, mYear, _, mDay ->
                 // set to textview
                 monthPickedText.text = monthName
                 dayPickedText.text = mDay.toString()
@@ -140,14 +140,15 @@ class PaceCalcFragment : Fragment() {
         numPicker.maxValue = max
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun initDate() {
         val cal: Calendar = Calendar.getInstance()
         val monthDate = SimpleDateFormat("MMMM")
-        val monthName: String = monthDate.format(cal.getTime())
+        val monthName: String = monthDate.format(cal.time)
         val dayDate = SimpleDateFormat("dd")
-        val dayName: String = dayDate.format(cal.getTime())
+        val dayName: String = dayDate.format(cal.time)
         val yearDate = SimpleDateFormat("yyyy")
-        val yearName: String = yearDate.format(cal.getTime())
+        val yearName: String = yearDate.format(cal.time)
 
         monthPickedText.text = monthName
         dayPickedText.text = dayName

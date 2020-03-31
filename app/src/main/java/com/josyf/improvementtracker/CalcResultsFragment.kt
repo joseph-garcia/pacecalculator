@@ -1,6 +1,7 @@
 package com.josyf.improvementtracker
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -51,6 +52,7 @@ class CalcResultsFragment : BaseFragment() {
     }
 
     //this happens 3rd
+    @SuppressLint("SetTextI18n")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -184,6 +186,7 @@ class CalcResultsFragment : BaseFragment() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun displayValues() {
 
         dateText.text = "$monthSelected $daySelected, $yearSelected"
